@@ -9,6 +9,7 @@ db.once("open", async () => {
     await User.deleteMany({});
 
     for (const user of userSeeds) {
+      user.savedPosts = [];
       await User.create(user);
     }
 

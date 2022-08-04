@@ -2,6 +2,12 @@ const { Schema, model } = require("mongoose");
 
 const postSchema = new Schema(
   {
+    // Commenting this out until we create a simple Category model
+    // categoryId: {
+    //     type: Schema.Types.ObjectId,
+    //     ref: "Category",
+    //     required: "You must send a valid categoryId in the body of the request",
+    //   },
     postTitle: {
       type: String,
       required: "You need to input a title!",
@@ -45,7 +51,8 @@ const postSchema = new Schema(
             },
             commentAuthor: {
               type: String,
-              required: true,
+              required:
+                "You must include a valid username in the body of the request",
             },
             userId: {
               type: Schema.Types.ObjectId,

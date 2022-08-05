@@ -39,32 +39,7 @@ const postSchema = new Schema(
       maxlength: 150,
       trim: true,
     },
-    comments: [
-      {
-        type: new Schema(
-          {
-            commentText: {
-              type: String,
-              required: "Comments must have text!",
-              minlength: 1,
-              maxlength: 280,
-            },
-            commentAuthor: {
-              type: String,
-              required:
-                "You must include a valid username in the body of the request",
-            },
-            userId: {
-              type: Schema.Types.ObjectId,
-              ref: "User",
-              required:
-                "You must include a valid userId in the body of the request",
-            },
-          },
-          { timestamps: true }
-        ),
-      },
-    ],
+   
   },
   { timestamps: true }
 );

@@ -2,6 +2,9 @@ const { AuthenticationError } = require("apollo-server-express");
 const { User, Post } = require("../models");
 const { signToken } = require("../utils/auth");
 
+
+// resolver is a function responsible for populating the data that defined by typeDefs.js
+//  Do we need to add await since we're using async?
 const resolvers = {
   Query: {
     users: async () => {

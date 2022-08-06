@@ -7,9 +7,9 @@ const { signToken } = require("../utils/auth");
 //  Do we need to add await since we're using async?
 const resolvers = {
   Query: {
-    // user: async (parent, { userID }) => {
-    //   return User.findById(userID);
-    // },
+    user: async (parent, { userID }) => {
+      return User.findById(userID);
+    },
     users: async () => {
       return User.find().populate("posts");
     },
@@ -20,8 +20,8 @@ const resolvers = {
       const params = username ? { username } : {};
       return Post.find(params).sort({ createdAt: -1 });
     },
-    post: async (parent, { postId }) => {
-      return Post.findOne({ _id: postId });
+    post: async (parent, { PostTitle }) => {
+      return Post.findOne({  PostTitle });
     },
     user: async (parent, args, context) => {
       if (context.user) {
@@ -54,9 +54,10 @@ const resolvers = {
 
       return { token, user };
     },
-    addPost: async (parent, {PostTitle, postText, postAuthor, expectedTradeCompensation }, context) => {
+    addPost: async (parent, {userId, PostTitle, postText, postAuthor, expectedTradeCompensation }, context) => {
       if (context.user) {
         const post = await Post.create({
+          userId,
           PostTitle,
           postText,
           postAuthor: context.user.username,

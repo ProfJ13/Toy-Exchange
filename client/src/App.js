@@ -7,14 +7,12 @@ import {
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-
-import Home from "./pages/Home";
-import Signup from "./pages/Signup";
-import Login from "./pages/Login";
-import SinglePost from "./pages/SinglePost";
-import Profile from "./pages/Profile";
-import Header from "./components/Header";
-import Footer from "./components/Footer";
+import PostFeedPage from "./ReactComponents+Pages/Pages/PostFeedPage";
+import LandingPage from "./ReactComponents+Pages/Pages/LandingPage";
+import SinglePost from "./ReactComponents+Pages/Pages/SinglePost";
+import Profile from "./ReactComponents+Pages/Pages/Profile";
+import Navbar from "./ReactComponents+Pages/Components/Navbar";
+import Footer from "./ReactComponents+Pages/Components/Footer";
 
 // Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
@@ -45,12 +43,10 @@ function App() {
     <ApolloProvider client={client}>
       <Router>
         <div className="flex-column justify-flex-start min-100-vh">
-          <Header />
+          <Navbar />
           <div className="container">
             <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/signup" element={<Signup />} />
+              <Route path="/" element={<PostFeedPage />} />
               <Route path="/me" element={<Profile />} />
               <Route path="/profiles/:username" element={<Profile />} />
               <Route path="/posts/:postId" element={<SinglePost />} />

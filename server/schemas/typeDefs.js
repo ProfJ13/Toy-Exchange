@@ -1,5 +1,7 @@
 const { gql } = require('apollo-server-express');
 
+// used to define our schema and the types it contains 
+// each type has objects and each objects has fields that describs the data
 const typeDefs = gql`
   type User {
     _id: ID!

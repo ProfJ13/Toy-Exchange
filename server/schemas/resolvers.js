@@ -1,5 +1,5 @@
 const { AuthenticationError } = require("apollo-server-express");
-const { User, Post, Comment } = require("../models");
+const { User, Post, Comment, Category} = require("../models");
 const { signToken } = require("../utils/auth");
 
 
@@ -7,9 +7,9 @@ const { signToken } = require("../utils/auth");
 //  Do we need to add await since we're using async?
 const resolvers = {
   Query: {
-    user: async (parent, { userID }) => {
-      return User.findById(userID);
-    },
+    // user: async (parent, { userID }) => {
+    //   return User.findById(userID);
+    // },
     users: async () => {
       return User.find().populate("posts");
     },
@@ -23,12 +23,12 @@ const resolvers = {
     post: async (parent, { postId }) => {
       return Post.findOne({ _id: postId });
     },
-    // me: async (parent, args, context) => {
-    //   if (context.user) {
-    //     return User.findOne({ _id: context.user._id }).populate("posts");
-    //   }
-    //   throw new AuthenticationError("You need to be logged in!");
-    // },
+    user: async (parent, args, context) => {
+      if (context.user) {
+        return User.findOne({ _id: context.user._id }).populate("posts");
+      }
+      throw new AuthenticationError("You need to be logged in!");
+    },
   },
 
   Mutation: {
@@ -54,11 +54,13 @@ const resolvers = {
 
       return { token, user };
     },
-    addPost: async (parent, { postText }, context) => {
+    addPost: async (parent, {PostTitle, postText, postAuthor, expectedTradeCompensation }, context) => {
       if (context.user) {
         const post = await Post.create({
+          PostTitle,
           postText,
           postAuthor: context.user.username,
+          expectedTradeCompensation
         });
 
         await User.findOneAndUpdate(

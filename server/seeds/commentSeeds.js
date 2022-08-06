@@ -9,7 +9,7 @@ const comments = [
   "I can't believe how crazy halloween was!",
   "Man my house is messy right now",
   "Yo somebody come help me move my couch :'D",
-  "Hey guys I'm new here, can you tell me how to leave a reaction on a thought",
+  "Hey guys I'm new here, can you tell me how to leave a reaction on a post",
   "You ever think about how if you throw a rock in a lake, you're likely the last human to ever touch it",
   "Why do cities make benches that are so uncomfortable?",
   "Who here has a strong opinion on slime mold; trying to see something",

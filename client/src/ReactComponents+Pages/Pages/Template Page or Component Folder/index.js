@@ -1,3 +1,4 @@
+// Make sure to change all references of template within this file to your desired name
 import React from "react";
 
 // I'm including the most common imports we saw in class; feel free to uncomment or delete them,
@@ -13,7 +14,7 @@ import React from "react";
 // import {} from "../../../utils/actions";
 
 // You can import pre-coded bootstrap components, already configured for react using this import
-// react-boostrap list of components: https://react-bootstrap.github.io/components/modal/
+// react-boostrap list of components: https://react-bootstrap.github.io/Components/modal/
 // import {} from "react-bootstrap";
 
 // Use this <Link> component in place of <a> tags, this'll make our single page app act like a multipage app
@@ -21,23 +22,19 @@ import React from "react";
 // import { Link } from "react-router-dom";
 
 // import { useQuery, useMutation, useLazyQuery } from '@apollo/client';
-// import {} from "../../../utils/queries"
-// import {} from "../../../utils/mutations"
+// import { REPLACE_THIS_QUERY } from "../../../utils/queries"
+// import { REPLACE_THIS_MUTATION } from "../../../utils/mutations"
 
 import "./index.css";
 
 // Package of methods used to fetch/verify the user's tokens
-import Auth from "../utils/auth";
+import Auth from "../../../utils/auth";
 
-const PostFeedPage = () => {
+const Template = () => {
   // const { error: queryError, loading: queryLoading, data: queryData } = useQuery(--REPLACE--);
   // const [templateMutationFunction, { data: mutationData, loading: mutationLoading, error: mutationError }] = useMutation(--REPLACE--);
   // const [lazyQueryFunction], { data:lazyQueryData, loading: lazyQueryLoading, error: lazyQueryError }] = useLazyQuery(--REPLACE--);
-  return (
-    <>
-      <ReplaceThisElementWithJSX></ReplaceThisElementWithJSX>
-    </>
-  );
+  return <>{/* Replace this comment and its curly braces with your JSX*/}</>;
 };
 
-export default PostFeedPage;
+export default Template;

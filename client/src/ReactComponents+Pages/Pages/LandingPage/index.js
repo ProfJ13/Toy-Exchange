@@ -13,7 +13,7 @@ import React from "react";
 // import {} from "../../../utils/actions";
 
 // You can import pre-coded bootstrap components, already configured for react using this import
-// react-boostrap list of components: https://react-bootstrap.github.io/components/modal/
+// react-boostrap list of components: https://react-bootstrap.github.io/Components/modal/
 // import {} from "react-bootstrap";
 
 // Use this <Link> component in place of <a> tags, this'll make our single page app act like a multipage app
@@ -27,7 +27,7 @@ import React from "react";
 import "./index.css";
 
 // Package of methods used to fetch/verify the user's tokens
-import Auth from "../utils/auth";
+import Auth from "../../../utils/auth";
 
 const LandingPage = () => {
   // const { error: queryError, loading: queryLoading, data: queryData } = useQuery(--REPLACE--);
@@ -35,7 +35,7 @@ const LandingPage = () => {
   // const [lazyQueryFunction], { data:lazyQueryData, loading: lazyQueryLoading, error: lazyQueryError }] = useLazyQuery(--REPLACE--);
   return (
     <>
-      <ReplaceThisElementWithJSX></ReplaceThisElementWithJSX>
+      return <>{/* Replace this comment and its curly braces with your JSX*/}</>
     </>
   );
 };

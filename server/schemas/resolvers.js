@@ -20,8 +20,8 @@ const resolvers = {
       const params = username ? { username } : {};
       return Post.find(params).sort({ createdAt: -1 });
     },
-    post: async (parent, { PostTitle }) => {
-      return Post.findOne({  PostTitle });
+    post: async (parent, { postId }) => {
+      return Post.findOne({  postId });
     },
     user: async (parent, args, context) => {
       if (context.user) {
@@ -29,6 +29,7 @@ const resolvers = {
       }
       throw new AuthenticationError("You need to be logged in!");
     },
+    // add category and comment resolvers
   },
 
   Mutation: {

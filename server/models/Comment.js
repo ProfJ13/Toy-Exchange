@@ -15,16 +15,16 @@ comments:
             maxlength: 280,
           },
           commentAuthor: {
-            type: String,
-            required:
-              "You must include a valid username in the body of the request",
-          },
-          userId: {
             type: Schema.Types.ObjectId,
             ref: "User",
             required:
-              "You must include a valid userId in the body of the request",
+              "You must include a valid username in the body of the request",
           },
+          // userId: {
+            
+          //   required:
+          //     "You must include a valid userId in the body of the request",
+          // },
         },
        
     //   ),

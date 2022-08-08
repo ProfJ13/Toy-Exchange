@@ -13,7 +13,7 @@ const postSchema = new Schema(
       required: "You need to input a title!",
       minlength: 1,
       maxlength: 150,
-      trim: true,
+      // trim: true,
     },
     postText: {
       type: String,

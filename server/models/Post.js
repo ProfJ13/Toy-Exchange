@@ -2,18 +2,12 @@ const { Schema, model } = require("mongoose");
 
 const postSchema = new Schema(
   {
-    // Commenting this out until we create a simple Category model
-    // categoryId: {
-    //     type: Schema.Types.ObjectId,
-    //     ref: "Category",
-    //     required: "You must send a valid categoryId in the body of the request",
-    //   },
     postTitle: {
       type: String,
       required: "You need to input a title!",
       minlength: 1,
       maxlength: 150,
-      // trim: true,
+      trim: true,
     },
     postText: {
       type: String,
@@ -23,21 +17,31 @@ const postSchema = new Schema(
       trim: true,
     },
     postAuthor: {
-      type: String,
-      required: "The author's username is required!",
-      trim: true,
-    },
-    userId: {
+    //   type: String,
+    //   required: "The author's username is required!",
       type: Schema.Types.ObjectId,
       ref: "User",
-      required: "You must send a valid userId in the body of the request",
+      trim: true,
     },
+    // userId: {
+      
+    //   required: "You must send a valid userId in the body of the request",
+    // },
     expectedTradeCompensation: {
       type: String,
       required: "You need to input an expected trade!",
       minlength: 1,
       maxlength: 150,
       trim: true,
+    },
+    createdAt: {
+      type: String
+    },
+    comment: {
+      type: Schema.Types.ObjectId,
+      ref: "Comment",
+      trim: true,
+      maxlength: 280
     },
    
   },

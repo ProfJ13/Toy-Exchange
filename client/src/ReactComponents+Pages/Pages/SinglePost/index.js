@@ -1,48 +1,65 @@
 import React from "react";
-
+import { Link } from "react-router-dom";
 // Import the `useParams()` hook
 import { useParams } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 
 import CommentList from "../../Components/CommentList";
 import CommentForm from "../../Components/CommentForm";
+import { format_date } from "../../../utils/helpers";
 import "./index.css";
 import { QUERY_SINGLE_POST } from "../../../utils/queries";
+import postSeeds from "../PostFeedPage/postSeeds.json";
 
 const SinglePost = () => {
   // Use `useParams()` to retrieve value of the route parameter `:profileId`
   const { postId } = useParams();
 
-  const { loading, data } = useQuery(QUERY_SINGLE_POST, {
-    // pass URL parameter
-    variables: { postId: postId },
-  });
+  // uncomment once we can query posts from server
+  // const { loading, data } = useQuery(QUERY_SINGLE_POST, {
+  //   // pass URL parameter
+  //   variables: { postId: postId },
+  // });
+  // const post = data?.post || {};
+  // if (loading) {
+  //   return <div>Loading...</div>;
+  // }
 
-  const post = data?.post || {};
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+  // delete this following block when we can query data
+  const post = postSeeds.filter((post) => post._id === postId)[0];
   return (
     <div className="my-3">
       <h3 className="card-header bg-dark text-light p-2 m-0">
-        {post.postAuthor} <br />
-        <span style={{ fontSize: "1rem" }}>
-          had this post on {post.createdAt}
-        </span>
+        {post.postTitle}
       </h3>
       <div className="bg-light py-4">
-        <blockquote
+     
+        <p
           className="p-4"
           style={{
             fontSize: "1.5rem",
-            fontStyle: "italic",
-            border: "2px dotted #1a1a1a",
+
             lineHeight: "1.5",
           }}
         >
           {post.postText}
-        </blockquote>
+        </p>
+        <p>In return, this user wants: {post.expectedTradeCompensation}</p>
+        <p>
+          <span style={{ fontSize: "1rem" }}>
+            {post.postAuthor} {format_date(post.createdAt)}
+          </span>
+        </p>
+        <p>
+          <Link
+            className="text-dark border"
+            to={`/categories/${post.categoryText}`}
+          >
+            <span style={{ fontSize: "1rem" }}>
+              Posted in the {post.categoryText.toLowerCase()} category
+            </span>
+          </Link>
+        </p>
       </div>
 
       <div className="my-5">

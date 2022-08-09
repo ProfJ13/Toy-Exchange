@@ -1,18 +1,14 @@
 [
-    {
-      "categoryText": "Art and craft toys",
-      "categoryAuthor": "System Admin"
-    },
-    {
-      "categoryText": "Toy animals",
-      "categoryAuthor": "System Admin"
-    },
-    {
-      "categoryText": "Dolls",
-      "categoryAuthor": "System Admin"
-    },
-    {
-      "categoryText": "Educational toys",
-      "categoryAuthor": "System Admin"
-    }
+  {
+    "categoryText": "Art and craft toys"
+  },
+  {
+    "categoryText": "Toy animals"
+  },
+  {
+    "categoryText": "Dolls"
+  },
+  {
+    "categoryText": "Educational toys"
+  }
 ]

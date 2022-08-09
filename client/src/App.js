@@ -7,6 +7,7 @@ import {
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import CategorySelect from "./ReactComponents+Pages/Pages/CategorySelect";
 import PostFeedPage from "./ReactComponents+Pages/Pages/PostFeedPage";
 import LandingPage from "./ReactComponents+Pages/Pages/LandingPage";
 import SinglePost from "./ReactComponents+Pages/Pages/SinglePost";
@@ -46,7 +47,11 @@ function App() {
           <Navbar />
           <div className="container">
             <Routes>
-              <Route path="/" element={<PostFeedPage />} />
+              <Route path="/" element={<CategorySelect />} />
+              <Route
+                path="/categories/:categoryText"
+                element={<PostFeedPage />}
+              />
               <Route path="/me" element={<Profile />} />
               <Route path="/profiles/:username" element={<Profile />} />
               <Route path="/posts/:postId" element={<SinglePost />} />

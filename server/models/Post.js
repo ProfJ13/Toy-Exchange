@@ -16,13 +16,13 @@ const postSchema = new Schema(
       maxlength: 280,
       trim: true,
     },
-    postAuthor: {
-    //   type: String,
-    //   required: "The author's username is required!",
-      type: Schema.Types.ObjectId,
-      ref: "User",
-      trim: true,
-    },
+    // postAuthor: {
+    // //   type: String,
+    // //   required: "The author's username is required!",
+    //   type: Schema.Types.ObjectId,
+    //   ref: "User",
+    //   trim: true,
+    // },
     // userId: {
       
     //   required: "You must send a valid userId in the body of the request",

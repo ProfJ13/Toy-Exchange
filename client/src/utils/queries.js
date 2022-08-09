@@ -58,3 +58,14 @@ export const QUERY_ME = gql`
     }
   }
 `;
+
+// need to match the category schema exatly, otherwise it won't work
+export const QUERY_CATEGORYS = gql`
+  query getCategorys {
+    categorys {
+      _id
+      categoryText
+      categoryAuthor
+    }
+  }
+`;

@@ -13,6 +13,7 @@ const resolvers = {
     users: async () => {
       return User.find().populate("posts");
     },
+
     // user: async (parent, { username }) => {
     //   return User.findOne({ username }).populate("posts");
     // },
@@ -30,6 +31,12 @@ const resolvers = {
       throw new AuthenticationError("You need to be logged in!");
     },
     // add category and comment resolvers
+    category: async (parent, { categoryId }) => {
+      return Category.findOne({ categoryId});
+    },
+    comments: async (parent, { commentId }) => {
+      return Category.findOne({ commentId});
+    },
   },
 
   Mutation: {

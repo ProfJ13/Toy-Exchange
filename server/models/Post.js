@@ -31,24 +31,17 @@ const postSchema = new Schema(
       maxlength: 150,
       trim: true,
     },
-    createdAt: {
-      type: String,
-    },
-    comments:[
-    {
-      type: Schema.Types.ObjectId,
-      ref: "Comment",
+    comments: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Comment",
 
-      trim: true,
-      maxlength: 280,
-
-    }
-  ],
+        trim: true,
+        maxlength: 280,
+      },
+    ],
     categoryName: {
-      type: Schema.Types.ObjectId,
-      ref: "Category",
-      required: true
-
+      type: String,
     },
   },
   { timestamps: true }

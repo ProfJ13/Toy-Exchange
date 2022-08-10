@@ -1,6 +1,6 @@
-const { gql } = require('apollo-server-express');
+const { gql } = require("apollo-server-express");
 
-// used to define our schema and the types it contains 
+// used to define our schema and the types it contains
 // each type has objects and each objects has fields that describs the data
 const typeDefs = gql`
   type User {
@@ -31,13 +31,13 @@ const typeDefs = gql`
     _id: ID!
     commentText: String!
     commentAuthor: User!
+    postId: ID!
     createdAt: String
   }
 
   type Category {
     _id: ID!
     categoryName: String!
-
   }
 
   type Query {
@@ -52,10 +52,15 @@ const typeDefs = gql`
   type Mutation {
     addUser(username: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
-    addPost(postTitle: String!, postText: String!,postAuthor: ID!, expectedTradeCompensation: String!): Post
-    addComment(postId: ID!, commentText: String!): Post
+    addPost(
+      postTitle: String!
+      postText: String!
+      postAuthor: ID!
+      expectedTradeCompensation: String!
+    ): Post
+    addComment(commentAuthor: ID!, commentText: String!): Comment
     removePost(postId: ID!): Post
-    removeComment(postId: ID!, commentId: ID!): Post
+    removeComment(commentId: ID!): Comment
   }
 `;
 

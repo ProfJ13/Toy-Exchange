@@ -13,6 +13,11 @@ const commentSchema = new Schema(
       ref: "User",
       required: "You must include a valid username in the body of the request",
     },
+    postId: {
+      type: Schema.Types.ObjectId,
+      ref: "Post",
+      required: "You must include a valid post ID in the body of the request",
+    },
   },
 
   { timestamps: true }

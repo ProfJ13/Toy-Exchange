@@ -9,7 +9,7 @@ import Auth from "../../../utils/auth";
 import { useParams } from "react-router-dom";
 
 const PostForm = ({ category }) => {
-  const { categoryText: categoryParam } = useParams();
+  const { categoryName: categoryParam } = useParams();
   // Uncomment this once the backend allows for querying categories
   // const { error, loading, data } = useQuery(QUERY_CATEGORYS);
   const [postCategory, setPostCategory] = useState(categoryParam || "");
@@ -105,7 +105,7 @@ const PostForm = ({ category }) => {
               onChange={handleChange}
             >
               {data.map((category) => (
-                <option>{category.categoryText}</option>
+                <option>{category.categoryName}</option>
               ))}
             </select>
             <h6>The name of your listed item:</h6>

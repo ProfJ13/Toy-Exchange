@@ -10,11 +10,11 @@ const PostList = ({ categoryData }) => {
     categoryData &&
     categoryData.map((category) => (
       <Link
-        key={category.categoryText}
+        key={category.categoryName}
         className="text-dark border"
-        to={`/categories/${category.categoryText}`}
+        to={`/categories/${category.categoryName}`}
       >
-        <h3>{category.categoryText}</h3>
+        <h3>{category.categoryName}</h3>
       </Link>
     ))
   );

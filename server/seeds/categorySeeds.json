@@ -1,14 +1,68 @@
 [
   {
-    "categoryName": "Art and craft toys"
+    "categoryName": "Arts and Crafts Toys"
   },
   {
-    "categoryName": "Toy animals"
+    "categoryName": "Toy Animals"
   },
   {
     "categoryName": "Dolls"
   },
   {
-    "categoryName": "Educational toys"
+    "categoryName": "Educational Toys"
+  },
+  {
+    "categoryName": "Construction Toys"
+  },
+  {
+    "categoryName": "Electronic Toys"
+  },
+  {
+    "categoryName": "Mechanical Toys"
+  },
+  {
+    "categoryName": "Novelty items"
+  },
+  {
+    "categoryName": "Optical Toys"
+  },
+  {
+    "categoryName": "Physical Activity and Dexterity Toys"
+  },
+  {
+    "categoryName": "Powered Toys"
+  },
+  {
+    "categoryName": "Puppetry Toys"
+  },
+  {
+    "categoryName": "Puzzle Toys"
+  },
+  {
+    "categoryName": "Scale Modeling Toys"
+  },
+  {
+    "categoryName": "Toy Figurines"
+  },
+  {
+    "categoryName": "Toy Instruments and Noisemakers"
+  },
+  {
+    "categoryName": "Toy Robots"
+  },
+  {
+    "categoryName": "Toy Weapons"
+  },
+  {
+    "categoryName": "Traditional Toys"
+  },
+  {
+    "categoryName": "Transforming Toys"
+  },
+  {
+    "categoryName": "Toy Vehicles"
+  },
+  {
+    "categoryName": "Water Toys"
   }
 ]

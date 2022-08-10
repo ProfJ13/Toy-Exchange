@@ -63,9 +63,7 @@ export const QUERY_ME = gql`
 export const QUERY_CATEGORYS = gql`
   query getCategorys {
     categorys {
-      _id
-      categoryText
-      categoryAuthor
+      categoryName
     }
   }
 `;

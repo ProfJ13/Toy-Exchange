@@ -1,14 +1,14 @@
 [
   {
-    "categoryText": "Arts and Crafts Toys"
+    "categoryName": "Arts and Crafts Toys"
   },
   {
-    "categoryText": "Toy Animals"
+    "categoryName": "Toy Animals"
   },
   {
-    "categoryText": "Dolls"
+    "categoryName": "Dolls"
   },
   {
-    "categoryText": "Educational Toys"
+    "categoryName": "Educational Toys"
   }
 ]

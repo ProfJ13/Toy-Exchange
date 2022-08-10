@@ -51,10 +51,10 @@ function App() {
               <Route path="/" element={<LandingPage />} />
               <Route path="/categories" element={<CategorySelect />} />
               <Route
-                path="/categories/:categoryText"
+                path="/categories/:categoryName"
                 element={<PostFeedPage />}
               />
-              <Route path="/create-post/:categoryText" element={<PostForm />} />
+              <Route path="/create-post/:categoryName" element={<PostForm />} />
               <Route path="/me" element={<Profile />} />
               <Route path="/profiles/:username" element={<Profile />} />
               <Route path="/posts/:postId" element={<SinglePost />} />

@@ -33,7 +33,6 @@ const SinglePost = () => {
         {post.postTitle}
       </h3>
       <div className="bg-light py-4">
-     
         <p
           className="p-4"
           style={{
@@ -53,10 +52,10 @@ const SinglePost = () => {
         <p>
           <Link
             className="text-dark border"
-            to={`/categories/${post.categoryText}`}
+            to={`/categories/${post.categoryName}`}
           >
             <span style={{ fontSize: "1rem" }}>
-              Posted in the {post.categoryText.toLowerCase()} category
+              Posted in the {post.categoryName.toLowerCase()} category
             </span>
           </Link>
         </p>

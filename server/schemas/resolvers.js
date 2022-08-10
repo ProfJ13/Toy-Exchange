@@ -7,16 +7,10 @@ const { signToken } = require("../utils/auth");
 //  Do we need to add await since we're using async?
 const resolvers = {
   Query: {
-    user: async (parent, { userID }) => {
-      return User.findById(userID);
-    },
     users: async () => {
       return User.find().populate("posts");
     },
 
-    // user: async (parent, { username }) => {
-    //   return User.findOne({ username }).populate("posts");
-    // },
     posts: async (parent, { username }) => {
       const params = username ? { username } : {};
       return Post.find(params).sort({ createdAt: -1 });
@@ -31,10 +25,10 @@ const resolvers = {
       throw new AuthenticationError("You need to be logged in!");
     },
     // add category and comment resolvers
-    category: async (parent, { categoryId }) => {
-      return Category.findOne({ categoryId});
+    category: async (parent, { categoryName }) => {
+      return Category.findOne({ categoryName});
     },
-    comments: async (parent, { commentId }) => {
+    comment: async (parent, { commentId }) => {
       return Category.findOne({ commentId});
     },
   },
@@ -62,14 +56,15 @@ const resolvers = {
 
       return { token, user };
     },
-    addPost: async (parent, {userId, PostTitle, postText, postAuthor, expectedTradeCompensation }, context) => {
+    addPost: async (parent, {userId, postTitle, postText, postAuthor, expectedTradeCompensation, categoryName}, context) => {
       if (context.user) {
         const post = await Post.create({
           userId,
-          PostTitle,
+          postTitle,
           postText,
           postAuthor: context.user.username,
-          expectedTradeCompensation
+          expectedTradeCompensation,
+          categoryName
         });
 
         await User.findOneAndUpdate(

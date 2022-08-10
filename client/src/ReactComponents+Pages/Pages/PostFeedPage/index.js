@@ -11,9 +11,9 @@ import postSeeds from "./postSeeds.json";
 const PostFeedPage = () => {
   const { categoryText: categoryParam } = useParams();
   // uncomment once the backend can support this
-  // const { loading, data } = useQuery(QUERY_POSTS, {
-  //   variables: { categoryParam },
-  // });
+  const { loading, data } = useQuery(QUERY_POSTS, {
+    variables: { categoryParam },
+  });
   // const posts = data?.posts || [];
 
   const posts = postSeeds.filter((post) => post.categoryText === categoryParam);

@@ -24,6 +24,7 @@ const typeDefs = gql`
     expectedTradeCompensation: String
     createdAt: String
     comment: [Comment]!
+    categoryName: [Category]
   }
 
   type Comment {
@@ -35,8 +36,8 @@ const typeDefs = gql`
 
   type Category {
     _id: ID!
-    categoryText: String!
-    categoryAuthor: User!
+    categoryName: String!
+
   }
 
   type Query {
@@ -44,14 +45,14 @@ const typeDefs = gql`
     user: User
     posts: [Post]
     post: Post
-    comment: Comment
+    comment(commentId: ID!): Comment
     category: Category
   }
 
   type Mutation {
     addUser(username: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
-    addPost(postTitle: String!, postText: String!,postAuthor: User!, expectedTradeCompensation: String!): Post
+    addPost(postTitle: String!, postText: String!,postAuthor: ID!, expectedTradeCompensation: String!): Post
     addComment(postId: ID!, commentText: String!): Post
     removePost(postId: ID!): Post
     removeComment(postId: ID!, commentId: ID!): Post

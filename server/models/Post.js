@@ -16,13 +16,10 @@ const postSchema = new Schema(
       maxlength: 280,
       trim: true,
     },
-    // postAuthor: {
-    // //   type: String,
-    // //   required: "The author's username is required!",
-    //   type: Schema.Types.ObjectId,
-    //   ref: "User",
-    //   trim: true,
-    // },
+    postAuthor: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+    },
     // userId: {
 
     //   required: "You must send a valid userId in the body of the request",
@@ -37,11 +34,21 @@ const postSchema = new Schema(
     createdAt: {
       type: String,
     },
-    comment: {
+    comments:[
+    {
       type: Schema.Types.ObjectId,
       ref: "Comment",
+
       trim: true,
       maxlength: 280,
+
+    }
+  ],
+    categoryName: {
+      type: Schema.Types.ObjectId,
+      ref: "Category",
+      required: true
+
     },
   },
   { timestamps: true }

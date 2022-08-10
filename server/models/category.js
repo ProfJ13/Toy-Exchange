@@ -4,13 +4,12 @@ const { Schema, model } = require("mongoose");
 
 
 const categorySchema = new Schema(
-    {
-category:
+    
 //  [
 //     {
 //       type: new Schema(
         {
-          categoryText: {
+          categoryName: {
             type: String,
             required: "categorys must have text!",
             minlength: 1,
@@ -20,14 +19,14 @@ category:
             trim: true,
           },
           // Why do we need the author? 
-          categoryAuthor: {
-            type: Schema.Types.ObjectId,
-            ref: "User",
-            required:
-              "You must include a valid username in the body of the request",
-              trim: true,
-          },
-        //   userId: {
+        //   categoryAuthor: {
+        //     type: Schema.Types.ObjectId,
+        //     ref: "User",
+        //     required:
+        //       "You must include a valid username in the body of the request",
+        //       trim: true,
+        //   },
+        // //   userId: {
            
         //     required:
         //       "You must include a valid userId in the body of the request",
@@ -37,7 +36,6 @@ category:
     //   ),
 //     },
 //   ],
-},
 );
 
 const Category = model("Category", categorySchema);

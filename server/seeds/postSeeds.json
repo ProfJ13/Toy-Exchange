@@ -2,51 +2,61 @@
   {
     "postTitle": "Magic: The Gathering Cards",
     "postText": "Everyone knows that debugging is twice as hard as writing a program in the first place. So if you're as clever as you can be when you write it, how will you ever debug it?",
-    "expectedTradeCompensation": "Switch Game Cartridge"
+    "expectedTradeCompensation": "Switch Game Cartridge",
+    "categoryName": "Art and craft toys"
   },
   {
     "postTitle": "Nintendo Switch",
     "postText": "Some of the best programming is done on paper, really. Putting it into the computer is just a minor detail.",
-    "expectedTradeCompensation": "Kindle Tablet"
+    "expectedTradeCompensation": "Kindle Tablet",
+    "categoryName": "Art and craft toys"
   },
   {
     "postTitle": "Star Destroyer Lego Set",
     "postText": "When you don't create things, you become defined by your tastes rather than ability. Your tastes only narrow & exclude people. So create.",
-    "expectedTradeCompensation": "Millenium Falcon Lego Set"
+    "expectedTradeCompensation": "Millenium Falcon Lego Set",
+    "categoryName": "Dolls"
   },
   {
     "postTitle": "Minecraft Funko Pop",
     "postText": "I'm not a great programmer; I'm just a good programmer with great habits.",
-    "expectedTradeCompensation": "He-Man figurine"
+    "expectedTradeCompensation": "He-Man figurine",
+    "categoryName": "Educational toys"
   },
   {
     "postTitle": "Barbie (Any Type)",
     "postText": "Walking on water and developing software from a specification are easy if both are frozen.",
-    "expectedTradeCompensation": "Tonka Concrete Mixer Truck"
+    "expectedTradeCompensation": "Tonka Concrete Mixer Truck",
+    "categoryName": "Educational toys"
   },
   {
     "postTitle": "PS4",
     "postText": "The most disastrous thing that you can ever learn is your first programming language.",
-    "expectedTradeCompensation": "XBOX 1"
+    "expectedTradeCompensation": "XBOX 1",
+    "categoryName": "Educational toys"
   },
   {
     "postTitle": "Large kiddie pool",
     "postText": "The most important property of a program is whether it accomplishes the intention of its user.",
-    "expectedTradeCompensation": "Wacky Sprinkler"
+    "expectedTradeCompensation": "Wacky Sprinkler",
+    "categoryName": "Educational toys"
   },
   {
     "postTitle": "Lawn Dart Set",
     "postText": "Delivering good software today is often better than perfect software tomorrow, so finish things and ship.",
-    "expectedTradeCompensation": "Betrayal at House on the Hill"
+    "expectedTradeCompensation": "Betrayal at House on the Hill",
+    "categoryName": "Educational toys"
   },
   {
     "postTitle": "Spiderman Figurine",
     "postText": "If you optimize everything, you will always be unhappy.",
-    "expectedTradeCompensation": "Mini Trampoline"
+    "expectedTradeCompensation": "Mini Trampoline",
+    "categoryName": "Educational toys"
   },
   {
     "postTitle": "Kitchen Playset",
     "postText": "It's not a bug; it's an undocumented feature.",
-    "expectedTradeCompensation": "NERF Gun"
+    "expectedTradeCompensation": "NERF Gun",
+    "categoryName": "Educational toys"
   }
 ]

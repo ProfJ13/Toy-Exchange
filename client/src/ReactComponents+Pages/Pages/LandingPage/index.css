@@ -1,0 +1,9 @@
+.landing-container {
+  background-image: url("https://dm0qx8t0i9gc9.cloudfront.net/thumbnails/video/rZJIMvhmliwmde8a6/videoblocks-preschool-kids-playing-with-toys-on-the-floor-children-playing-constructor-top-view-kids-development-center_hdnkal5an_thumbnail-1080_01.png");
+  height: 100vh;
+}
+
+.mask {
+  background-color: rgba(0, 0, 0, 0.4);
+  height: 100%;
+}

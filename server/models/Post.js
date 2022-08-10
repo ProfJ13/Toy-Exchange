@@ -21,7 +21,7 @@ const postSchema = new Schema(
       ref: "User",
     },
     // userId: {
-      
+
     //   required: "You must send a valid userId in the body of the request",
     // },
     expectedTradeCompensation: {
@@ -32,20 +32,24 @@ const postSchema = new Schema(
       trim: true,
     },
     createdAt: {
-      type: String
+      type: String,
     },
     comments:[
     {
       type: Schema.Types.ObjectId,
       ref: "Comment",
+
+      trim: true,
+      maxlength: 280,
+
     }
   ],
     categoryName: {
       type: Schema.Types.ObjectId,
       ref: "Category",
       required: true
+
     },
-   
   },
   { timestamps: true }
 );

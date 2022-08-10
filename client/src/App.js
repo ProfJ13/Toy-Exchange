@@ -11,6 +11,7 @@ import CategorySelect from "./ReactComponents+Pages/Pages/CategorySelect";
 import PostFeedPage from "./ReactComponents+Pages/Pages/PostFeedPage";
 import LandingPage from "./ReactComponents+Pages/Pages/LandingPage";
 import SinglePost from "./ReactComponents+Pages/Pages/SinglePost";
+import PostForm from "./ReactComponents+Pages/Pages/PostForm";
 import Profile from "./ReactComponents+Pages/Pages/Profile";
 import Navbar from "./ReactComponents+Pages/Components/Navbar";
 import Footer from "./ReactComponents+Pages/Components/Footer";
@@ -47,11 +48,13 @@ function App() {
           <Navbar />
           <div className="container">
             <Routes>
-              <Route path="/" element={<CategorySelect />} />
+              <Route path="/" element={<LandingPage />} />
+              <Route path="/categories" element={<CategorySelect />} />
               <Route
                 path="/categories/:categoryText"
                 element={<PostFeedPage />}
               />
+              <Route path="/create-post/:categoryText" element={<PostForm />} />
               <Route path="/me" element={<Profile />} />
               <Route path="/profiles/:username" element={<Profile />} />
               <Route path="/posts/:postId" element={<SinglePost />} />

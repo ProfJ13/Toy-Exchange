@@ -1,14 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { format_date } from "../../../utils/helpers";
-
+import Auth from "../../../utils/auth";
 const PostList = ({
   posts,
   title,
   username,
   showTitle = true,
   showCategory = true,
-  isYou = false,
 }) => {
   if (!posts.length) {
     return <h3>No Posts Yet</h3>;
@@ -29,10 +28,13 @@ const PostList = ({
                 </div>
                 <p>
                   <span style={{ fontSize: "1rem" }}>
-                    {post.comments.length} comments on this post
+                    {post.comments.length}{" "}
+                    {post.comments.length === 1 ? "comment" : "comments"} on
+                    this post
                   </span>
                 </p>
-                {isYou ? (
+                {Auth.getProfile().data.username ===
+                (post?.postAuthor?.username || username) ? (
                   <p>
                     <span style={{ fontSize: "1rem" }}>
                       You {format_date(post.createdAt)}

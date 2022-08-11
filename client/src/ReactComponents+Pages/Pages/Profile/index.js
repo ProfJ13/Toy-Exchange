@@ -19,7 +19,7 @@ const Profile = () => {
   const user = data?.user || data?.otherUser || {};
   // navigate to personal profile page if username is yours
   if (Auth.loggedIn() && Auth.getProfile().data.username === userParam) {
-    return <Navigate to="/me" />;
+    return <Navigate to="/me" replace={true} />;
   }
 
   if (loading) {
@@ -47,7 +47,6 @@ const Profile = () => {
             posts={user.posts}
             username={user.username}
             title={`${user.username}'s posts...`}
-            isYou={userParam ? false : true}
             showTitle={false}
             showUsername={false}
           />

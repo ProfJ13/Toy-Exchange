@@ -78,7 +78,9 @@ const resolvers = {
         const post = await Post.create({
           postTitle,
           postText,
-          postAuthor: context.user._id,
+
+          postAuthor,
+
           expectedTradeCompensation,
           categoryName,
         });

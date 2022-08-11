@@ -1,7 +1,6 @@
 const { AuthenticationError } = require("apollo-server-express");
-const { User, Post, Comment, Category} = require("../models");
+const { User, Post, Comment, Category } = require("../models");
 const { signToken } = require("../utils/auth");
-
 
 // resolver is a function responsible for populating the data that defined by typeDefs.js
 //  Do we need to add await since we're using async?
@@ -10,13 +9,24 @@ const resolvers = {
     users: async () => {
       return User.find().populate("posts");
     },
-
     posts: async (parent, { username }) => {
       const params = username ? { username } : {};
       return Post.find(params).sort({ createdAt: -1 });
     },
+    categoryPosts: async (parent, { categoryName }) => {
+      return Post.find({ categoryName })
+        .populate("postAuthor")
+        .sort({ createdAt: -1 });
+    },
     post: async (parent, { postId }) => {
-      return Post.findOne({  postId });
+      return Post.findOne({ _id: postId })
+        .populate("postAuthor")
+        .populate("categoryName")
+        .populate("comments")
+        .populate({
+          path: "comments",
+          populate: "commentAuthor",
+        });
     },
     user: async (parent, args, context) => {
       if (context.user) {
@@ -24,12 +34,15 @@ const resolvers = {
       }
       throw new AuthenticationError("You need to be logged in!");
     },
+    otherUser: async (parent, { username }) => {
+      return User.findOne({ username }).populate("posts");
+    },
     // add category and comment resolvers
-    category: async (parent, { categoryName }) => {
-      return Category.findOne({ categoryName});
+    categories: async (parent, args) => {
+      return Category.find().sort({ categoryName: 1 });
     },
     comment: async (parent, { commentId }) => {
-      return Category.findOne({ commentId});
+      return Comment.findOne({ commentId });
     },
   },
 
@@ -43,7 +56,7 @@ const resolvers = {
       const user = await User.findOne({ email });
 
       if (!user) {
-        throw new AuthenticationError("No user found with this email address");
+        throw new AuthenticationError("Incorrect credentials");
       }
 
       const correctPw = await user.isCorrectPassword(password);
@@ -56,15 +69,20 @@ const resolvers = {
 
       return { token, user };
     },
-    addPost: async (parent, {userId, postTitle, postText, postAuthor, expectedTradeCompensation, categoryName}, context) => {
+    addPost: async (
+      parent,
+      { postTitle, postText, expectedTradeCompensation, categoryName },
+      context
+    ) => {
       if (context.user) {
         const post = await Post.create({
-          userId,
           postTitle,
           postText,
+
           postAuthor,
+
           expectedTradeCompensation,
-          categoryName
+          categoryName,
         });
 
         await User.findOneAndUpdate(
@@ -78,18 +96,18 @@ const resolvers = {
     },
     addComment: async (parent, { postId, commentText }, context) => {
       if (context.user) {
-        return Post.findOneAndUpdate(
+        const comment = await Comment.create({
+          postId,
+          commentText,
+          commentAuthor: context.user._id,
+        });
+
+        await Post.findOneAndUpdate(
           { _id: postId },
-          {
-            $addToSet: {
-              comments: { commentText, commentAuthor: context.user.username },
-            },
-          },
-          {
-            new: true,
-            runValidators: true,
-          }
+          { $addToSet: { comments: comment._id } }
         );
+
+        return comment;
       }
       throw new AuthenticationError("You need to be logged in!");
     },

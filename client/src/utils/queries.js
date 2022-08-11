@@ -1,15 +1,20 @@
 import { gql } from "@apollo/client";
 
 export const QUERY_USER = gql`
-  query user($username: String!) {
-    user(username: $username) {
+  query otherUser($username: String!) {
+    otherUser(username: $username) {
       _id
       username
-      email
       posts {
         _id
+        postTitle
         postText
+        expectedTradeCompensation
+        categoryName
         createdAt
+        comments {
+          _id
+        }
       }
     }
   }
@@ -26,18 +31,43 @@ export const QUERY_POSTS = gql`
   }
 `;
 
-export const QUERY_SINGLE_POST = gql`
-  query getSinglePost($postId: ID!) {
-    post(postId: $postId) {
+export const QUERY_CATEGORY_POSTS = gql`
+  query getCategoryPosts($categoryName: String!) {
+    categoryPosts(categoryName: $categoryName) {
       _id
+      postTitle
       postText
-      postAuthor
+      expectedTradeCompensation
       createdAt
+      categoryName
       comments {
         _id
+      }
+      postAuthor {
+        username
+      }
+    }
+  }
+`;
+
+export const QUERY_SINGLE_POST = gql`
+  query getPost($postId: ID!) {
+    post(postId: $postId) {
+      _id
+      postTitle
+      postText
+      expectedTradeCompensation
+      createdAt
+      categoryName
+      comments {
         commentText
-        commentAuthor
         createdAt
+        commentAuthor {
+          username
+        }
+      }
+      postAuthor {
+        username
       }
     }
   }
@@ -45,24 +75,29 @@ export const QUERY_SINGLE_POST = gql`
 
 export const QUERY_ME = gql`
   query me {
-    me {
+    user {
       _id
       username
       email
       posts {
         _id
+        postTitle
         postText
-        postAuthor
+        expectedTradeCompensation
+        categoryName
         createdAt
+        comments {
+          _id
+        }
       }
     }
   }
 `;
 
 // need to match the category schema exatly, otherwise it won't work
-export const QUERY_CATEGORYS = gql`
-  query getCategorys {
-    categorys {
+export const QUERY_CATEGORIES = gql`
+  query getCategories {
+    categories {
       categoryName
     }
   }

@@ -1,30 +1,26 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { useMutation } from '@apollo/client';
-
-import { ADD_COMMENT } from '../../../utils/mutations';
-
-import Auth from '../../../utils/auth';
+import React, { useState } from "react";
+import { useMutation } from "@apollo/client";
+import { ADD_COMMENT } from "../../../utils/mutations";
+import Auth from "../../../utils/auth";
 
 const CommentForm = ({ postId }) => {
-  const [commentText, setCommentText] = useState('');
+  const [commentText, setCommentText] = useState("");
   const [characterCount, setCharacterCount] = useState(0);
-
   const [addComment, { error }] = useMutation(ADD_COMMENT);
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-
     try {
+      console.log(postId, commentText);
       const { data } = await addComment({
         variables: {
           postId,
           commentText,
-          commentAuthor: Auth.getProfile().data.username,
         },
       });
-
-      setCommentText('');
+      if (data) {
+        window.location.reload();
+      }
     } catch (err) {
       console.error(err);
     }
@@ -33,7 +29,7 @@ const CommentForm = ({ postId }) => {
   const handleChange = (event) => {
     const { name, value } = event.target;
 
-    if (name === 'commentText' && value.length <= 280) {
+    if (name === "commentText" && value.length <= 280) {
       setCommentText(value);
       setCharacterCount(value.length);
     }
@@ -41,13 +37,12 @@ const CommentForm = ({ postId }) => {
 
   return (
     <div>
-      <h4>What are your posts on this post?</h4>
-
+      <h4>Want to make a comment on this listing?</h4>
       {Auth.loggedIn() ? (
         <>
           <p
             className={`m-0 ${
-              characterCount === 280 || error ? 'text-danger' : ''
+              characterCount === 280 || error ? "text-danger" : ""
             }`}
           >
             Character Count: {characterCount}/280
@@ -63,7 +58,7 @@ const CommentForm = ({ postId }) => {
                 placeholder="Add your comment..."
                 value={commentText}
                 className="form-input w-100"
-                style={{ lineHeight: '1.5', resize: 'vertical' }}
+                style={{ lineHeight: "1.5", resize: "vertical" }}
                 onChange={handleChange}
               ></textarea>
             </div>
@@ -77,8 +72,8 @@ const CommentForm = ({ postId }) => {
         </>
       ) : (
         <p>
-          You need to be logged in to share your posts. Please{' '}
-          <Link to="/login">login</Link> or <Link to="/signup">signup.</Link>
+          You need to be logged in to comment. Please log in or sign up using
+          the links in the nav bar.
         </p>
       )}
     </div>

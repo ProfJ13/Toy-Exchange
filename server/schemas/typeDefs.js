@@ -8,7 +8,7 @@ const typeDefs = gql`
     username: String!
     email: String!
     password: String!
-    post: [Post]
+    posts: [Post]
   }
 
   type Auth {
@@ -23,8 +23,8 @@ const typeDefs = gql`
     postAuthor: User!
     expectedTradeCompensation: String
     createdAt: String
-    comment: [Comment]!
-    categoryName: [Category]
+    comments: [Comment]!
+    categoryName: String
   }
 
   type Comment {
@@ -43,10 +43,12 @@ const typeDefs = gql`
   type Query {
     users: [User]
     user: User
+    otherUser(username: String!): User
     posts: [Post]
-    post: Post
+    categoryPosts(categoryName: String!): [Post]
+    post(postId: ID!): Post!
     comment(commentId: ID!): Comment
-    category: Category
+    categories: [Category]
   }
 
   type Mutation {
@@ -55,10 +57,10 @@ const typeDefs = gql`
     addPost(
       postTitle: String!
       postText: String!
-      postAuthor: ID!
       expectedTradeCompensation: String!
+      categoryName: String!
     ): Post
-    addComment(commentAuthor: ID!, commentText: String!): Comment
+    addComment(commentText: String!, postId: ID!): Comment
     removePost(postId: ID!): Post
     removeComment(commentId: ID!): Comment
   }

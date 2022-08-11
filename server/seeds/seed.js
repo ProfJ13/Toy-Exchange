@@ -11,8 +11,9 @@ db.once("open", async () => {
     await Category.deleteMany({});
     await Comment.deleteMany({});
 
-    await User.insertMany(userSeeds);
-
+    for (const user of userSeeds) {
+      await User.create(user);
+    }
     const userData = await User.find();
 
     await Category.insertMany(categorySeeds);
@@ -44,8 +45,10 @@ db.once("open", async () => {
       for (let i = 0; i < 3; i++) {
         const comment =
           commentSeeds[Math.floor(Math.random() * commentSeeds.length)];
-        comment.commentAuthor =
-          userData[Math.floor(Math.random() * userData.length)]._id;
+        do {
+          comment.commentAuthor =
+            userData[Math.floor(Math.random() * userData.length)]._id;
+        } while (comment.commentAuthoer === detailedPost.postAuthor);
         comment.postId = detailedPost._id;
         await Comment.create(comment);
       }

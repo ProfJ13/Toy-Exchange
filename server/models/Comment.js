@@ -19,7 +19,6 @@ const commentSchema = new Schema(
       required: "You must include a valid post ID in the body of the request",
     },
   },
-
   { timestamps: true }
 );
 

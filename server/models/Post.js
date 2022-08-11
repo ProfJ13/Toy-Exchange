@@ -20,10 +20,6 @@ const postSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "User",
     },
-    // userId: {
-
-    //   required: "You must send a valid userId in the body of the request",
-    // },
     expectedTradeCompensation: {
       type: String,
       required: "You need to input an expected trade!",

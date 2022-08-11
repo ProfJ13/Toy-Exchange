@@ -1,9 +1,6 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import { useMutation } from "@apollo/client";
-
 import { ADD_COMMENT } from "../../../utils/mutations";
-
 import Auth from "../../../utils/auth";
 
 const CommentForm = ({ postId }) => {
@@ -13,17 +10,17 @@ const CommentForm = ({ postId }) => {
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-
     try {
+      console.log(postId, commentText);
       const { data } = await addComment({
         variables: {
           postId,
           commentText,
-          commentAuthor: Auth.getProfile().data.username,
         },
       });
-
-      setCommentText("");
+      if (data) {
+        window.location.reload();
+      }
     } catch (err) {
       console.error(err);
     }
@@ -40,8 +37,7 @@ const CommentForm = ({ postId }) => {
 
   return (
     <div>
-      <h4>Want to make a public offer on this listing?</h4>
-
+      <h4>Want to make a comment on this listing?</h4>
       {Auth.loggedIn() ? (
         <>
           <p
@@ -76,8 +72,8 @@ const CommentForm = ({ postId }) => {
         </>
       ) : (
         <p>
-          You need to be logged in to share your posts. Please{" "}
-          <Link to="/login">login</Link> or <Link to="/signup">signup.</Link>
+          You need to be logged in to comment. Please log in or sign up using
+          the links in the nav bar.
         </p>
       )}
     </div>

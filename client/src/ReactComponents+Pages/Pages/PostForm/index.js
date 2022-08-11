@@ -1,22 +1,15 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useMutation, useQuery } from "@apollo/client";
 import { ADD_POST } from "../../../utils/mutations";
-import {
-  QUERY_POSTS,
-  QUERY_ME,
-  QUERY_CATEGORIES,
-} from "../../../utils/queries";
-import Auth from "../../../utils/auth";
+import { QUERY_CATEGORIES } from "../../../utils/queries";
 import { useParams } from "react-router-dom";
 
 const PostForm = () => {
-  const { loading, data } = useQuery(QUERY_CATEGORIES);
+  const { data } = useQuery(QUERY_CATEGORIES);
   const categories = data?.categories;
   const { categoryName: categoryParam } = useParams();
-  // Uncomment this once the backend allows for querying categories
-  // const { error, loading, data } = useQuery(QUERY_CATEGORIES);
-  const [postCategory, setPostCategory] = useState(categoryParam || "");
+  const [categoryName, setcategoryName] = useState(categoryParam || "");
   const [postText, setPostText] = useState("");
   const [postTitle, setPostTitle] = useState("");
   const [expectedTradeCompensation, setExpectedTradeCompensation] =
@@ -27,43 +20,24 @@ const PostForm = () => {
     expectedTradeCompensationCharacterCount,
     setExpectedTradeCompensationCharacterCount,
   ] = useState(0);
-  const [addPost, { error }] = useMutation(ADD_POST, {
-    update(cache, { data: { addPost } }) {
-      try {
-        const { posts } = cache.readQuery({ query: QUERY_POSTS });
-
-        cache.writeQuery({
-          query: QUERY_POSTS,
-          data: { posts: [addPost, ...posts] },
-        });
-      } catch (e) {
-        console.error(e);
-      }
-
-      // update me object's cache
-      const { me } = cache.readQuery({ query: QUERY_ME });
-      cache.writeQuery({
-        query: QUERY_ME,
-        data: { me: { ...me, posts: [...me.posts, addPost] } },
-      });
-    },
-  });
-
+  const [addPost, { error }] = useMutation(ADD_POST);
+  let navigate = useNavigate();
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
     try {
       const { data } = await addPost({
         variables: {
-          postCategory,
+          categoryName,
           postTitle,
           expectedTradeCompensation,
           postText,
-          postAuthor: Auth.getProfile().data.username,
         },
       });
-
-      setPostText("");
+      console.log(data);
+      if (data) {
+        navigate(`/posts/${data.addPost._id}`, { replace: true });
+      }
     } catch (err) {
       console.error(err);
     }
@@ -86,8 +60,8 @@ const PostForm = () => {
       setExpectedTradeCompensation(value);
       setExpectedTradeCompensationCharacterCount(value.length);
     }
-    if (name === "postCategory") {
-      setPostCategory(value);
+    if (name === "categoryName") {
+      setcategoryName(value);
     }
   };
 
@@ -103,9 +77,9 @@ const PostForm = () => {
         >
           <div className="col-12">
             <select
-              name="postCategory"
+              name="categoryName"
               className="px-4 py-1 mb-3"
-              value={postCategory}
+              value={categoryName}
               onChange={handleChange}
             >
               {categories ? (

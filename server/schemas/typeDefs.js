@@ -57,10 +57,10 @@ const typeDefs = gql`
     addPost(
       postTitle: String!
       postText: String!
-      postAuthor: ID!
       expectedTradeCompensation: String!
+      categoryName: String!
     ): Post
-    addComment(commentAuthor: ID!, commentText: String!): Comment
+    addComment(commentText: String!, postId: ID!): Comment
     removePost(postId: ID!): Post
     removeComment(commentId: ID!): Comment
   }

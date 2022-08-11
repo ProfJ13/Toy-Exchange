@@ -27,25 +27,33 @@ const SinglePost = () => {
   if (post) {
     return (
       <div className="my-3">
-        <h3 className="card-header bg-dark text-light p-2 m-0">
+        <h3 className="card-header bg-dark text-light px-4 m-0">
           {post.postTitle}
         </h3>
-        <div className="bg-light py-4">
+        <div className="bg-light px-3 py-1 border border-dark rounded">
           <p
-            className="p-4"
+            className="border"
             style={{
               fontSize: "1.5rem",
-
               lineHeight: "1.5",
             }}
           >
             {post.postText}
           </p>
-          <p>In return, this user wants: {post.expectedTradeCompensation}</p>
+          <p
+            style={{
+              fontSize: "1.25rem",
+              lineHeight: "1.5",
+            }}
+          >
+            In return, this user wants: {post.expectedTradeCompensation}
+          </p>
           <p>
-            <span style={{ fontSize: "1rem" }}>
-              {post.postAuthor.username} {format_date(post.createdAt)}
-            </span>
+            <Link to={`/profiles/${post?.postAuthor?.username}`}>
+              <span style={{ fontSize: "1rem" }}>
+                {post?.postAuthor?.username} {format_date(post.createdAt)}
+              </span>
+            </Link>{" "}
           </p>
           <p>
             <Link
@@ -55,7 +63,7 @@ const SinglePost = () => {
               <span style={{ fontSize: "1rem" }}>
                 Posted in the {post.categoryName.toLowerCase()} category
               </span>
-            </Link>
+            </Link>{" "}
           </p>
         </div>
 

@@ -53,6 +53,7 @@ export const QUERY_CATEGORY_POSTS = gql`
 export const QUERY_SINGLE_POST = gql`
   query getPost($postId: ID!) {
     post(postId: $postId) {
+      _id
       postTitle
       postText
       expectedTradeCompensation

@@ -79,7 +79,7 @@ const resolvers = {
           postTitle,
           postText,
 
-          postAuthor,
+          postAuthor: context.user._id,
 
           expectedTradeCompensation,
           categoryName,

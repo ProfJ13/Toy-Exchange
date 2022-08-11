@@ -33,25 +33,17 @@ const PostList = ({
                     this post
                   </span>
                 </p>
-                {Auth.getProfile().data.username ===
-                (post?.postAuthor?.username || username) ? (
+                <Link
+                  to={`/profiles/${post?.postAuthor?.username || username}`}
+                >
                   <p>
                     <span style={{ fontSize: "1rem" }}>
-                      You {format_date(post.createdAt)}
+                      {post?.postAuthor?.username || username}{" "}
+                      {format_date(post.createdAt)}
                     </span>
                   </p>
-                ) : (
-                  <Link
-                    to={`/profiles/${post?.postAuthor?.username || username}`}
-                  >
-                    <p>
-                      <span style={{ fontSize: "1rem" }}>
-                        {post?.postAuthor?.username || username}{" "}
-                        {format_date(post.createdAt)}
-                      </span>
-                    </p>
-                  </Link>
-                )}
+                </Link>
+
                 {showCategory && (
                   <Link to={`/categories/${post.categoryName}`}>
                     <p>

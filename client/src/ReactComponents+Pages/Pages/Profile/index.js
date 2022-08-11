@@ -16,7 +16,7 @@ const Profile = () => {
     variables: { username: userParam },
   });
 
-  const user = data?.me || data?.user || {};
+  const user = data?.user || data?.otherUser || {};
   // navigate to personal profile page if username is yours
   if (Auth.loggedIn() && Auth.getProfile().data.username === userParam) {
     return <Navigate to="/me" />;
@@ -45,7 +45,9 @@ const Profile = () => {
         <div className="col-12 col-md-10 mb-5">
           <PostList
             posts={user.posts}
+            username={user.username}
             title={`${user.username}'s posts...`}
+            isYou={userParam ? false : true}
             showTitle={false}
             showUsername={false}
           />

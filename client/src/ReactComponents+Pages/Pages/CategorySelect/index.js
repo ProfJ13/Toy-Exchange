@@ -11,7 +11,7 @@ const CategorySelect = () => {
           Choose a Category
         </h2>
 
-        <CategoryList />
+        <CategoryList  />
       </div>
     </main>
   );

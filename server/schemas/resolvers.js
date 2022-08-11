@@ -34,6 +34,9 @@ const resolvers = {
       }
       throw new AuthenticationError("You need to be logged in!");
     },
+    otherUser: async (parent, { username }) => {
+      return User.findOne({ username }).populate("posts");
+    },
     // add category and comment resolvers
     categories: async (parent, args) => {
       return Category.find().sort({ categoryName: 1 });

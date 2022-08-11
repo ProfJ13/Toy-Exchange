@@ -9,7 +9,7 @@ const PostForm = () => {
   const { data } = useQuery(QUERY_CATEGORIES);
   const categories = data?.categories;
   const { categoryName: categoryParam } = useParams();
-  const [categoryName, setcategoryName] = useState(categoryParam || "");
+  const [categoryName, setcategoryName] = useState(categoryParam || "Arts and Crafts Toys");
   const [postText, setPostText] = useState("");
   const [postTitle, setPostTitle] = useState("");
   const [expectedTradeCompensation, setExpectedTradeCompensation] =

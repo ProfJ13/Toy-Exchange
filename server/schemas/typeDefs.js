@@ -8,7 +8,7 @@ const typeDefs = gql`
     username: String!
     email: String!
     password: String!
-    post: [Post]
+    posts: [Post]
   }
 
   type Auth {
@@ -23,8 +23,8 @@ const typeDefs = gql`
     postAuthor: User!
     expectedTradeCompensation: String
     createdAt: String
-    comment: [Comment]!
-    categoryName: [Category]
+    comments: [Comment]!
+    categoryName: String
   }
 
   type Comment {
@@ -44,9 +44,10 @@ const typeDefs = gql`
     users: [User]
     user: User
     posts: [Post]
-    post: Post
+    categoryPosts(categoryName: String!): [Post]
+    post(postId: ID!): Post!
     comment(commentId: ID!): Comment
-    category: Category
+    categories: [Category]
   }
 
   type Mutation {

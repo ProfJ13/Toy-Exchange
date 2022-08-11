@@ -6,7 +6,7 @@ const PostList = ({ posts, title, showTitle = true, showUsername = true }) => {
   if (!posts.length) {
     return <h3>No Posts Yet</h3>;
   }
-
+  console.log(posts);
   return (
     <div>
       {showTitle && <h3>{title}</h3>}
@@ -22,13 +22,8 @@ const PostList = ({ posts, title, showTitle = true, showUsername = true }) => {
               </div>
               <p>
                 <span style={{ fontSize: "1rem" }}>
-                  {post.postAuthor} {format_date(post.createdAt)}
+                  {post.postAuthor.username} {format_date(post.createdAt)}
                 </span>
-              </p>
-              <p>
-                {post.comments.length}{" "}
-                {post.comments.length === 1 ? "comment" : "comments"} on this
-                post
               </p>
             </div>
           </Link>

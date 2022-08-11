@@ -1,17 +1,21 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { useMutation } from "@apollo/client";
-
+import { useMutation, useQuery } from "@apollo/client";
 import { ADD_POST } from "../../../utils/mutations";
-import { QUERY_POSTS, QUERY_ME, QUERY_CATEGORYS } from "../../../utils/queries";
-import data from "../CategorySelect/categorySeeds.json";
+import {
+  QUERY_POSTS,
+  QUERY_ME,
+  QUERY_CATEGORIES,
+} from "../../../utils/queries";
 import Auth from "../../../utils/auth";
 import { useParams } from "react-router-dom";
 
-const PostForm = ({ category }) => {
+const PostForm = () => {
+  const { loading, data } = useQuery(QUERY_CATEGORIES);
+  const categories = data?.categories;
   const { categoryName: categoryParam } = useParams();
   // Uncomment this once the backend allows for querying categories
-  // const { error, loading, data } = useQuery(QUERY_CATEGORYS);
+  // const { error, loading, data } = useQuery(QUERY_CATEGORIES);
   const [postCategory, setPostCategory] = useState(categoryParam || "");
   const [postText, setPostText] = useState("");
   const [postTitle, setPostTitle] = useState("");
@@ -104,9 +108,13 @@ const PostForm = ({ category }) => {
               value={postCategory}
               onChange={handleChange}
             >
-              {data.map((category) => (
-                <option>{category.categoryName}</option>
-              ))}
+              {categories ? (
+                categories.map((category) => (
+                  <option>{category.categoryName}</option>
+                ))
+              ) : (
+                <option>Loading...</option>
+              )}
             </select>
             <h6>The name of your listed item:</h6>
             <textarea

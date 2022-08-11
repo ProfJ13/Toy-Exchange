@@ -1,6 +1,6 @@
 module.exports = {
   format_date: (timestamp) => {
-    const timeDifference = (Date.now() - Date.parse(timestamp)) / 60000;
+    const timeDifference = (Date.now() - timestamp) / 60000;
     if (timeDifference) {
       if (timeDifference < 1) {
         return `posted this a few seconds ago`;

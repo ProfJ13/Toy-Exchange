@@ -1,7 +1,6 @@
 const { AuthenticationError } = require("apollo-server-express");
-const { User, Post, Comment, Category} = require("../models");
+const { User, Post, Comment, Category } = require("../models");
 const { signToken } = require("../utils/auth");
-
 
 // resolver is a function responsible for populating the data that defined by typeDefs.js
 //  Do we need to add await since we're using async?
@@ -10,13 +9,24 @@ const resolvers = {
     users: async () => {
       return User.find().populate("posts");
     },
-
     posts: async (parent, { username }) => {
       const params = username ? { username } : {};
       return Post.find(params).sort({ createdAt: -1 });
     },
+    categoryPosts: async (parent, { categoryName }) => {
+      return Post.find({ categoryName })
+        .populate("postAuthor")
+        .sort({ createdAt: -1 });
+    },
     post: async (parent, { postId }) => {
-      return Post.findOne({  postId });
+      return Post.findOne({ _id: postId })
+        .populate("postAuthor")
+        .populate("categoryName")
+        .populate("comments")
+        .populate({
+          path: "comments",
+          populate: "commentAuthor",
+        });
     },
     user: async (parent, args, context) => {
       if (context.user) {
@@ -25,11 +35,11 @@ const resolvers = {
       throw new AuthenticationError("You need to be logged in!");
     },
     // add category and comment resolvers
-    category: async (parent, { categoryName }) => {
-      return Category.findOne({ categoryName});
+    categories: async (parent, args) => {
+      return Category.find().sort({ categoryName: 1 });
     },
     comment: async (parent, { commentId }) => {
-      return Category.findOne({ commentId});
+      return Comment.findOne({ commentId });
     },
   },
 
@@ -56,7 +66,18 @@ const resolvers = {
 
       return { token, user };
     },
-    addPost: async (parent, {userId, postTitle, postText, postAuthor, expectedTradeCompensation, categoryName}, context) => {
+    addPost: async (
+      parent,
+      {
+        userId,
+        postTitle,
+        postText,
+        postAuthor,
+        expectedTradeCompensation,
+        categoryName,
+      },
+      context
+    ) => {
       if (context.user) {
         const post = await Post.create({
           userId,
@@ -64,7 +85,7 @@ const resolvers = {
           postText,
           postAuthor: context.user.username,
           expectedTradeCompensation,
-          categoryName
+          categoryName,
         });
 
         await User.findOneAndUpdate(

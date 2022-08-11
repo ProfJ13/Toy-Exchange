@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import { format_date } from "../../../utils/helpers";
 
 const CommentList = ({ comments = [] }) => {
@@ -21,7 +21,8 @@ const CommentList = ({ comments = [] }) => {
               <div className="p-3 bg-dark text-light">
                 <p>
                   <span style={{ fontSize: "1rem" }}>
-                    {comment.commentAuthor} {format_date(comment.createdAt)}
+                    {comment.commentAuthor.username}{" "}
+                    {format_date(comment.createdAt)}
                   </span>
                 </p>
                 <p className="card-body">{comment.commentText}</p>

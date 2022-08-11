@@ -2,21 +2,16 @@ import React from "react";
 import { useQuery } from "@apollo/client";
 import { useParams, Link } from "react-router-dom";
 import PostList from "../../Components/PostList";
-import PostForm from "../../Pages/PostForm";
 import "./index.css";
-import { QUERY_POSTS } from "../../../utils/queries";
-// delete this and the file once the queries work
-import postSeeds from "./postSeeds.json";
+import { QUERY_CATEGORY_POSTS } from "../../../utils/queries";
 
 const PostFeedPage = () => {
   const { categoryName: categoryParam } = useParams();
-  // uncomment once the backend can support this
-  const { loading, data } = useQuery(QUERY_POSTS, {
-    variables: { categoryParam },
+  const { loading, data, error } = useQuery(QUERY_CATEGORY_POSTS, {
+    variables: { categoryName: categoryParam },
   });
-  // const posts = data?.posts || [];
-
-  const posts = postSeeds.filter((post) => post.categoryName === categoryParam);
+  console.log(data);
+  const posts = data?.categoryPosts || [];
   return (
     <main>
       <div className="flex-row justify-center">
@@ -32,13 +27,13 @@ const PostFeedPage = () => {
           </Link>
         </div>
         <div className="col-12 col-md-8 mb-3">
-          {/* uncomment once we can query posts */}
-          {/* {loading ? (
+          {loading ? (
             <div>Loading...</div>
+          ) : error ? (
+            <div>There was an error loading this page.</div>
           ) : (
-            <PostList posts={posts} title="Some Feed for Post(s)..." />
-          )} */}
-          <PostList posts={posts} title={categoryParam + " Listings"} />
+            <PostList posts={posts} title={categoryParam + " Listings"} />
+          )}
         </div>
       </div>
     </main>

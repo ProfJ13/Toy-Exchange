@@ -26,18 +26,41 @@ export const QUERY_POSTS = gql`
   }
 `;
 
-export const QUERY_SINGLE_POST = gql`
-  query getSinglePost($postId: ID!) {
-    post(postId: $postId) {
+export const QUERY_CATEGORY_POSTS = gql`
+  query getCategoryPosts($categoryName: String!) {
+    categoryPosts(categoryName: $categoryName) {
       _id
+      postTitle
       postText
-      postAuthor
+      expectedTradeCompensation
       createdAt
       comments {
         _id
+      }
+      postAuthor {
+        username
+      }
+    }
+  }
+`;
+
+export const QUERY_SINGLE_POST = gql`
+  query getPost($postId: ID!) {
+    post(postId: $postId) {
+      postTitle
+      postText
+      expectedTradeCompensation
+      createdAt
+      categoryName
+      comments {
         commentText
-        commentAuthor
         createdAt
+        commentAuthor {
+          username
+        }
+      }
+      postAuthor {
+        username
       }
     }
   }
@@ -60,9 +83,9 @@ export const QUERY_ME = gql`
 `;
 
 // need to match the category schema exatly, otherwise it won't work
-export const QUERY_CATEGORYS = gql`
-  query getCategorys {
-    categorys {
+export const QUERY_CATEGORIES = gql`
+  query getCategories {
+    categories {
       categoryName
     }
   }

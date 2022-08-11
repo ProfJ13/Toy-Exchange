@@ -6,7 +6,13 @@ import {
   createHttpLink,
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
+
 import CategorySelect from "./ReactComponents+Pages/Pages/CategorySelect";
 import PostFeedPage from "./ReactComponents+Pages/Pages/PostFeedPage";
 import LandingPage from "./ReactComponents+Pages/Pages/LandingPage";
@@ -55,9 +61,11 @@ function App() {
                 element={<PostFeedPage />}
               />
               <Route path="/create-post/:categoryName" element={<PostForm />} />
+              <Route path="/create-post" element={<PostForm />} />
               <Route path="/me" element={<Profile />} />
               <Route path="/profiles/:username" element={<Profile />} />
               <Route path="/posts/:postId" element={<SinglePost />} />
+              <Route path="*" element={<Navigate to="/" />} />
             </Routes>
           </div>
           <Footer />

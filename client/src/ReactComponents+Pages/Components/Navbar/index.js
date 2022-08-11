@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { Navbar, Nav, Container, Modal, Tab } from "react-bootstrap";
 import SignUpForm from "../SignupForm";
 import LoginForm from "../LoginForm";
-
 import Auth from "../../../utils/auth";
 
 const AppNavbar = () => {
@@ -24,50 +23,45 @@ const AppNavbar = () => {
               {/* <Nav.Link as={Link} to="/">
                 Search For Books
               </Nav.Link> */}
-              {/* if user is logged in show saved books and logout */}
               {Auth.loggedIn() ? (
                 <>
-                  <Nav.Link className="btn btn-lg btn-info m-2" to="/me">
-                    {Auth.getProfile().data.username}'s profile
+                  <Nav.Link
+                    className="btn btn-lg btn-grey text-dark m-2"
+                    to={`/categories`}
+                  >
+                    Browse
                   </Nav.Link>
-                  <Nav.Link onClick={Auth.logout}>Logout</Nav.Link>
+                  <Nav.Link
+                    className="btn btn-lg btn-info text-dark m-2"
+                    to="/me"
+                  >
+                    {Auth.getProfile().data.username}'s Profile
+                  </Nav.Link>
+                  <Nav.Link
+                    className="btn btn-lg btn-danger text-dark m-2"
+                    onClick={Auth.logout}
+                  >
+                    Logout
+                  </Nav.Link>
                 </>
               ) : (
-                <Nav.Link onClick={() => setShowModal(true)}>
+                <Nav.Link
+                  className="btn btn-lg btn-info text-dark mx-2 my-0"
+                  onClick={() => setShowModal(true)}
+                >
                   Login/Sign Up
                 </Nav.Link>
               )}
             </Nav>
           </Navbar.Collapse>
-          {/*   {Auth.loggedIn() ? (
-            <>
-              <Link className="btn btn-lg btn-info m-2" to="/me">
-                {Auth.getProfile().data.username}'s profile
-              </Link>
-              <button className="btn btn-lg btn-light m-2" onClick={logout}>
-                Logout
-              </button>
-            </>
-          ) : (
-            <>
-              <Link className="btn btn-lg btn-info m-2" to="/login">
-                Login
-              </Link>
-              <Link className="btn btn-lg btn-light m-2" to="/signup">
-                Signup
-              </Link>
-            </>
-          )} */}
         </Container>
       </Navbar>
-      {/* set modal data up */}
       <Modal
         size="lg"
         show={showModal}
         onHide={() => setShowModal(false)}
         aria-labelledby="signup-modal"
       >
-        {/* tab container to do either signup or login component */}
         <Tab.Container defaultActiveKey="login">
           <Modal.Header closeButton>
             <Modal.Title id="signup-modal">

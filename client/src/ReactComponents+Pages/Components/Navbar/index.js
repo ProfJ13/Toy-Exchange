@@ -23,20 +23,17 @@ const AppNavbar = () => {
               {/* <Nav.Link as={Link} to="/">
                 Search For Books
               </Nav.Link> */}
+              <Link
+                className="btn btn-lg btn-grey text-dark m-2"
+                to={`/categories`}
+              >
+                Browse
+              </Link>
               {Auth.loggedIn() ? (
                 <>
-                  <Nav.Link
-                    className="btn btn-lg btn-grey text-dark m-2"
-                    to={`/categories`}
-                  >
-                    Browse
-                  </Nav.Link>
-                  <Nav.Link
-                    className="btn btn-lg btn-info text-dark m-2"
-                    to="/me"
-                  >
+                  <Link className="btn btn-lg btn-info text-dark m-2" to="/me">
                     {Auth.getProfile().data.username}'s Profile
-                  </Nav.Link>
+                  </Link>
                   <Nav.Link
                     className="btn btn-lg btn-danger text-dark m-2"
                     onClick={Auth.logout}

@@ -1,15 +1,20 @@
 import { gql } from "@apollo/client";
 
 export const QUERY_USER = gql`
-  query user($username: String!) {
-    user(username: $username) {
+  query otherUser($username: String!) {
+    otherUser(username: $username) {
       _id
       username
-      email
       posts {
         _id
+        postTitle
         postText
+        expectedTradeCompensation
+        categoryName
         createdAt
+        comments {
+          _id
+        }
       }
     }
   }
@@ -34,6 +39,7 @@ export const QUERY_CATEGORY_POSTS = gql`
       postText
       expectedTradeCompensation
       createdAt
+      categoryName
       comments {
         _id
       }
@@ -47,6 +53,7 @@ export const QUERY_CATEGORY_POSTS = gql`
 export const QUERY_SINGLE_POST = gql`
   query getPost($postId: ID!) {
     post(postId: $postId) {
+      _id
       postTitle
       postText
       expectedTradeCompensation
@@ -68,15 +75,20 @@ export const QUERY_SINGLE_POST = gql`
 
 export const QUERY_ME = gql`
   query me {
-    me {
+    user {
       _id
       username
       email
       posts {
         _id
+        postTitle
         postText
-        postAuthor
+        expectedTradeCompensation
+        categoryName
         createdAt
+        comments {
+          _id
+        }
       }
     }
   }

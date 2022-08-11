@@ -32,7 +32,11 @@ const PostFeedPage = () => {
           ) : error ? (
             <div>There was an error loading this page.</div>
           ) : (
-            <PostList posts={posts} title={categoryParam + " Listings"} />
+            <PostList
+              posts={posts}
+              title={categoryParam + " Listings"}
+              showCategory={false}
+            />
           )}
         </div>
       </div>

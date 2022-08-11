@@ -34,6 +34,9 @@ const resolvers = {
       }
       throw new AuthenticationError("You need to be logged in!");
     },
+    otherUser: async (parent, { username }) => {
+      return User.findOne({ username }).populate("posts");
+    },
     // add category and comment resolvers
     categories: async (parent, args) => {
       return Category.find().sort({ categoryName: 1 });
@@ -53,7 +56,7 @@ const resolvers = {
       const user = await User.findOne({ email });
 
       if (!user) {
-        throw new AuthenticationError("No user found with this email address");
+        throw new AuthenticationError("Incorrect credentials");
       }
 
       const correctPw = await user.isCorrectPassword(password);
@@ -68,22 +71,14 @@ const resolvers = {
     },
     addPost: async (
       parent,
-      {
-        userId,
-        postTitle,
-        postText,
-        postAuthor,
-        expectedTradeCompensation,
-        categoryName,
-      },
+      { postTitle, postText, expectedTradeCompensation, categoryName },
       context
     ) => {
       if (context.user) {
         const post = await Post.create({
-          userId,
           postTitle,
           postText,
-          postAuthor: context.user.username,
+          postAuthor: context.user._id,
           expectedTradeCompensation,
           categoryName,
         });
@@ -99,18 +94,18 @@ const resolvers = {
     },
     addComment: async (parent, { postId, commentText }, context) => {
       if (context.user) {
-        return Post.findOneAndUpdate(
+        const comment = await Comment.create({
+          postId,
+          commentText,
+          commentAuthor: context.user._id,
+        });
+
+        await Post.findOneAndUpdate(
           { _id: postId },
-          {
-            $addToSet: {
-              comments: { commentText, commentAuthor: context.user.username },
-            },
-          },
-          {
-            new: true,
-            runValidators: true,
-          }
+          { $addToSet: { comments: comment._id } }
         );
+
+        return comment;
       }
       throw new AuthenticationError("You need to be logged in!");
     },

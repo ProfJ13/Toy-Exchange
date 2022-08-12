@@ -18,6 +18,7 @@ import PostFeedPage from "./ReactComponents+Pages/Pages/PostFeedPage";
 import LandingPage from "./ReactComponents+Pages/Pages/LandingPage";
 import SinglePost from "./ReactComponents+Pages/Pages/SinglePost";
 import PostForm from "./ReactComponents+Pages/Pages/PostForm";
+import EditPostForm from "./ReactComponents+Pages/Pages/EditPostForm";
 import Profile from "./ReactComponents+Pages/Pages/Profile";
 import Navbar from "./ReactComponents+Pages/Components/Navbar";
 import Footer from "./ReactComponents+Pages/Components/Footer";
@@ -62,6 +63,7 @@ function App() {
               />
               <Route path="/create-post/:categoryName" element={<PostForm />} />
               <Route path="/create-post" element={<PostForm />} />
+              <Route path="/edit-post/:postId" element={<EditPostForm />} />
               <Route path="/me" element={<Profile />} />
               <Route path="/profiles/:username" element={<Profile />} />
               <Route path="/posts/:postId" element={<SinglePost />} />

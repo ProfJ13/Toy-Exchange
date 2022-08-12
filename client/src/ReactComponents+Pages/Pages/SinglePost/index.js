@@ -62,7 +62,8 @@ const SinglePost = () => {
               lineHeight: "1.5",
             }}
           >
-            In return, this user wants: {post.expectedTradeCompensation}
+            In return, {post?.postAuthor?.username} wants:{" "}
+            {post.expectedTradeCompensation}
           </p>
           <p>
             <Link to={`/profiles/${post?.postAuthor?.username}`}>
@@ -72,27 +73,32 @@ const SinglePost = () => {
             </Link>
           </p>
           <p>
-            <Link
-              to={`/categories/${post.categoryName}`}
-            >
+            <Link to={`/categories/${post.categoryName}`}>
               <span style={{ fontSize: "1rem", color: "#0F1419" }}>
                 Posted in the {post.categoryName.toLowerCase()} category
               </span>
             </Link>
           </p>
-          {post?.postAuthor._id?.toString() ===
+          {Auth.loggedIn() ? (
+            post?.postAuthor._id?.toString() ===
             Auth.getProfile()?.data?._id?.toString() ? (
-            <div className="d-flex flex-row-reverse w-100 mb-1 mx-1">
-              <button className="btn bg-danger" onClick={deletePostHandler}>
-                Delete Listing
-              </button>
-              <Link
-                to={`/edit-post/${post._id}`}
-                className="btn bg-warning mx-1"
-              >
-                Edit Listing
-              </Link>
-            </div>
+              <div className="d-flex flex-row-reverse w-100 ">
+                <button
+                  className="btn bg-danger mb-1 mx-1"
+                  onClick={deletePostHandler}
+                >
+                  Delete Listing
+                </button>
+                <Link
+                  to={`/edit-post/${post._id}`}
+                  className="btn bg-warning mb-1 mx-1"
+                >
+                  Edit Listing
+                </Link>
+              </div>
+            ) : (
+              <></>
+            )
           ) : (
             <></>
           )}

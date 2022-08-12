@@ -28,12 +28,7 @@ const Profile = () => {
   }
 
   if (!user?.username) {
-    return (
-      <h4>
-        You need to be logged in to see this. Use the navigation links above to
-        sign up or log in!
-      </h4>
-    );
+    return <h4 className="text-center">That user doesn't exist!</h4>;
   }
 
   return (

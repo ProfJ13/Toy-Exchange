@@ -14,6 +14,7 @@ const Profile = () => {
 
   const { loading, data } = useQuery(userParam ? QUERY_USER : QUERY_ME, {
     variables: { username: userParam },
+    fetchPolicy: "no-cache",
   });
 
   const user = data?.user || data?.otherUser || {};

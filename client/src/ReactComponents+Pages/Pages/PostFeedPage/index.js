@@ -9,6 +9,7 @@ const PostFeedPage = () => {
   const { categoryName: categoryParam } = useParams();
   const { loading, data, error } = useQuery(QUERY_CATEGORY_POSTS, {
     variables: { categoryName: categoryParam },
+    fetchPolicy: "no-cache",
   });
   console.log(data);
   const posts = data?.categoryPosts || [];

@@ -4,7 +4,7 @@ import { Navbar, Nav, Container, Modal, Tab } from "react-bootstrap";
 import SignUpForm from "../SignupForm";
 import LoginForm from "../LoginForm";
 import Auth from "../../../utils/auth";
-import './index.css';
+import "./index.css";
 
 const AppNavbar = () => {
   // set modal display state
@@ -14,33 +14,50 @@ const AppNavbar = () => {
     <>
       <Navbar expand="lg" id="navbar">
         <Container fluid>
-          <Navbar.Brand as={Link} to="/" style={{color: 'var(--text)'}}>
-            Toy Exchange
+          <Navbar.Brand
+            as={Link}
+            to="/"
+            className="d-flex align-items-center"
+          >
+            <img
+              src="./logo192.png"
+              className="mr-2"
+              style={{
+                maxHeight: "50px",
+              }}
+            />
+            <h1
+              style={{ color: "var(--text)", fontSize: "30px" }}
+              className="d-inline-block m-0"
+            >
+              ToyZoid
+            </h1>
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="navbar" />
           <Navbar.Collapse id="navbar">
             <Nav className="ml-auto">
-              {/* This was a link to a page; preserved as a template for later */}
-              {/* <Nav.Link as={Link} to="/">
-                Search For Books
-              </Nav.Link> */}
               <Link
                 className="btn btn-lg m-2"
                 to={`/categories`}
-                style={{color: 'var(--text)'}}
+                style={{ color: "var(--text)" }}
                 id="browse"
               >
                 Browse
               </Link>
               {Auth.loggedIn() ? (
                 <>
-                  <Link className="btn btn-lg m-2" to="/me" id="profileButton" style={{color: 'var(--text)'}}>
+                  <Link
+                    className="btn btn-lg m-2"
+                    to="/me"
+                    id="profileButton"
+                    style={{ color: "var(--text)" }}
+                  >
                     {Auth.getProfile().data.username}'s Profile
                   </Link>
                   <Nav.Link
                     className="btn btn-lg btn-danger m-2"
                     onClick={Auth.logout}
-                    style={{color: 'var(--text)'}}
+                    style={{ color: "var(--text)" }}
                   >
                     Logout
                   </Nav.Link>
@@ -49,7 +66,7 @@ const AppNavbar = () => {
                 <Nav.Link
                   className="btn btn-lg m-2"
                   onClick={() => setShowModal(true)}
-                  style={{color: 'var(--text)'}}
+                  style={{ color: "var(--text)" }}
                   id="login"
                 >
                   Login/Sign Up

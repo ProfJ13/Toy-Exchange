@@ -10,6 +10,7 @@ const categorySchema = new Schema({
     unique: true,
     trim: true,
   },
+  
 });
 
 const Category = model("Category", categorySchema);

@@ -16,6 +16,7 @@ const SinglePost = () => {
   const { loading, data, error } = useQuery(QUERY_SINGLE_POST, {
     variables: { postId },
   });
+  
   const post = data?.post || {};
   console.log(post);
   if (loading) {

@@ -11,6 +11,14 @@ const typeDefs = gql`
     posts: [Post]
   }
 
+  type Message {
+    _id: ID!
+    messageText: String!
+    messageSender: String!
+    messageRecipient: String!
+    createdAt: String
+  }
+
   type Auth {
     token: ID!
     user: User
@@ -41,6 +49,7 @@ const typeDefs = gql`
   }
 
   type Query {
+    messages(username: String!, username2: String!): [Message]
     users: [User]
     user: User
     otherUser(username: String!): User
@@ -52,6 +61,11 @@ const typeDefs = gql`
   }
 
   type Mutation {
+    createMessage(
+      messageSender: String!
+      messageRecipient: String!
+      messageText: String!
+    ): Message
     addUser(username: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
     addPost(

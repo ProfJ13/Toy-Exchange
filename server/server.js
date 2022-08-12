@@ -28,17 +28,18 @@ if (process.env.NODE_ENV === "production") {
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "../client/build/index.html"));
 });
-
-app.get("/*", function (req, res) {
-  res.sendFile(
-    path.join(__dirname, "../client/build/index.html"),
-    function (err) {
-      if (err) {
-        res.status(500).send(err);
+if (process.env.NODE_ENV === "production") {
+  app.get("/*", function (req, res) {
+    res.sendFile(
+      path.join(__dirname, "../client/build/index.html"),
+      function (err) {
+        if (err) {
+          res.status(500).send(err);
+        }
       }
-    }
-  );
-});
+    );
+  });
+}
 // Create a new instance of an Apollo server with the GraphQL schema
 const startApolloServer = async (typeDefs, resolvers) => {
   await server.start();

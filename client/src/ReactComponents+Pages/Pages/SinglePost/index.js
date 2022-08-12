@@ -62,7 +62,8 @@ const SinglePost = () => {
               lineHeight: "1.5",
             }}
           >
-            In return, this user wants: {post.expectedTradeCompensation}
+            In return, {post?.postAuthor?.username} wants:{" "}
+            {post.expectedTradeCompensation}
           </p>
           <p>
             <Link to={`/profiles/${post?.postAuthor?.username}`}>

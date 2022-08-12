@@ -83,17 +83,17 @@ const SignupForm = () => {
         </Form.Group>
 
         <Form.Group>
-          <Form.Label htmlFor="email">Email</Form.Label>
+          <Form.Label htmlFor="email">E-mail</Form.Label>
           <Form.Control
             type="email"
-            placeholder="Your email address"
+            placeholder="Your e-mail address"
             name="email"
             onChange={handleInputChange}
             value={signupFormData.email}
             required
           />
           <Form.Control.Feedback type="invalid">
-            Email is required!
+            E-mail is required!
           </Form.Control.Feedback>
         </Form.Group>
 

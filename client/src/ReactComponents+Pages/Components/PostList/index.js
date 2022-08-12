@@ -2,6 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { format_date } from "../../../utils/helpers";
 import Auth from "../../../utils/auth";
+import "./index.css";
+
 const PostList = ({
   posts,
   title,

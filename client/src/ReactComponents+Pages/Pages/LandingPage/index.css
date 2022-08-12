@@ -7,11 +7,11 @@
 
 .mask {
   background-color: rgba(44, 44, 44, 0.7);
-  height: 100%;
+  height: 100vh;
 }
 
 body {
-  background-image: linear-gradient(to right, var(--dark), #ccd1cb,#ccd1cb,#ccd1cb,var(--dark));
+  background-image: linear-gradient(to right, #ccd1cb, var(--dark), var(--dark),var(--dark),var(--dark),var(--dark),var(--dark),#ccd1cb);
 }
 
 .font {

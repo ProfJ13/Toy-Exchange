@@ -4,7 +4,7 @@ import "./index.css";
 
 const LandingPage = () => {
   return (
-    <div className="p-5 text-center bg-image rounded-3 landing-container">
+    <div className="text-center bg-image rounded-3 landing-container">
       <div className="mask">
         <div className="d-flex justify-content-center align-items-center h-100">
           <div className="text-white d-flex align-items-center flex-column">

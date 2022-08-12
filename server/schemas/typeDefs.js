@@ -61,6 +61,7 @@ const typeDefs = gql`
       categoryName: String!
     ): Post
     addComment(commentText: String!, postId: ID!): Comment
+    updatePost(postId: ID!): Post
     removePost(postId: ID!): Post
     removeComment(commentId: ID!): Comment
   }

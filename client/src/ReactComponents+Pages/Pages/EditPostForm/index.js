@@ -10,6 +10,7 @@ const EditPostForm = () => {
   const { postId } = useParams();
   const { loading, data } = useQuery(QUERY_SINGLE_POST, {
     variables: { postId },
+    fetchPolicy: "no-cache",
   });
   const post = data?.post || {};
   const [formState, setFormState] = useState({

@@ -147,7 +147,7 @@ const PostForm = () => {
           </form>
         </>
       ) : (
-        <p>
+        <p style={{ color: "var(--text)" }}>
           You need to be logged in to list your items. Please log in or sign up
           using the link in the nav bar.
         </p>

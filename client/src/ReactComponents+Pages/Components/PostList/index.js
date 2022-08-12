@@ -18,16 +18,16 @@ const PostList = ({
       {showTitle && <h3>{title}</h3>}
       {posts &&
         posts.map((post) => (
-          <div key={post._id} className="card mb-3">
+          <div key={post._id} className="card mb-3" id="post" style={{ backgroundColor: "var(--grey)" }}>
             <Link to={`/posts/${post._id}`}>
-              <h4 className="card-header bg-primary text-light p-2 m-0">
+              <h4 className="card-header p-2 m-0" id="cardHeader">
                 {post.postTitle} <br />
               </h4>
               <div className="card-body bg-light p-2">
                 <p>{post.postText}</p>
               </div>
               <p>
-                <span style={{ fontSize: "1rem" }}>
+                <span style={{ fontSize: "1rem", color: "var(--text)" }}>
                   {post.comments.length}{" "}
                   {post.comments.length === 1 ? "comment" : "comments"} on this
                   post
@@ -36,7 +36,7 @@ const PostList = ({
             </Link>
             <Link to={`/profiles/${post?.postAuthor?.username || username}`}>
               <p>
-                <span style={{ fontSize: "1rem" }}>
+                <span style={{ fontSize: "1rem", color: "var(--text)" }}>
                   {post?.postAuthor?.username || username}{" "}
                   {format_date(post.createdAt)}
                 </span>
@@ -46,7 +46,7 @@ const PostList = ({
             {showCategory && (
               <Link to={`/categories/${post.categoryName}`}>
                 <p>
-                  <span style={{ fontSize: "1rem" }}>
+                  <span style={{ fontSize: "1rem", color: "var(--text)" }}>
                     This was posted in the {post.categoryName.toLowerCase()}{" "}
                     category
                   </span>

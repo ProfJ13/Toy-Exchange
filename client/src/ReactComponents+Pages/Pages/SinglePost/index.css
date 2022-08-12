@@ -1,12 +1,13 @@
 #postHeader {
-    background-color: var(--dark);
-    color: var(--text);
+    background-color: var(--rose);
+    color: var(--dark);
     border: 1px solid var(--blue);
+    font-weight: bold;
 }
 
 #postBody {
     background-color: #3E5F4B;
-    color: #CBB680;
+    color: darkblue
 }
 
 h3 {

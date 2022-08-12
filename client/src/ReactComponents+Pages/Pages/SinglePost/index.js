@@ -47,7 +47,7 @@ const SinglePost = () => {
         <h3 className="card-header px-4 m-0" id="postHeader">
           {post.postTitle}
         </h3>
-        <div className="px-3 py-1 border border-light rounded" id="postBody">
+        <div className="px-3 py-1 border border-light rounded bg-light" id="postBody">
           <p
             style={{
               fontSize: "1.5rem",
@@ -65,23 +65,25 @@ const SinglePost = () => {
             In return, {post?.postAuthor?.username} wants:{" "}
             {post.expectedTradeCompensation}
           </p>
-          <p>
-            <Link to={`/profiles/${post?.postAuthor?.username}`}>
-              <span style={{ fontSize: "1rem", color: "#5485C1" }}>
-                {post?.postAuthor?.username} {format_date(post.createdAt)}
-              </span>
-            </Link>
-          </p>
-          <p>
-            <Link to={`/categories/${post.categoryName}`}>
-              <span style={{ fontSize: "1rem", color: "#0F1419" }}>
-                Posted in the {post.categoryName.toLowerCase()} category
-              </span>
-            </Link>
-          </p>
+          <div style={{ backgroundColor: "var(--grey)" }}>
+            <p >
+              <Link to={`/profiles/${post?.postAuthor?.username}`}>
+                <span style={{ fontSize: "1rem", color: "var(--text)" }}>
+                  {post?.postAuthor?.username} {format_date(post.createdAt)}
+                </span>
+              </Link>
+            </p>
+            <p>
+              <Link to={`/categories/${post.categoryName}`}>
+                <span style={{ fontSize: "1rem", color: "var(--text)" }}>
+                  Posted in the {post.categoryName.toLowerCase()} category
+                </span>
+              </Link>
+            </p>
+          </div>
           {Auth.loggedIn() ? (
             post?.postAuthor._id?.toString() ===
-            Auth.getProfile()?.data?._id?.toString() ? (
+              Auth.getProfile()?.data?._id?.toString() ? (
               <div className="d-flex flex-row-reverse w-100 ">
                 <button
                   className="btn bg-danger mb-1 mx-1"

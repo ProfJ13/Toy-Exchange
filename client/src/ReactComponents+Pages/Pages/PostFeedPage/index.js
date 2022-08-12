@@ -22,6 +22,7 @@ const PostFeedPage = () => {
           <Link
             className="btn btn-outline-light btn-lg mb-3"
             to={`/create-post/${categoryParam}`}
+            id="createListing"
           >
             Create a Listing
           </Link>

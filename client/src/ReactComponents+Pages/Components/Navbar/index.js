@@ -4,6 +4,7 @@ import { Navbar, Nav, Container, Modal, Tab } from "react-bootstrap";
 import SignUpForm from "../SignupForm";
 import LoginForm from "../LoginForm";
 import Auth from "../../../utils/auth";
+import './index.css';
 
 const AppNavbar = () => {
   // set modal display state
@@ -11,9 +12,9 @@ const AppNavbar = () => {
 
   return (
     <>
-      <Navbar bg="dark" variant="dark" expand="lg">
+      <Navbar expand="lg" id="navbar">
         <Container fluid>
-          <Navbar.Brand as={Link} to="/">
+          <Navbar.Brand as={Link} to="/" style={{color: 'var(--text)'}}>
             Toy Exchange
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="navbar" />
@@ -24,27 +25,32 @@ const AppNavbar = () => {
                 Search For Books
               </Nav.Link> */}
               <Link
-                className="btn btn-lg btn-grey text-dark m-2"
+                className="btn btn-lg m-2"
                 to={`/categories`}
+                style={{color: 'var(--text)'}}
+                id="browse"
               >
                 Browse
               </Link>
               {Auth.loggedIn() ? (
                 <>
-                  <Link className="btn btn-lg btn-info text-dark m-2" to="/me">
+                  <Link className="btn btn-lg btn-info m-2" to="/me" style={{color: 'var(--text)'}}>
                     {Auth.getProfile().data.username}'s Profile
                   </Link>
                   <Nav.Link
-                    className="btn btn-lg btn-danger text-dark m-2"
+                    className="btn btn-lg btn-danger m-2"
                     onClick={Auth.logout}
+                    style={{color: 'var(--text)'}}
                   >
                     Logout
                   </Nav.Link>
                 </>
               ) : (
                 <Nav.Link
-                  className="btn btn-lg btn-info text-dark mx-2 my-0"
+                  className="btn btn-lg m-2"
                   onClick={() => setShowModal(true)}
+                  style={{color: 'var(--text)'}}
+                  id="login"
                 >
                   Login/Sign Up
                 </Nav.Link>

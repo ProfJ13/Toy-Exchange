@@ -2,9 +2,23 @@
   background: url("https://dm0qx8t0i9gc9.cloudfront.net/thumbnails/video/rZJIMvhmliwmde8a6/videoblocks-preschool-kids-playing-with-toys-on-the-floor-children-playing-constructor-top-view-kids-development-center_hdnkal5an_thumbnail-1080_01.png")
     no-repeat center center;
   height: 100vh;
+  font-family: var(--font);
 }
 
 .mask {
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: rgba(44, 44, 44, 0.7);
   height: 100%;
+}
+
+body {
+  background-image: linear-gradient(to right, var(--dark), #ccd1cb,#ccd1cb,#ccd1cb,var(--dark));
+}
+
+.font {
+  font-family: var(--font);
+  color: var(--text);
+}
+
+.button {
+  background-color: var(--rose);
 }

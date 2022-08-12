@@ -1,0 +1,13 @@
+#navbar {
+    font-size: calc(10px + 2vmin);
+    font-family: var(--font);
+    background-color: var(--dark);
+  }
+
+  #browse {
+    background-color: var(--rose);
+  }
+
+  #login {
+    background-color: var(--blue);
+  }

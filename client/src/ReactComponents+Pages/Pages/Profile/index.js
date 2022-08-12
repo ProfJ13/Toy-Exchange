@@ -26,9 +26,7 @@ const Profile = () => {
   if (loading) {
     return <div>Loading...</div>;
   }
-  if (error) {
-    return <div>There was an error loading this page.</div>;
-  }
+
   if (!userParam && !Auth.loggedIn()) {
     return (
       <h4 className="text-center">
@@ -41,6 +39,9 @@ const Profile = () => {
     return <h4 className="text-center">That user doesn't exist!</h4>;
   }
 
+  if (error) {
+    return <div>There was an error loading this page.</div>;
+  }
   return (
     <div>
       <div className="flex-row justify-center mb-3">

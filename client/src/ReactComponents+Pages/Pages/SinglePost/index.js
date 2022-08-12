@@ -29,7 +29,7 @@ const SinglePost = () => {
         },
       });
       if (data) {
-        navigate(-1);
+        navigate(`/categories/${post?.categoryName}`, { replace: true });
       }
     } catch (err) {
       console.error(err);
@@ -88,7 +88,10 @@ const SinglePost = () => {
               <button className="btn bg-danger" onClick={deletePostHandler}>
                 Delete Listing
               </button>
-              <Link to={`/edit-post/${post._id}`} className="btn bg-warning mx-1">
+              <Link
+                to={`/edit-post/${post._id}`}
+                className="btn bg-warning mx-1"
+              >
                 Edit Listing
               </Link>
             </div>

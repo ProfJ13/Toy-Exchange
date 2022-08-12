@@ -21,7 +21,6 @@ const resolvers = {
     post: async (parent, { postId }) => {
       return Post.findOne({ _id: postId })
         .populate("postAuthor")
-        .populate("categoryName")
         .populate("comments")
         .populate({
           path: "comments",

@@ -44,12 +44,11 @@ const SinglePost = () => {
   if (post) {
     return (
       <div className="my-3">
-        <h3 className="card-header bg-dark text-light px-4 m-0">
+        <h3 className="card-header px-4 m-0" id="postHeader">
           {post.postTitle}
         </h3>
-        <div className="bg-light px-3 py-1 border border-dark rounded">
+        <div className="px-3 py-1 border border-light rounded" id="postBody">
           <p
-            className="border"
             style={{
               fontSize: "1.5rem",
               lineHeight: "1.5",
@@ -67,23 +66,22 @@ const SinglePost = () => {
           </p>
           <p>
             <Link to={`/profiles/${post?.postAuthor?.username}`}>
-              <span style={{ fontSize: "1rem" }}>
+              <span style={{ fontSize: "1rem", color: "#5485C1" }}>
                 {post?.postAuthor?.username} {format_date(post.createdAt)}
               </span>
             </Link>
           </p>
           <p>
             <Link
-              className="text-dark border"
               to={`/categories/${post.categoryName}`}
             >
-              <span style={{ fontSize: "1rem" }}>
+              <span style={{ fontSize: "1rem", color: "#0F1419" }}>
                 Posted in the {post.categoryName.toLowerCase()} category
               </span>
             </Link>
           </p>
           {post?.postAuthor._id?.toString() ===
-          Auth.getProfile()?.data?._id?.toString() ? (
+            Auth.getProfile()?.data?._id?.toString() ? (
             <div className="d-flex flex-row-reverse w-100 mb-1 mx-1">
               <button className="btn bg-danger" onClick={deletePostHandler}>
                 Delete Listing

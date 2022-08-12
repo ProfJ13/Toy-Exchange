@@ -9,7 +9,7 @@ const LandingPage = () => {
         <div className="d-flex justify-content-center align-items-center h-100">
           <div className="text-white d-flex align-items-center flex-column">
             <h1 className="flex-row mb-4 fs-1 fw-bold font">
-              TOY EXCHANGE
+              ToyZoid
             </h1>
             <h4 className="flex-row mb-4 font">
               Find new toys for your bored kids!

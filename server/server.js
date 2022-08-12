@@ -9,7 +9,6 @@ const { authMiddleware } = require("./utils/auth");
 const { typeDefs, resolvers } = require("./schemas");
 const db = require("./config/connection");
 
-
 const PORT = process.env.PORT || 3001;
 const app = express();
 // create new instance of the apolloServer class so we can use the schema to handle our data
@@ -30,10 +29,20 @@ app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "../client/build/index.html"));
 });
 
+app.get("/*", function (req, res) {
+  res.sendFile(
+    path.join(__dirname, "../client/build/index.html"),
+    function (err) {
+      if (err) {
+        res.status(500).send(err);
+      }
+    }
+  );
+});
 // Create a new instance of an Apollo server with the GraphQL schema
 const startApolloServer = async (typeDefs, resolvers) => {
   await server.start();
-// enable the app to use grapQL (to update express.js to use the apolloServer )
+  // enable the app to use grapQL (to update express.js to use the apolloServer )
   server.applyMiddleware({ app });
 
   // start the database

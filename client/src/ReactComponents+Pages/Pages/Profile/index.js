@@ -12,7 +12,7 @@ import Auth from "../../../utils/auth";
 const Profile = () => {
   const { username: userParam } = useParams();
 
-  const { loading, data } = useQuery(userParam ? QUERY_USER : QUERY_ME, {
+  const { error, loading, data } = useQuery(userParam ? QUERY_USER : QUERY_ME, {
     variables: { username: userParam },
     fetchPolicy: "no-cache",
   });
@@ -27,10 +27,21 @@ const Profile = () => {
     return <div>Loading...</div>;
   }
 
+  if (!userParam && !Auth.loggedIn()) {
+    return (
+      <h4 className="text-center">
+        You need to log in to access your profile!
+      </h4>
+    );
+  }
+
   if (!user?.username) {
     return <h4 className="text-center">That user doesn't exist!</h4>;
   }
 
+  if (error) {
+    return <div>There was an error loading this page.</div>;
+  }
   return (
     <div>
       <div className="flex-row justify-center mb-3">

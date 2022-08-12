@@ -10,6 +10,7 @@ const EditPostForm = () => {
   const { postId } = useParams();
   const { loading, data } = useQuery(QUERY_SINGLE_POST, {
     variables: { postId },
+    fetchPolicy: "no-cache",
   });
   const post = data?.post || {};
   const [formState, setFormState] = useState({
@@ -70,7 +71,7 @@ const EditPostForm = () => {
   }
   if (!Auth.loggedIn()) {
     <p>
-      You need to be logged in to list your items. Please log in or sign up
+      You need to be logged in to edit your listings. Please log in or sign up
       using the link in the nav bar.
     </p>;
   } else {

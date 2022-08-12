@@ -1,5 +1,5 @@
 const { AuthenticationError } = require("apollo-server-express");
-const { User, Post, Comment, Category } = require("../models");
+const { User, Post, Comment, Category, Message } = require("../models");
 const { signToken } = require("../utils/auth");
 
 // resolver is a function responsible for populating the data that defined by typeDefs.js
@@ -31,7 +31,29 @@ const resolvers = {
       if (context.user) {
         return User.findOne({ _id: context.user._id }).populate("posts");
       }
-      throw new AuthenticationError("You need to be logged in!");
+      throw new AuthenticationError(
+        "You need to be logged in, or you don't have access to this!"
+      );
+    },
+    messages: async (parent, { username, username2 }, context) => {
+      // if (context.user) {
+      return Message.find({
+        $or: [
+          {
+            messageSender: username2,
+            messageRecipient: username,
+          },
+          {
+            messageSender: username,
+            messageRecipient: username2,
+          },
+        ],
+      });
+      // } else {
+      //   throw new AuthenticationError(
+      //     "You need to be logged in, or you don't have access to this!"
+      //   );
+      // }
     },
     otherUser: async (parent, { username }) => {
       return User.findOne({ username }).populate("posts");
@@ -126,6 +148,10 @@ const resolvers = {
           { postTitle, postText, expectedTradeCompensation }
         );
         return post;
+      } else {
+        throw new AuthenticationError(
+          "You need to be logged in, or you don't have access to this!"
+        );
       }
     },
 
@@ -143,7 +169,9 @@ const resolvers = {
 
         return post;
       }
-      throw new AuthenticationError("You need to be logged in!");
+      throw new AuthenticationError(
+        "You need to be logged in, or you don't have access to this!"
+      );
     },
     removeComment: async (parent, { postId, commentId }, context) => {
       if (context.user) {
@@ -160,7 +188,9 @@ const resolvers = {
           { new: true }
         );
       }
-      throw new AuthenticationError("You need to be logged in!");
+      throw new AuthenticationError(
+        "You need to be logged in, or you don't have access to this!"
+      );
     },
   },
 };

@@ -1,9 +1,10 @@
 const db = require("../config/connection");
-const { User, Post, Comment, Category } = require("../models");
+const { User, Post, Comment, Category, Message } = require("../models");
 const userSeeds = require("./userSeeds.json");
 const postSeeds = require("./postSeeds.json");
 const commentSeeds = require("./commentSeeds.json");
 const categorySeeds = require("./categorySeeds.json");
+const messageSeeds = require("./messageSeeds.json");
 db.once("open", async () => {
   try {
     await Post.deleteMany({});
@@ -15,6 +16,19 @@ db.once("open", async () => {
       await User.create(user);
     }
     const userData = await User.find();
+
+    for (const user of userData) {
+      for (let i = 0; i < 5; i++) {
+        await Message.create({
+          messageText:
+            messageSeeds[Math.floor(Math.random() * messageSeeds.length)]
+              .messageText,
+          messageSender: user.username,
+          messageRecipient:
+            userData[Math.floor(Math.random() * userData.length)].username,
+        });
+      }
+    }
 
     await Category.insertMany(categorySeeds);
 

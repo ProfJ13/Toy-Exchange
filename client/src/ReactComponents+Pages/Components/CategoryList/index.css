@@ -1,0 +1,14 @@
+* {
+    font-family: var(--font);
+}
+
+.categories {
+    border-color: var(--grey);
+    background-color: var(--blue);
+    color: var(--text);
+}
+
+h5 {
+    color: var(--text);
+    font-family: var(--font);
+}

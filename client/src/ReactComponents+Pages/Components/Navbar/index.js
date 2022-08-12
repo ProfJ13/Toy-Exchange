@@ -34,7 +34,7 @@ const AppNavbar = () => {
               </Link>
               {Auth.loggedIn() ? (
                 <>
-                  <Link className="btn btn-lg btn-info m-2" to="/me" style={{color: 'var(--text)'}}>
+                  <Link className="btn btn-lg m-2" to="/me" id="profileButton" style={{color: 'var(--text)'}}>
                     {Auth.getProfile().data.username}'s Profile
                   </Link>
                   <Nav.Link

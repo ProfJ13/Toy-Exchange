@@ -1,24 +1,40 @@
 import React from "react";
-import { Link } from "react-router-dom";
-// Import the `useParams()` hook
+import { Link, useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
-import { useQuery } from "@apollo/client";
-
+import { useQuery, useMutation } from "@apollo/client";
 import CommentList from "../../Components/CommentList";
 import CommentForm from "../../Components/CommentForm";
 import { format_date } from "../../../utils/helpers";
 import "./index.css";
 import { QUERY_SINGLE_POST } from "../../../utils/queries";
+import { REMOVE_POST } from "../../../utils/mutations";
+import Auth from "../../../utils/auth";
 
 const SinglePost = () => {
+  const navigate = useNavigate();
   const { postId } = useParams();
-  console.log(postId);
   const { loading, data, error } = useQuery(QUERY_SINGLE_POST, {
     variables: { postId },
+    fetchPolicy: "no-cache",
   });
-  
+  const [removePost] = useMutation(REMOVE_POST);
   const post = data?.post || {};
-  console.log(post);
+  const deletePostHandler = async (event) => {
+    event.preventDefault();
+
+    try {
+      const { data } = await removePost({
+        variables: {
+          postId,
+        },
+      });
+      if (data) {
+        navigate(-1);
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -54,7 +70,7 @@ const SinglePost = () => {
               <span style={{ fontSize: "1rem" }}>
                 {post?.postAuthor?.username} {format_date(post.createdAt)}
               </span>
-            </Link>{" "}
+            </Link>
           </p>
           <p>
             <Link
@@ -64,8 +80,21 @@ const SinglePost = () => {
               <span style={{ fontSize: "1rem" }}>
                 Posted in the {post.categoryName.toLowerCase()} category
               </span>
-            </Link>{" "}
+            </Link>
           </p>
+          {post?.postAuthor._id?.toString() ===
+          Auth.getProfile()?.data?._id?.toString() ? (
+            <div className="d-flex flex-row-reverse w-100 mb-1 mx-1">
+              <button className="btn bg-danger" onClick={deletePostHandler}>
+                Delete Listing
+              </button>
+              <Link to={`/edit-post/${post._id}`} className="btn bg-warning mx-1">
+                Edit Listing
+              </Link>
+            </div>
+          ) : (
+            <></>
+          )}
         </div>
 
         <div className="my-5">

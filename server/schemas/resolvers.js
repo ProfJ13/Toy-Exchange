@@ -112,22 +112,28 @@ const resolvers = {
     },
 
     // not finished, still returning original post info
-    updatePost: async (parent, { postId}, context) => {
+    updatePost: async (
+      parent,
+      { postId, postTitle, postText, expectedTradeCompensation },
+      context
+    ) => {
       if (context.user) {
-        const post = await Post.findOne(
-          {_id: postId },
-        ) 
-        await post.updateOne({ _id: postId });
+        const post = await Post.findOneAndUpdate(
+          {
+            _id: postId,
+            postAuthor: context.user._id.toString(),
+          },
+          { postTitle, postText, expectedTradeCompensation }
+        );
         return post;
-        
       }
     },
-
 
     removePost: async (parent, { postId }, context) => {
       if (context.user) {
         const post = await Post.findOneAndDelete({
           _id: postId,
+          postAuthor: context.user._id,
         });
 
         await User.findOneAndUpdate(

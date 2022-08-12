@@ -67,6 +67,7 @@ export const QUERY_SINGLE_POST = gql`
         }
       }
       postAuthor {
+        _id
         username
       }
     }

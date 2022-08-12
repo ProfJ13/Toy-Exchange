@@ -51,8 +51,25 @@ export const ADD_COMMENT = gql`
 `;
 
 export const EDIT_POST = gql`
-  mutation addComment($commentText: String!, $postId: ID!) {
-    addComment(commentText: $commentText, postId: $postId) {
+  mutation updatePost(
+    $postTitle: String!
+    $postText: String!
+    $expectedTradeCompensation: String!
+    $postId: ID!
+  ) {
+    updatePost(
+      postTitle: $postTitle
+      postText: $postText
+      expectedTradeCompensation: $expectedTradeCompensation
+      postId: $postId
+    ) {
+      _id
+    }
+  }
+`;
+export const REMOVE_POST = gql`
+  mutation removePost($postId: ID!) {
+    removePost(postId: $postId) {
       _id
     }
   }

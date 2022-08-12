@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useMutation } from "@apollo/client";
 import { ADD_COMMENT } from "../../../utils/mutations";
 import Auth from "../../../utils/auth";
+import "./index.css";
 
 const CommentForm = ({ postId }) => {
   const [commentText, setCommentText] = useState("");
@@ -64,7 +65,7 @@ const CommentForm = ({ postId }) => {
             </div>
 
             <div className="col-12 col-lg-3">
-              <button className="btn btn-primary btn-block py-3" type="submit">
+              <button className="btn btn-block py-3" type="submit" id="addCommentBtn">
                 Add Comment
               </button>
             </div>

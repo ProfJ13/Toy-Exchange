@@ -1,0 +1,14 @@
+#postHeader {
+    background-color: var(--dark);
+    color: var(--text);
+    border: 1px solid var(--blue);
+}
+
+#postBody {
+    background-color: #3E5F4B;
+    color: #CBB680;
+}
+
+h3 {
+    color: #CBB680;
+}

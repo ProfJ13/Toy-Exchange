@@ -1,3 +1,9 @@
 h3 {
     font-family: var(--font);
 }
+
+#post {
+    background-color: var(--dark);
+    border-color: var(--rose);
+    border-width: 1px;
+}

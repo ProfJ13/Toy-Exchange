@@ -20,6 +20,57 @@ export const QUERY_USER = gql`
   }
 `;
 
+export const QUERY_ME = gql`
+  query me {
+    user {
+      _id
+      username
+      email
+      posts {
+        _id
+        postTitle
+        postText
+        expectedTradeCompensation
+        categoryName
+        createdAt
+        comments {
+          _id
+        }
+      }
+    }
+  }
+`;
+
+export const QUERY_THREAD = gql`
+  query getThread($threadId: ID!) {
+    thread(threadId: $threadId) {
+      user1
+      user2
+      createdAt
+      messages {
+        _id
+        messageSender
+        messageText
+        read
+        createdAt
+      }
+    }
+  }
+`;
+
+export const QUERY_SHARED_THREADS = gql`
+  query sharedThreads {
+    sharedThreads {
+      _id
+      user1
+      user2
+      updatedAt
+      user1NewMessages
+      user2NewMessages
+    }
+  }
+`;
+
 export const QUERY_POSTS = gql`
   query getPosts {
     posts {
@@ -69,27 +120,6 @@ export const QUERY_SINGLE_POST = gql`
       postAuthor {
         _id
         username
-      }
-    }
-  }
-`;
-
-export const QUERY_ME = gql`
-  query me {
-    user {
-      _id
-      username
-      email
-      posts {
-        _id
-        postTitle
-        postText
-        expectedTradeCompensation
-        categoryName
-        createdAt
-        comments {
-          _id
-        }
       }
     }
   }

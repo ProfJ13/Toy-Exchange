@@ -11,11 +11,22 @@ const typeDefs = gql`
     posts: [Post]
   }
 
+  type Thread {
+    _id: ID!
+    user1: String!
+    user2: String!
+    messages: [Message]
+    createdAt: String
+    updatedAt: String
+    user1NewMessages: Int
+    user2NewMessages: Int
+  }
+
   type Message {
     _id: ID!
     messageText: String!
     messageSender: String!
-    messageRecipient: String!
+    read: Boolean!
     createdAt: String
   }
 
@@ -49,9 +60,11 @@ const typeDefs = gql`
   }
 
   type Query {
-    messages(username: String!, username2: String!): [Message]
+    thread(threadId: ID!): [Thread]
+    sharedThreads: [Thread]
     users: [User]
     user: User
+    userSearch(username: String!): [User]
     otherUser(username: String!): User
     posts: [Post]
     categoryPosts(categoryName: String!): [Post]
@@ -61,11 +74,8 @@ const typeDefs = gql`
   }
 
   type Mutation {
-    createMessage(
-      messageSender: String!
-      messageRecipient: String!
-      messageText: String!
-    ): Message
+    sendMessage(username: String!, messageText: String!): Thread
+    createThread(username: String!): Thread
     addUser(username: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
     addPost(

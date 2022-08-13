@@ -1,0 +1,19 @@
+h1 h2 h3 h4 h5 p {
+  font-family: var(--font);
+}
+
+.accordion-button,
+.accordion-button::after,
+.accordion-header,
+.accordion-item {
+  color: black !important;
+  border-width: 0 !important;
+  background-color: transparent !important;
+  max-width: 65vw;
+}
+.my-message div h2 button {
+  text-align: right !important;
+}
+.their-message div h2 button {
+  text-align: left !important;
+}

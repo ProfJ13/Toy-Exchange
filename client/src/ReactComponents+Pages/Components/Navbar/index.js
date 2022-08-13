@@ -5,6 +5,7 @@ import SignUpForm from "../SignupForm";
 import LoginForm from "../LoginForm";
 import Auth from "../../../utils/auth";
 import "./index.css";
+import logo from "../../../images/logo192.png";
 
 const AppNavbar = () => {
   // set modal display state
@@ -14,13 +15,9 @@ const AppNavbar = () => {
     <>
       <Navbar expand="lg" id="navbar">
         <Container fluid>
-          <Navbar.Brand
-            as={Link}
-            to="/"
-            className="d-flex align-items-center"
-          >
+          <Navbar.Brand as={Link} to="/" className="d-flex align-items-center">
             <img
-              src="./logo192.png"
+              src={logo}
               className="mr-2"
               style={{
                 maxHeight: "50px",

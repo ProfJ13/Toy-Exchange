@@ -1,35 +1,57 @@
 const db = require("../config/connection");
-const { User, Post, Comment, Category, Message } = require("../models");
+const { User, Post, Comment, Category, Thread } = require("../models");
 const userSeeds = require("./userSeeds.json");
 const postSeeds = require("./postSeeds.json");
 const commentSeeds = require("./commentSeeds.json");
 const categorySeeds = require("./categorySeeds.json");
 const messageSeeds = require("./messageSeeds.json");
+
 db.once("open", async () => {
   try {
     await Post.deleteMany({});
     await User.deleteMany({});
     await Category.deleteMany({});
     await Comment.deleteMany({});
-
+    await Thread.deleteMany({});
     for (const user of userSeeds) {
       await User.create(user);
     }
     const userData = await User.find();
 
     for (const user of userData) {
-      for (let i = 0; i < 5; i++) {
-        await Message.create({
-          messageText:
-            messageSeeds[Math.floor(Math.random() * messageSeeds.length)]
-              .messageText,
-          messageSender: user.username,
-          messageRecipient:
-            userData[Math.floor(Math.random() * userData.length)].username,
-        });
-      }
+      await Thread.create({
+        user1: user.username,
+        user2: userData[Math.floor(Math.random() * userData.length)].username,
+      });
     }
 
+    const threadData = await Thread.find();
+
+    console.log(threadData);
+    for (const thread of threadData) {
+      for (let i = 0; i < 5; i++) {
+        await Thread.findOneAndUpdate(
+          {
+            $or: [
+              {
+                user1: thread.user1,
+                user2: thread.user2,
+              },
+            ],
+          },
+          {
+            $push: {
+              messages: {
+                messageText:
+                  messageSeeds[Math.floor(Math.random() * messageSeeds.length)]
+                    .messageText,
+                messageSender: thread.user2,
+              },
+            },
+          }
+        );
+      }
+    }
     await Category.insertMany(categorySeeds);
 
     const categoryData = await Category.find();
@@ -62,7 +84,7 @@ db.once("open", async () => {
         do {
           comment.commentAuthor =
             userData[Math.floor(Math.random() * userData.length)]._id;
-        } while (comment.commentAuthoer === detailedPost.postAuthor);
+        } while (comment.commentAuthor === detailedPost.postAuthor);
         comment.postId = detailedPost._id;
         await Comment.create(comment);
       }

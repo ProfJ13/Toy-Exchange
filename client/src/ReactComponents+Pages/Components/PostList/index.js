@@ -37,7 +37,7 @@ const PostList = ({
             <Link to={`/profiles/${post?.postAuthor?.username || username}`}>
               <p>
                 <span style={{ fontSize: "1rem", color: "var(--text)" }}>
-                  {post?.postAuthor?.username || username}{" "}
+                  {post?.postAuthor?.username || username} posted this
                   {format_date(post.createdAt)}
                 </span>
               </p>

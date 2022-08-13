@@ -40,12 +40,12 @@ const threadSchema = new Schema(
 
 threadSchema.virtual("user1NewMessages").get(function () {
   return this.messages.filter((message) => {
-    return message.read === false && this.user1 === message.messageSender;
+    return message.read === false && this.user2 === message.messageSender;
   }).length;
 });
 threadSchema.virtual("user2NewMessages").get(function () {
   return this.messages.filter((message) => {
-    return message.read === false && this.user2 === message.messageSender;
+    return message.read === false && this.user1 === message.messageSender;
   }).length;
 });
 

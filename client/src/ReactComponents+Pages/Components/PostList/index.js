@@ -18,15 +18,20 @@ const PostList = ({
       {showTitle && <h3>{title}</h3>}
       {posts &&
         posts.map((post) => (
-          <div key={post._id} className="card mb-3" id="post" style={{ backgroundColor: "var(--grey)" }}>
+          <div
+            key={post._id}
+            className="card mb-3"
+            id="post"
+            style={{ backgroundColor: "var(--grey)" }}
+          >
             <Link to={`/posts/${post._id}`}>
               <h4 className="card-header p-2 m-0" id="cardHeader">
                 {post.postTitle} <br />
               </h4>
               <div className="card-body bg-light p-2">
-                <p>{post.postText}</p>
+                <p className="mb-0">{post.postText}</p>
               </div>
-              <p>
+              <p className="px-2 pt-1 mb-1">
                 <span style={{ fontSize: "1rem", color: "var(--text)" }}>
                   {post.comments.length}{" "}
                   {post.comments.length === 1 ? "comment" : "comments"} on this
@@ -35,17 +40,17 @@ const PostList = ({
               </p>
             </Link>
             <Link to={`/profiles/${post?.postAuthor?.username || username}`}>
-              <p>
+              <p className="px-2 mb-1">
                 <span style={{ fontSize: "1rem", color: "var(--text)" }}>
-                  {post?.postAuthor?.username || username} posted this
+                  {post?.postAuthor?.username || username} posted this{" "}
                   {format_date(post.createdAt)}
                 </span>
               </p>
             </Link>
 
             {showCategory && (
-              <Link to={`/categories/${post.categoryName}`}>
-                <p>
+              <Link to={`/categories/${post.categoryName}`} className="mb-1">
+                <p className="px-2 mb-1">
                   <span style={{ fontSize: "1rem", color: "var(--text)" }}>
                     This was posted in the {post.categoryName.toLowerCase()}{" "}
                     category

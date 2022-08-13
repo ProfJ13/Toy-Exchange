@@ -70,6 +70,7 @@ const SignupForm = () => {
         <Form.Group>
           <Form.Label htmlFor="username">Username</Form.Label>
           <Form.Control
+            autoFocus
             type="text"
             placeholder="Your username"
             name="username"

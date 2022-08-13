@@ -51,7 +51,7 @@ const resolvers = {
     },
     thread: async (parent, { threadId }, context) => {
       if (context.user) {
-        const thread = Thread.find({
+        const thread = await Thread.findOne({
           _id: threadId,
           $or: [
             {
@@ -62,18 +62,38 @@ const resolvers = {
             },
           ],
         });
+
         if (thread) {
-          await thread.updateOne({
-            _id: threadId,
-            $or: [
-              {
-                user1: context.user.username,
-              },
-              {
-                user2: context.user.username,
-              },
-            ],
-          });
+          console.log(thread);
+          const username =
+            thread.user1 === context.user.username
+              ? thread.user2
+              : thread.user1;
+          await Thread.findOneAndUpdate(
+            {
+              _id: threadId,
+              $or: [
+                {
+                  user1: context.user.username,
+                },
+                {
+                  user2: context.user.username,
+                },
+              ],
+            },
+            {
+              $set: { [`messages.$[outer].read`]: true },
+            },
+            {
+              arrayFilters: [
+                {
+                  "outer.read": false,
+
+                  "outer.messageSender": username,
+                },
+              ],
+            }
+          );
         }
         return thread;
       } else {
@@ -113,6 +133,7 @@ const resolvers = {
   Mutation: {
     sendMessage: async (parent, { username, messageText }, context) => {
       if (context.user) {
+        console.log(username, messageText);
         return Thread.findOneAndUpdate(
           {
             $or: [
@@ -133,7 +154,8 @@ const resolvers = {
                 messageSender: context.user.username,
               },
             },
-          }
+          },
+          { new: true }
         );
       } else {
         throw new AuthenticationError(
@@ -143,10 +165,33 @@ const resolvers = {
     },
     createThread: async (parent, { username }, context) => {
       if (context.user) {
-        return await Thread.create({
-          user1: context.user.username,
-          user2: username,
+        const user = await User.findOne({
+          username,
         });
+        if (user && user.username !== context.user.username) {
+          const thread = await Thread.findOne({
+            $or: [
+              {
+                user1: context.user.username,
+                user2: username,
+              },
+              {
+                user1: username,
+                user2: context.user.username,
+              },
+            ],
+          });
+
+          if (!thread) {
+            return await Thread.create({
+              user1: context.user.username,
+              user2: username,
+            });
+          } else {
+            return null;
+          }
+        }
+        return null;
       }
       throw new AuthenticationError("You need to be logged in!");
     },

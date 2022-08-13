@@ -78,7 +78,7 @@ const PostForm = () => {
                   <option>Loading...</option>
                 )}
               </select>
-              <h6>The name of your listed item:</h6>
+              <h5 className="text-light">The name of your listed item:</h5>
               <textarea
                 name="postTitle"
                 placeholder="What item are you offering?"
@@ -88,14 +88,14 @@ const PostForm = () => {
                 onChange={handleChange}
               ></textarea>
               <p
-                className={`m-0 ${
+                className={`m-0 text-light ${
                   characterCount.postTitle >= 150 || error ? "text-danger" : ""
                 }`}
               >
                 Character Count: {characterCount.postTitle}/150
               </p>
               <br />
-              <h6>Listing Details:</h6>
+              <h5 className="text-light">Listing Details:</h5>
               <textarea
                 name="postText"
                 placeholder="Type any relevant information about your item here..."
@@ -105,14 +105,14 @@ const PostForm = () => {
                 onChange={handleChange}
               ></textarea>
               <p
-                className={`m-0 ${
+                className={`m-0 text-light ${
                   characterCount.postText >= 280 || error ? "text-danger" : ""
                 }`}
               >
                 Character Count: {characterCount.postText}/280
               </p>
               <br />
-              <h6>What do you want in return?</h6>{" "}
+              <h5 className="text-light">What do you want in return?</h5>{" "}
               <textarea
                 name="expectedTradeCompensation"
                 placeholder="What do you want in exchange for this item? Multiple options may help you find a match faster."
@@ -122,7 +122,7 @@ const PostForm = () => {
                 onChange={handleChange}
               ></textarea>{" "}
               <p
-                className={`m-0 mb-2 ${
+                className={`m-0 mb-2 text-light ${
                   characterCount.expectedTradeCompensation >= 150 || error
                     ? "text-danger"
                     : ""

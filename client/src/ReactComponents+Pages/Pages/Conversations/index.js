@@ -5,8 +5,9 @@ import { format_date } from "../../../utils/helpers";
 import "./index.css";
 import { QUERY_SHARED_THREADS } from "../../../utils/queries";
 import Auth from "../../../utils/auth";
+import UserSearchBar from "../../Components/UserSearchBar";
 const Conversations = ({}) => {
-  const { error, loading, data } = useQuery(QUERY_SHARED_THREADS, {
+  const { error, loading, data, refetch } = useQuery(QUERY_SHARED_THREADS, {
     fetchPolicy: "no-cache",
   });
   const threads = data?.sharedThreads || [];
@@ -20,6 +21,7 @@ const Conversations = ({}) => {
   }
   return (
     <div className="mt-3">
+      <UserSearchBar refetch={refetch} />
       <h3>Your Conversations</h3>;
       {threads &&
         threads.map((thread) => (
@@ -29,13 +31,14 @@ const Conversations = ({}) => {
             id="thread"
             style={{ backgroundColor: "var(--grey)" }}
           >
+            {console.log(thread)}
             <Link to={`/conversations/${thread._id}`}>
               <h5
                 className={
                   (Auth.getProfile().data.username === thread.user1 &&
-                    thread.user2NewMessages !== 0) ||
+                    thread.user1NewMessages !== 0) ||
                   (Auth.getProfile().data.username === thread.user2 &&
-                    thread.user1NewMessages !== 0)
+                    thread.user2NewMessages !== 0)
                     ? "bg-success card-header p-2 m-0"
                     : "card-header p-2 m-0"
                 }
@@ -45,20 +48,28 @@ const Conversations = ({}) => {
                   ? thread.user2
                   : thread.user1}
               </h5>
-              <div className="card-body bg-light p-2">
-                <p>
-                  {Auth.getProfile().data.username === thread.user1
-                    ? thread.user2NewMessages
-                    : thread.user1NewMessages}{" "}
-                  new messages
-                </p>
-              </div>
-              <div className="card-body bg-light p-2">
-                <p>
-                  The last message between you was{" "}
-                  {format_date(thread.updatedAt)}
-                </p>
-              </div>
+              {thread.updatedAt === thread.createdAt ? (
+                <div className="card-body bg-light p-2">
+                  <p>Click here to start your conversation!</p>
+                </div>
+              ) : (
+                <>
+                  <div className="card-body bg-light p-2">
+                    <p>
+                      {Auth.getProfile().data.username === thread.user1
+                        ? thread.user1NewMessages
+                        : thread.user2NewMessages}{" "}
+                      new messages
+                    </p>
+                  </div>
+                  <div className="card-body bg-light p-2">
+                    <p>
+                      The last message between you was{" "}
+                      {format_date(thread.updatedAt)}
+                    </p>
+                  </div>
+                </>
+              )}
             </Link>
             <Link
               to={`/profiles/${

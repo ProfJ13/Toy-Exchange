@@ -42,7 +42,7 @@ const CommentForm = ({ postId }) => {
       {Auth.loggedIn() ? (
         <>
           <p
-            className={`m-0 ${
+            className={`m-0 text-light ${
               characterCount === 280 || error ? "text-danger" : ""
             }`}
           >

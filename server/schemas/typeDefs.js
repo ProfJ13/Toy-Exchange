@@ -60,7 +60,7 @@ const typeDefs = gql`
   }
 
   type Query {
-    thread(threadId: ID!): [Thread]
+    thread(threadId: ID!): Thread
     sharedThreads: [Thread]
     users: [User]
     user: User

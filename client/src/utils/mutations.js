@@ -86,8 +86,9 @@ export const CREATE_THREAD = gql`
 export const SEND_MESSAGE = gql`
   mutation sendMessage($username: String!, $messageText: String!) {
     sendMessage(username: $username, messageText: $messageText) {
+      _id
       messages {
-        createdAt
+        messageText
       }
     }
   }

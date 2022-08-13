@@ -12,12 +12,21 @@ const Conversations = ({}) => {
   });
   const threads = data?.sharedThreads || [];
   if (!Auth.loggedIn()) {
-    <h3>Your Conversations</h3>;
-    return <h4>You need to be logged in to view this!</h4>;
+    return (
+      <>
+        {" "}
+        <h3>Your Conversations</h3>;
+        <h4>You need to be logged in to view this!</h4>;
+      </>
+    );
   }
   if (!threads.length) {
-    <h3>Your Conversations</h3>;
-    return <h4>No Conversations Yet! Add some by searching for users!</h4>;
+    return (
+      <>
+        <UserSearchBar refetch={refetch} />
+        <h4>No Conversations Yet! Add some by searching for users!</h4>
+      </>
+    );
   }
   return (
     <div className="mt-3">

@@ -120,6 +120,32 @@ const resolvers = {
         );
       }
     },
+    checkMessages: async (parent, args, context) => {
+      if (context.user) {
+        console.log("we here");
+        const thread = await Thread.find({
+          $or: [
+            {
+              user1: context.user.username,
+            },
+            {
+              user2: context.user.username,
+            },
+          ],
+          "messages.read": false,
+          "messages.messageSender": {
+            $not: { $eq: context.user.username },
+          },
+        });
+        console.log(thread);
+        console.log("we here");
+        return thread;
+      } else {
+        throw new AuthenticationError(
+          "You need to be logged in, or you don't have access to this!"
+        );
+      }
+    },
 
     // add category and comment resolvers
     categories: async (parent, args) => {

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Navbar, Nav, Container, Modal, Tab } from "react-bootstrap";
 import SignUpForm from "../SignupForm";
@@ -6,11 +6,34 @@ import LoginForm from "../LoginForm";
 import Auth from "../../../utils/auth";
 import "./index.css";
 import logo from "../../../images/logo192.png";
-
+import { useLazyQuery } from "@apollo/client";
+import { CHECK_MESSAGES } from "../../../utils/queries";
 const AppNavbar = () => {
   // set modal display state
   const [showModal, setShowModal] = useState(false);
 
+  const [checkMessagesFunction, { data, loading, error }] = useLazyQuery(
+    CHECK_MESSAGES,
+    {
+      fetchPolicy: "no-cache",
+    }
+  );
+  const [intervalState, setIntervalState] = useState(
+    setInterval(() => {
+      if (Auth.loggedIn()) checkMessagesFunction();
+    }, 10000)
+  );
+  useEffect(() => {
+    if (Auth.loggedIn()) checkMessagesFunction();
+  }, []);
+
+  const newMessages = data?.checkMessages;
+  let newMessageCount = 0;
+  if (newMessages) {
+    for (const messageObj of newMessages) {
+      newMessageCount += messageObj?.messages?.length;
+    }
+  }
   return (
     <>
       <Navbar expand="lg" id="navbar">
@@ -44,12 +67,32 @@ const AppNavbar = () => {
               {Auth.loggedIn() ? (
                 <>
                   <Link
-                    className="btn btn-lg m-2"
+                    className="btn btn-lg m-2 d-flex justify-content-between align-items-center"
                     to="/me"
                     id="profileButton"
                     style={{ color: "var(--text)" }}
                   >
                     {Auth.getProfile().data.username}'s Profile
+                    {newMessageCount !== 0 ? (
+                      <span
+                        className="d-flex justify-content-center align-items-center"
+                        style={{
+                          border: "solid 2px black",
+                          marginLeft: "1px",
+                          display: "inline-block",
+                          minHeight: "30px",
+                          minWidth: "30px",
+                          fontSize: "15px",
+                          borderRadius: "15px",
+                          color: "white",
+                          backgroundColor: "yellow",
+                        }}
+                      >
+                        <span>{newMessageCount.toString()}</span>
+                      </span>
+                    ) : (
+                      <></>
+                    )}
                   </Link>
                   <Nav.Link
                     className="btn btn-lg btn-danger m-2"

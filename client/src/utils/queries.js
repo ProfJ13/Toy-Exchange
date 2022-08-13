@@ -80,6 +80,14 @@ export const QUERY_SHARED_THREADS = gql`
   }
 `;
 
+export const CHECK_MESSAGES = gql`query checkMessages {
+  checkMessages {
+    messages {
+      read
+    }
+  }
+}`
+
 export const QUERY_POSTS = gql`
   query getPosts {
     posts {

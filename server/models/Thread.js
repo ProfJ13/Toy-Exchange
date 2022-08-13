@@ -48,6 +48,11 @@ threadSchema.virtual("user2NewMessages").get(function () {
     return message.read === false && this.user1 === message.messageSender;
   }).length;
 });
+threadSchema.virtual("totalNewMessages").get(function () {
+  this.messages.filter((message) => {
+    return message.read === false && this.user1 === message.messageSender;
+  }).length;
+});
 
 const Thread = model("Thread", threadSchema);
 module.exports = Thread;

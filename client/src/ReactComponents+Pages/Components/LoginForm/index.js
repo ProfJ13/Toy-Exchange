@@ -65,6 +65,7 @@ const LoginForm = () => {
         <Form.Group>
           <Form.Label htmlFor="email">E-mail</Form.Label>
           <Form.Control
+            autoFocus
             type="text"
             placeholder="Your e-mail"
             name="email"
@@ -95,6 +96,7 @@ const LoginForm = () => {
           disabled={!(loginFormData.email && loginFormData.password)}
           type="submit"
           variant="success"
+          className="mt-2"
         >
           Submit
         </Button>

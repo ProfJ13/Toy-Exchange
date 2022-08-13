@@ -13,7 +13,7 @@ const Footer = () => {
             &larr; Go Back
           </button>
         )}
-        <h4>Copyright 2022</h4>
+        <h4>© 2022 ToyZoid, Inc.</h4>
       </div>
     </footer>
   );

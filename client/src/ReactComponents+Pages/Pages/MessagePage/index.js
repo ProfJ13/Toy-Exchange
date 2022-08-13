@@ -7,14 +7,15 @@ import "./index.css";
 import { QUERY_THREAD } from "../../../utils/queries";
 import Auth from "../../../utils/auth";
 import { useParams } from "react-router-dom";
+import MessageForm from "../../Components/MessageForm";
 const MessagePage = ({}) => {
   const { threadId } = useParams();
-  const { error, loading, data } = useQuery(QUERY_THREAD, {
+  const { error, loading, data, refetch } = useQuery(QUERY_THREAD, {
     variables: { threadId },
     fetchPolicy: "no-cache",
   });
 
-  const thread = data?.thread[0] || {};
+  const thread = data?.thread || {};
   const messages = thread?.messages || [];
   console.log(thread, messages);
   if (!Auth.loggedIn()) {
@@ -22,13 +23,23 @@ const MessagePage = ({}) => {
   }
   if (!messages?.length) {
     return (
-      <h4 className="mt-2">
-        Start your conversation with{" "}
-        {Auth.getProfile().data.username === thread.user1
-          ? thread.user2
-          : thread.user1}
-        !
-      </h4>
+      <>
+        <h4 className="mt-2">
+          Start your conversation with{" "}
+          {Auth.getProfile().data.username === thread.user1
+            ? thread.user2
+            : thread.user1}
+          !
+        </h4>
+        <MessageForm
+          refetch={refetch}
+          username={
+            Auth.getProfile().data.username === thread.user1
+              ? thread.user2
+              : thread.user1
+          }
+        />
+      </>
     );
   }
   return (
@@ -44,11 +55,10 @@ const MessagePage = ({}) => {
         {messages &&
           messages.map((message) => (
             <Accordion
-              key="{message._id}"
+              key={message._id}
               defaultActiveKey="1"
               className={
-                Auth.getProfile().data.username === thread.user1 &&
-                thread.user1 === message.messageSender
+                Auth.getProfile().data.username === message.messageSender
                   ? "bg-success p-2 m-0 align-self-end border border-dark rounded mb-2 d-flex align-items-end my-message"
                   : "bg-warning p-2 m-0 align-self-start border border-dark rounded mb-2 d-flex align-items-start their-message"
               }
@@ -61,6 +71,14 @@ const MessagePage = ({}) => {
               </Accordion.Item>
             </Accordion>
           ))}
+        <MessageForm
+          refetch={refetch}
+          username={
+            Auth.getProfile().data.username === thread.user1
+              ? thread.user2
+              : thread.user1
+          }
+        />
       </div>
     </>
   );

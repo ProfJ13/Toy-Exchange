@@ -109,7 +109,7 @@ const SinglePost = () => {
         <div className="my-5">
           <CommentList comments={post.comments} />
         </div>
-        <div className="m-3 p-4" style={{ border: "1px dotted #1a1a1a" }}>
+        <div className="m-3 p-4" >
           <CommentForm postId={post._id} />
         </div>
       </div>

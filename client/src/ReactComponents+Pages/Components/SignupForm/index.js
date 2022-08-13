@@ -70,6 +70,7 @@ const SignupForm = () => {
         <Form.Group>
           <Form.Label htmlFor="username">Username</Form.Label>
           <Form.Control
+            autoFocus
             type="text"
             placeholder="Your username"
             name="username"
@@ -119,6 +120,7 @@ const SignupForm = () => {
               signupFormData.password
             )
           }
+          className="mt-2"
           type="submit"
           variant="success"
         >

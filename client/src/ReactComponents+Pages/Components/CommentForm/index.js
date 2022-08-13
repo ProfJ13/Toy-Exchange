@@ -42,7 +42,7 @@ const CommentForm = ({ postId }) => {
       {Auth.loggedIn() ? (
         <>
           <p
-            className={`m-0 ${
+            className={`m-0 text-light ${
               characterCount === 280 || error ? "text-danger" : ""
             }`}
           >
@@ -65,14 +65,18 @@ const CommentForm = ({ postId }) => {
             </div>
 
             <div className="col-12 col-lg-3">
-              <button className="btn btn-block py-3" type="submit" id="addCommentBtn">
+              <button
+                className="btn btn-block py-3"
+                type="submit"
+                id="addCommentBtn"
+              >
                 Add Comment
               </button>
             </div>
           </form>
         </>
       ) : (
-        <p>
+        <p className="text-light">
           You need to be logged in to comment. Please log in or sign up using
           the links in the nav bar.
         </p>

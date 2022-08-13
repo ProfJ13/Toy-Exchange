@@ -27,17 +27,11 @@ db.once("open", async () => {
 
     const threadData = await Thread.find();
 
-    console.log(threadData);
     for (const thread of threadData) {
       for (let i = 0; i < 5; i++) {
         await Thread.findOneAndUpdate(
           {
-            $or: [
-              {
-                user1: thread.user1,
-                user2: thread.user2,
-              },
-            ],
+            _id: thread._id,
           },
           {
             $push: {
@@ -46,6 +40,21 @@ db.once("open", async () => {
                   messageSeeds[Math.floor(Math.random() * messageSeeds.length)]
                     .messageText,
                 messageSender: thread.user2,
+              },
+            },
+          }
+        );
+        await Thread.findOneAndUpdate(
+          {
+            _id: thread._id,
+          },
+          {
+            $push: {
+              messages: {
+                messageText:
+                  messageSeeds[Math.floor(Math.random() * messageSeeds.length)]
+                    .messageText,
+                messageSender: thread.user1,
               },
             },
           }

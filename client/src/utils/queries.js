@@ -41,6 +41,14 @@ export const QUERY_ME = gql`
   }
 `;
 
+export const QUERY_USER_SEARCH = gql`
+  query UserSearch($username: String!) {
+    userSearch(username: $username) {
+      username
+    }
+  }
+`;
+
 export const QUERY_THREAD = gql`
   query getThread($threadId: ID!) {
     thread(threadId: $threadId) {
@@ -65,11 +73,20 @@ export const QUERY_SHARED_THREADS = gql`
       user1
       user2
       updatedAt
+      createdAt
       user1NewMessages
       user2NewMessages
     }
   }
 `;
+
+export const CHECK_MESSAGES = gql`query checkMessages {
+  checkMessages {
+    messages {
+      read
+    }
+  }
+}`
 
 export const QUERY_POSTS = gql`
   query getPosts {

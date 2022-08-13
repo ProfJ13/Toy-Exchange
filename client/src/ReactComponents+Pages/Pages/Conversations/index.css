@@ -1,0 +1,20 @@
+h1
+h2
+h3
+h4
+h5
+p {
+    font-family: var(--font);
+}
+
+#post {
+    border-color: var(--rose);
+    border-width: 1px;
+    color: var(--text);
+}
+
+#cardHeader {
+    background-color: var(--rose);
+    color: var(--dark);
+    font-weight: bold;
+}

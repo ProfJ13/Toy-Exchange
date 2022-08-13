@@ -22,7 +22,8 @@ import EditPostForm from "./ReactComponents+Pages/Pages/EditPostForm";
 import Profile from "./ReactComponents+Pages/Pages/Profile";
 import Navbar from "./ReactComponents+Pages/Components/Navbar";
 import Footer from "./ReactComponents+Pages/Components/Footer";
-
+import Conversations from "./ReactComponents+Pages/Pages/Conversations";
+import MessagePage from "./ReactComponents+Pages/Pages/MessagePage";
 // Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
   uri: "/graphql",
@@ -66,6 +67,12 @@ function App() {
               <Route path="/edit-post/:postId" element={<EditPostForm />} />
               <Route path="/me" element={<Profile />} />
               <Route path="/profiles/:username" element={<Profile />} />
+
+              <Route path="/conversations" element={<Conversations />} />
+              <Route
+                path="/conversations/:threadId"
+                element={<MessagePage />}
+              />
               <Route path="/posts/:postId" element={<SinglePost />} />
               <Route path="*" element={<Navigate to="/" />} />
             </Routes>

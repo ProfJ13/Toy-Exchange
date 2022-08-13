@@ -69,7 +69,7 @@ const SinglePost = () => {
             <p >
               <Link to={`/profiles/${post?.postAuthor?.username}`}>
                 <span style={{ fontSize: "1rem", color: "var(--text)" }}>
-                  {post?.postAuthor?.username} {format_date(post.createdAt)}
+                  {post?.postAuthor?.username} posted this {format_date(post.createdAt)}
                 </span>
               </Link>
             </p>

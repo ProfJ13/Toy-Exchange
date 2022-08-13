@@ -22,7 +22,7 @@ const CommentList = ({ comments = [] }) => {
                 <Link to={`/profiles/${comment.commentAuthor.username}`}>
                   <p>
                     <span style={{ fontSize: "1rem", color: "#1a89bc" }}>
-                      {comment.commentAuthor.username}{" "}
+                      {comment.commentAuthor.username} posted this{" "}
                       {format_date(comment.createdAt)}
                     </span>
                   </p>

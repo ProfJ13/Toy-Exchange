@@ -1,5 +1,5 @@
 const { AuthenticationError } = require("apollo-server-express");
-const { User, Post, Comment, Category, Message } = require("../models");
+const { User, Post, Comment, Category, Thread } = require("../models");
 const { signToken } = require("../utils/auth");
 
 // resolver is a function responsible for populating the data that defined by typeDefs.js
@@ -35,29 +35,72 @@ const resolvers = {
         "You need to be logged in, or you don't have access to this!"
       );
     },
-    messages: async (parent, { username, username2 }, context) => {
-      // if (context.user) {
-      return Message.find({
-        $or: [
-          {
-            messageSender: username2,
-            messageRecipient: username,
-          },
-          {
-            messageSender: username,
-            messageRecipient: username2,
-          },
-        ],
-      });
-      // } else {
-      //   throw new AuthenticationError(
-      //     "You need to be logged in, or you don't have access to this!"
-      //   );
-      // }
-    },
     otherUser: async (parent, { username }) => {
       return User.findOne({ username }).populate("posts");
     },
+    userSearch: async (parent, { username }, context) => {
+      if (context.user) {
+        return await User.find({
+          username: { $regex: new RegExp("^" + username + ".+$", "i") },
+        }).limit(5);
+      } else {
+        throw new AuthenticationError(
+          "You need to be logged in, or you don't have access to this!"
+        );
+      }
+    },
+    thread: async (parent, { threadId }, context) => {
+      if (context.user) {
+        const thread = Thread.find({
+          _id: threadId,
+          $or: [
+            {
+              user1: context.user.username,
+            },
+            {
+              user2: context.user.username,
+            },
+          ],
+        });
+        if (thread) {
+          await thread.updateOne({
+            _id: threadId,
+            $or: [
+              {
+                user1: context.user.username,
+              },
+              {
+                user2: context.user.username,
+              },
+            ],
+          });
+        }
+        return thread;
+      } else {
+        throw new AuthenticationError(
+          "You need to be logged in, or you don't have access to this!"
+        );
+      }
+    },
+    sharedThreads: async (parent, args, context) => {
+      if (context.user) {
+        return await Thread.find({
+          $or: [
+            {
+              user1: context.user.username,
+            },
+            {
+              user2: context.user.username,
+            },
+          ],
+        }).sort({ updatedAt: -1 });
+      } else {
+        throw new AuthenticationError(
+          "You need to be logged in, or you don't have access to this!"
+        );
+      }
+    },
+
     // add category and comment resolvers
     categories: async (parent, args) => {
       return Category.find().sort({ categoryName: 1 });
@@ -68,6 +111,45 @@ const resolvers = {
   },
 
   Mutation: {
+    sendMessage: async (parent, { username, messageText }, context) => {
+      if (context.user) {
+        return Thread.findOneAndUpdate(
+          {
+            $or: [
+              {
+                user1: context.user.username,
+                user2: username,
+              },
+              {
+                user1: username,
+                user2: context.user.username,
+              },
+            ],
+          },
+          {
+            $push: {
+              messages: {
+                messageText: messageText,
+                messageSender: context.user.username,
+              },
+            },
+          }
+        );
+      } else {
+        throw new AuthenticationError(
+          "You need to be logged in, or you don't have access to this!"
+        );
+      }
+    },
+    createThread: async (parent, { username }, context) => {
+      if (context.user) {
+        return await Thread.create({
+          user1: context.user.username,
+          user2: username,
+        });
+      }
+      throw new AuthenticationError("You need to be logged in!");
+    },
     addUser: async (parent, { username, email, password }) => {
       const user = await User.create({ username, email, password });
       const token = signToken(user);

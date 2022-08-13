@@ -74,3 +74,21 @@ export const REMOVE_POST = gql`
     }
   }
 `;
+
+export const CREATE_THREAD = gql`
+  mutation CreateThread($username: String!) {
+    createThread(username: $username) {
+      _id
+    }
+  }
+`;
+
+export const SEND_MESSAGE = gql`
+  mutation sendMessage($username: String!, $messageText: String!) {
+    sendMessage(username: $username, messageText: $messageText) {
+      messages {
+        createdAt
+      }
+    }
+  }
+`;

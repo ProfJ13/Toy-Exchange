@@ -120,6 +120,7 @@ const SignupForm = () => {
               signupFormData.password
             )
           }
+          className="mt-2"
           type="submit"
           variant="success"
         >

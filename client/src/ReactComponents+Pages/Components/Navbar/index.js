@@ -6,34 +6,17 @@ import LoginForm from "../LoginForm";
 import Auth from "../../../utils/auth";
 import "./index.css";
 import logo from "../../../images/logo192.png";
-import { useLazyQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { CHECK_MESSAGES } from "../../../utils/queries";
 const AppNavbar = () => {
   // set modal display state
   const [showModal, setShowModal] = useState(false);
 
-  const [checkMessagesFunction, { data, loading, error }] = useLazyQuery(
-    CHECK_MESSAGES,
-    {
-      fetchPolicy: "no-cache",
-    }
-  );
-  const [intervalState, setIntervalState] = useState(
-    setInterval(() => {
-      if (Auth.loggedIn()) checkMessagesFunction();
-    }, 10000)
-  );
-  useEffect(() => {
-    if (Auth.loggedIn()) checkMessagesFunction();
-  }, []);
+  const { data, loading, error } = useQuery(CHECK_MESSAGES, {
+    pollInterval: 5000,
+    fetchPolicy: "no-cache",
+  });
 
-  const newMessages = data?.checkMessages;
-  let newMessageCount = 0;
-  if (newMessages) {
-    for (const messageObj of newMessages) {
-      newMessageCount += messageObj?.messages?.length;
-    }
-  }
   return (
     <>
       <Navbar expand="lg" id="navbar">
@@ -73,7 +56,7 @@ const AppNavbar = () => {
                     style={{ color: "var(--text)" }}
                   >
                     {Auth.getProfile().data.username}'s Profile
-                    {newMessageCount !== 0 ? (
+                    {data?.checkMessages?.length !== 0 ? (
                       <span
                         className="d-flex justify-content-center align-items-center"
                         style={{
@@ -88,7 +71,7 @@ const AppNavbar = () => {
                           backgroundColor: "yellow",
                         }}
                       >
-                        <span>{newMessageCount.toString()}</span>
+                        <span>{data?.checkMessages?.length}</span>
                       </span>
                     ) : (
                       <></>

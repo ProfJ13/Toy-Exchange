@@ -20,6 +20,7 @@ const typeDefs = gql`
     updatedAt: String
     user1NewMessages: Int
     user2NewMessages: Int
+    lastMessageTimestamp: String
   }
 
   type Message {

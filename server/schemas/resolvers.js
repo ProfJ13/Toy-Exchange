@@ -122,23 +122,32 @@ const resolvers = {
     },
     checkMessages: async (parent, args, context) => {
       if (context.user) {
-        console.log("we here");
-        const thread = await Thread.find({
-          $or: [
-            {
-              user1: context.user.username,
+        const rawThread = await Thread.aggregate([
+          {
+            $match: {
+              $or: [
+                {
+                  user1: context.user.username,
+                },
+                {
+                  user2: context.user.username,
+                },
+              ],
             },
-            {
-              user2: context.user.username,
-            },
-          ],
-          "messages.read": false,
-          "messages.messageSender": {
-            $not: { $eq: context.user.username },
           },
-        });
-        console.log(thread);
-        console.log("we here");
+          {
+            $unwind: "$messages",
+          },
+          {
+            $match: {
+              $and: [
+                { "messages.read": false },
+                { "messages.messageSender": { $ne: context.user.username } },
+              ],
+            },
+          },
+        ]);
+        const thread = rawThread.map((message) => message.messages);
         return thread;
       } else {
         throw new AuthenticationError(
@@ -159,7 +168,6 @@ const resolvers = {
   Mutation: {
     sendMessage: async (parent, { username, messageText }, context) => {
       if (context.user) {
-        console.log(username, messageText);
         return Thread.findOneAndUpdate(
           {
             $or: [
@@ -224,6 +232,16 @@ const resolvers = {
     addUser: async (parent, { username, email, password }) => {
       const user = await User.create({ username, email, password });
       const token = signToken(user);
+      Thread.create({
+        user1: username,
+        user2: "ToyZoid",
+        messages: [
+          {
+            messageText: `Hello, ${username}, and welcome to ToyZoid! Now that you have an account, you can post listings, comment on other listings, and in your conversations page you can search for other users to privately message them to arrange a toy exchange. We hope you find the trade you're looking for!`,
+            messageSender: "ToyZoid",
+          },
+        ],
+      });
       return { token, user };
     },
     login: async (parent, { email, password }) => {

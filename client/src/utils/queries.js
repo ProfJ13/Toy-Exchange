@@ -76,6 +76,7 @@ export const QUERY_SHARED_THREADS = gql`
       createdAt
       user1NewMessages
       user2NewMessages
+      lastMessageTimestamp
     }
   }
 `;

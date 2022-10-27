@@ -11,6 +11,10 @@ const Conversations = ({}) => {
     fetchPolicy: "no-cache",
   });
   const threads = data?.sharedThreads || [];
+  threads.sort((a, b) =>
+    a.lastMessageTimestamp > b.lastMessageTimestamp ? -1 : 1
+  );
+
   if (!Auth.loggedIn()) {
     return (
       <>
@@ -74,7 +78,7 @@ const Conversations = ({}) => {
                   <div className="card-body bg-light p-2">
                     <p>
                       The last message between you was{" "}
-                      {format_date(thread.updatedAt)}
+                      {format_date(thread.lastMessageTimestamp)}
                     </p>
                   </div>
                 </>

@@ -19,10 +19,13 @@
     "react-bootstrap": "^2.5.0"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "SET NODE_OPTIONS=--openssl-legacy-provider && react-scripts start",
+    "build": "SET NODE_OPTIONS=--openssl-legacy-provider && react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
+  },
+  "engines": {
+    "node": "17.9"
   },
   "eslintConfig": {
     "extends": [

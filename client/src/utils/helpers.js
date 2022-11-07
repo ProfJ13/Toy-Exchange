@@ -1,5 +1,5 @@
 module.exports = {
-  format_date: (timestamp) => {
+  formatDate: (timestamp) => {
     const timeDifference = (Date.now() - timestamp) / 60000;
     if (timeDifference) {
       if (timeDifference < 1) {

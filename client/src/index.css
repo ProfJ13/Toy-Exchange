@@ -1,13 +1,13 @@
 :root {
   /* declare a variable with `--` syntax */
   --dark: #333232;
-  --text: #FFE6A7;
+  --text: #ffe6a7;
   --blue: #82a6b1;
   --grey: #76877d;
   --rose: #a07178;
-  --font: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  --font: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
 }
-
 
 body {
   margin: 0;
@@ -1194,7 +1194,7 @@ label form [type="radio"] {
 
 .container {
   width: 85%;
-  max-width: 1200px;
+  max-width: 1200zpx;
   margin-left: auto;
   margin-right: auto;
 }
@@ -1207,12 +1207,6 @@ label form [type="radio"] {
 .flex-row {
   display: flex;
   flex-direction: row;
-  flex-wrap: wrap;
-}
-
-.flex-column {
-  display: flex;
-  flex-direction: column;
   flex-wrap: wrap;
 }
 

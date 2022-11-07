@@ -1,5 +1,8 @@
 const { Schema, model } = require("mongoose");
 
+// Each document in this collection is an individual private messaging thread between two users
+// In the course of using this collection I found its schema to be clunky and difficult to work with,
+// so it may be wise to structure this differently in the future
 const threadSchema = new Schema(
   {
     user1: {
@@ -38,6 +41,7 @@ const threadSchema = new Schema(
   { timestamps: true }
 );
 
+// virtual properties that calculate how many new messages each user has and when the last message was sent
 threadSchema.virtual("user1NewMessages").get(function () {
   return this.messages.filter((message) => {
     return message.read === false && this.user2 === message.messageSender;
@@ -49,7 +53,9 @@ threadSchema.virtual("user2NewMessages").get(function () {
   }).length;
 });
 threadSchema.virtual("lastMessageTimestamp").get(function () {
-  return this.messages[this.messages.length - 1]?.createdAt;
+  if (this.messages.length > 0) {
+    return this.messages[this.messages.length - 1]?.createdAt;
+  } else return this.createdAt;
 });
 
 const Thread = model("Thread", threadSchema);

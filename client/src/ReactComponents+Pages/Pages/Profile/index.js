@@ -13,7 +13,7 @@ import Auth from "../../../utils/auth";
 // It's also the only way to access the conversations button, which leads to a list of their private message threads
 const Profile = () => {
   const { username: userParam } = useParams();
-// GraphQL query that will
+  // GraphQL query that will
   const { error, loading, data } = useQuery(userParam ? QUERY_USER : QUERY_ME, {
     variables: { username: userParam },
     fetchPolicy: "no-cache",
@@ -44,22 +44,30 @@ const Profile = () => {
     <div>
       <div className="flex-row justify-center mb-3 d-flex">
         <div className="d-flex align-items-center w-75">
-          <h2 className="col-12 col-md-10 p-3 text-left mb-1 p-0">
-            Viewing {userParam ? `${user.username}'s` : "your"} profile
-          </h2>
-          {!userParam && (
-            <Link to={`/conversations`} className="btn bg-warning conversations">
-              Conversations
-            </Link>
-          )}
+          <div className="d-flex flex-column flex-md-row justify-content-between align-items-center w-100">
+            <h2 className="col-12 col-md-10 p-3 text-left mb-0 p-0">
+              Viewing {userParam ? `${user.username}'s` : "your"} profile
+            </h2>
+            <div className = "d-flex flex-row justify-content-end align-items-center w-100">
+              {!userParam && (
+                <Link
+                  to={`/conversations`}
+                  className="btn bg-warning conversations"
+                >
+                  Conversations
+                </Link>
+              )}
+            </div>
+          </div>
         </div>
-        <div className="col-12 col-md-10 mb-5">
+        <div className="col-12 col-md-10 mb-5 mt-2">
           <PostList
             posts={user.posts}
             username={user.username}
             title={`${user.username}'s posts...`}
             showTitle={false}
             showUsername={false}
+           
           />
         </div>
         {!userParam && (

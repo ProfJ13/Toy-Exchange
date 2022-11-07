@@ -96,90 +96,92 @@ const EditPostForm = () => {
       return <h2>You can't edit a post you didn't create!</h2>;
     } else {
       return (
-        <div className="mb-3">
-          <h3>Update your Listing</h3>
-          <form
-            className="flex-row justify-center justify-space-between-md align-center"
-            onSubmit={handleFormSubmit}
-          >
-            <div className="col-12">
-              <h5 className="text-light">The name of your listed item:</h5>
-              <textarea
-                autoFocus
-                id="postTitle"
-                name="postTitle"
-                placeholder="What item are you offering?"
-                value={formState.postTitle}
-                className="form-input w-100"
-                style={{ lineHeight: "1.5", resize: "vertical" }}
-                onChange={handleChange}
-              ></textarea>
-              <p
-                className={`m-0 ${
-                  characterCount.postTitle > 150 || error
-                    ? "text-danger"
-                    : "text-light"
-                }`}
-              >
-                Character Count: {characterCount.postTitle}/150
-              </p>
-              <br />
-              <h5 className="text-light">Listing Details:</h5>
-              <textarea
-                id="postText"
-                name="postText"
-                placeholder="Type any relevant information about your item here..."
-                value={formState.postText}
-                className="form-input w-100"
-                style={{ lineHeight: "1.5", resize: "vertical" }}
-                onChange={handleChange}
-              ></textarea>
-              <p
-                className={`m-0 ${
-                  characterCount.postText > 280 || error
-                    ? "text-danger"
-                    : "text-light"
-                }`}
-              >
-                Character Count: {characterCount.postText}/280
-              </p>
-              <br />
-              <h5 className="text-light">What do you want in return?</h5>{" "}
-              <textarea
-                id="expectedTradeCompensation"
-                name="expectedTradeCompensation"
-                placeholder="What do you want in exchange for this item? Multiple options may help you find a match faster."
-                value={formState.expectedTradeCompensation}
-                className="form-input w-100"
-                style={{ lineHeight: "1.5", resize: "vertical" }}
-                onChange={handleChange}
-              ></textarea>
-              <p
-                className={`m-0 mb-2 ${
-                  characterCount.expectedTradeCompensation > 150 || error
-                    ? "text-danger"
-                    : "text-light"
-                }`}
-              >
-                Character Count: {characterCount.expectedTradeCompensation}
-                /150
-              </p>
-            </div>
-            <div className="col-12">
-              <button
-                className="btn bg-success justify-content-right"
-                type="submit"
-              >
-                Update This Listing
-              </button>
-            </div>
-            {error && (
-              <div className="col-12 my-3 bg-danger text-white p-3 text-break">
-                {error.message}
+        <main className="flex-row justify-content-center">
+          <div className="mb-3 my-3 col-12 col-md-10 p-3">
+            <h3>Update your Listing</h3>
+            <form
+              className="flex-row justify-center justify-space-between-md align-center"
+              onSubmit={handleFormSubmit}
+            >
+              <div className="col-12">
+                <h5 className="text-light">The name of your listed item:</h5>
+                <textarea
+                  autoFocus
+                  id="postTitle"
+                  name="postTitle"
+                  placeholder="What item are you offering?"
+                  value={formState.postTitle}
+                  className="form-input w-100"
+                  style={{ lineHeight: "1.5", resize: "vertical" }}
+                  onChange={handleChange}
+                ></textarea>
+                <p
+                  className={`m-0 ${
+                    characterCount.postTitle > 150 || error
+                      ? "text-danger"
+                      : "text-light"
+                  }`}
+                >
+                  Character Count: {characterCount.postTitle}/150
+                </p>
+                <br />
+                <h5 className="text-light">Listing Details:</h5>
+                <textarea
+                  id="postText"
+                  name="postText"
+                  placeholder="Type any relevant information about your item here..."
+                  value={formState.postText}
+                  className="form-input w-100"
+                  style={{ lineHeight: "1.5", resize: "vertical" }}
+                  onChange={handleChange}
+                ></textarea>
+                <p
+                  className={`m-0 ${
+                    characterCount.postText > 280 || error
+                      ? "text-danger"
+                      : "text-light"
+                  }`}
+                >
+                  Character Count: {characterCount.postText}/280
+                </p>
+                <br />
+                <h5 className="text-light">What do you want in return?</h5>{" "}
+                <textarea
+                  id="expectedTradeCompensation"
+                  name="expectedTradeCompensation"
+                  placeholder="What do you want in exchange for this item? Multiple options may help you find a match faster."
+                  value={formState.expectedTradeCompensation}
+                  className="form-input w-100"
+                  style={{ lineHeight: "1.5", resize: "vertical" }}
+                  onChange={handleChange}
+                ></textarea>
+                <p
+                  className={`m-0 mb-2 ${
+                    characterCount.expectedTradeCompensation > 150 || error
+                      ? "text-danger"
+                      : "text-light"
+                  }`}
+                >
+                  Character Count: {characterCount.expectedTradeCompensation}
+                  /150
+                </p>
               </div>
-            )}
-          </form>
-        </div>
+              <div className="col-12">
+                <button
+                  className="btn bg-success justify-content-right"
+                  type="submit"
+                >
+                  Update This Listing
+                </button>
+              </div>
+              {error && (
+                <div className="col-12 my-3 bg-danger text-white p-3 text-break">
+                  {error.message}
+                </div>
+              )}
+            </form>
+          </div>
+        </main>
       );
     }
   }

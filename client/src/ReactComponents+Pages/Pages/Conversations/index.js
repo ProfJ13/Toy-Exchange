@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { formatDate } from "../../../utils/helpers";
 import "./index.css";
@@ -18,7 +18,9 @@ const Conversations = () => {
   threads.sort((a, b) =>
     a.lastMessageTimestamp > b.lastMessageTimestamp ? -1 : 1
   );
-
+  if (!Auth.loggedIn()) {
+    return <Navigate to="/" replace={true} />;
+  }
   if (!Auth.loggedIn()) {
     return (
       <>
@@ -28,20 +30,22 @@ const Conversations = () => {
       </>
     );
   }
-  if (loading) return (
-    <>
-      <UserSearchBar refetch={refetch} />
-      <h4>Loading...</h4>
-    </>
-  );
-    if (!threads.length) {
-      return (
-        <>
-          <UserSearchBar refetch={refetch} />
-          <h4>No Conversations Yet! Add some by searching for users!</h4>
-        </>
-      );
-    }
+  if (loading)
+    return (
+      <>
+        <UserSearchBar refetch={refetch} />
+        <h4>Loading...</h4>
+      </>
+    );
+  if (!threads.length) {
+    return (
+      <>
+        <UserSearchBar refetch={refetch} />
+        <h4>No Conversations Yet! Add some by searching for users!</h4>
+      </>
+    );
+  }
+
   return (
     <main className="flex-row justify-content-center">
       <div className="mt-3 col-12 col-md-10 mb-3 p-3">

@@ -17,7 +17,7 @@ const LandingPage = () => {
           <div className="text-white d-flex align-items-center flex-column">
             <h1
               className="mb-4 fw-bold font"
-              style={{ fontFamily: "'Chalk', sans-serif" ,fontSize: "70px" }}
+              style={{ fontFamily: "'Chalk', sans-serif", fontSize: "90px" }}
             >
               ToyZoid
             </h1>

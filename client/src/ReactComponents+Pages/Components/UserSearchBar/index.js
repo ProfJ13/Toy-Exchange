@@ -1,19 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useMutation, useLazyQuery } from "@apollo/client";
 import { CREATE_THREAD } from "../../../utils/mutations";
 import { QUERY_USER_SEARCH } from "../../../utils/queries";
 import Auth from "../../../utils/auth";
 
+// This search bar component is on the conversations page
+// It allows users to search for other users by username (uses a regex search of the db to find matching names)
+// Once they find them, they can submit the name to the server to create a new private messaging conversation
 const UserSearchBar = ({ refetch }) => {
-  const [userSearchFunction, { data, loading, error: searchError }] =
-    useLazyQuery(QUERY_USER_SEARCH, {
-      fetchPolicy: "no-cache",
-    });
-  const [createThread, { error }] = useMutation(CREATE_THREAD);
+  const [userSearchFunction, { data }] = useLazyQuery(QUERY_USER_SEARCH, {
+    fetchPolicy: "no-cache",
+  });
+  const [createThread] = useMutation(CREATE_THREAD);
 
   const [formState, setFormState] = useState("");
-
-  const usernames = data?.userSearch || [];
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
@@ -26,17 +26,20 @@ const UserSearchBar = ({ refetch }) => {
       });
 
       if (data?.createThread) {
+        setFormState("");
         refetch();
       }
     } catch (err) {
       console.error(err);
     }
   };
-  const handleChange = (event) => {
-    const { value } = event.target;
 
-    setFormState(value);
-    userSearchFunction({ variables: { username: formState } });
+  const handleChange = (event) => {
+    const searchTerm = event.target.value;
+    setFormState(searchTerm);
+    if (searchTerm.length > 0) {
+      userSearchFunction({ variables: { username: searchTerm } });
+    }
   };
 
   if (!Auth.loggedIn()) {
@@ -51,21 +54,22 @@ const UserSearchBar = ({ refetch }) => {
             onSubmit={handleFormSubmit}
           >
             <input
-              autoFocus
+              type="text"
+              placeholder="Search usernames..."
               list="users"
               onChange={handleChange}
               className="p-1"
+              value={formState}
             />
+            {/* renders a list of matching users in a tooltip list to pick from */}
             <datalist id="users">
-              {usernames && !searchError && !loading
-                ? usernames.map((user) => (
-                    <option style={{ fontSize: "48px" }}>
-                      {user.username}
-                    </option>
-                  ))
-                : searchError && <option></option>}
+              {data?.userSearch &&
+                data?.userSearch?.map((user) => (
+                  <option style={{ fontSize: "48px" }} key={user.username}>
+                    {user.username}
+                  </option>
+                ))}
             </datalist>
-
             <button className="btn bg-success ml-2 p-1 py-1" type="submit">
               Add Conversation
             </button>

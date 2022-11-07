@@ -4,6 +4,7 @@ import { useMutation } from "@apollo/client";
 import { ADD_USER } from "../../../utils/mutations";
 import Auth from "../../../utils/auth";
 
+// a Form component to allow users to sign up. Uses a graphql mutation to submit the info and pass back a token
 const SignupForm = () => {
   // set initial form state
   const [signupFormData, setSignupFormData] = useState({
@@ -15,6 +16,7 @@ const SignupForm = () => {
   const [validated] = useState(false);
   // set state for alert
   const [showAlert, setShowAlert] = useState(false);
+// Here's our graphQL query, which will submit the info to the server
   const [addUserFunction] = useMutation(ADD_USER);
 
   const handleInputChange = (event) => {
@@ -25,7 +27,6 @@ const SignupForm = () => {
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
-    // check if form has everything (as per react-bootstrap docs)
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
       event.preventDefault();

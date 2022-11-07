@@ -1,11 +1,13 @@
 import React, { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useMutation, useQuery } from "@apollo/client";
 import { ADD_POST } from "../../../utils/mutations";
 import { QUERY_CATEGORIES } from "../../../utils/queries";
 import { useParams } from "react-router-dom";
 import Auth from "../../../utils/auth";
 
+// This page allows the user to create a new post, using several inputs.
+// It includes visual indicators of character limits, using conditional rendering
 const PostForm = () => {
   const { data } = useQuery(QUERY_CATEGORIES);
   const categories = data?.categories;
@@ -33,7 +35,6 @@ const PostForm = () => {
           ...formState,
         },
       });
-      console.log(data);
       if (data) {
         navigate(`/posts/${data.addPost._id}`, { replace: true });
       }
@@ -64,6 +65,7 @@ const PostForm = () => {
             onSubmit={handleFormSubmit}
           >
             <div className="col-12">
+              <h5 className="text-light">Toy Category:</h5>
               <select
                 name="categoryName"
                 className="px-4 py-1 mb-3"
@@ -72,7 +74,9 @@ const PostForm = () => {
               >
                 {categories ? (
                   categories.map((category) => (
-                    <option>{category.categoryName}</option>
+                    <option key={category.categoryName}>
+                      {category.categoryName}
+                    </option>
                   ))
                 ) : (
                   <option>Loading...</option>
@@ -88,8 +92,10 @@ const PostForm = () => {
                 onChange={handleChange}
               ></textarea>
               <p
-                className={`m-0 text-light ${
-                  characterCount.postTitle >= 150 || error ? "text-danger" : ""
+                className={`m-0 ${
+                  characterCount.postTitle >= 150 || error
+                    ? "text-danger"
+                    : "text-light"
                 }`}
               >
                 Character Count: {characterCount.postTitle}/150
@@ -105,8 +111,10 @@ const PostForm = () => {
                 onChange={handleChange}
               ></textarea>
               <p
-                className={`m-0 text-light ${
-                  characterCount.postText >= 280 || error ? "text-danger" : ""
+                className={`m-0 ${
+                  characterCount.postText >= 280 || error
+                    ? "text-danger"
+                    : "text-light"
                 }`}
               >
                 Character Count: {characterCount.postText}/280
@@ -122,10 +130,10 @@ const PostForm = () => {
                 onChange={handleChange}
               ></textarea>{" "}
               <p
-                className={`m-0 mb-2 text-light ${
+                className={`m-0 mb-2 ${
                   characterCount.expectedTradeCompensation >= 150 || error
                     ? "text-danger"
-                    : ""
+                    : "text-light"
                 }`}
               >
                 Character Count: {characterCount.expectedTradeCompensation}/150
@@ -140,7 +148,7 @@ const PostForm = () => {
               </button>
             </div>
             {error && (
-              <div className="col-12 my-3 bg-danger text-white p-3">
+              <div className="col-12 my-3 bg-danger text-white p-3 text-break">
                 {error.message}
               </div>
             )}

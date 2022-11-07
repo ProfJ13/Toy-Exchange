@@ -9,16 +9,18 @@ import { QUERY_USER, QUERY_ME } from "../../../utils/queries";
 
 import Auth from "../../../utils/auth";
 
+// This page displays a logged-in user's posts using the PostList component
+// It's also the only way to access the conversations button, which leads to a list of their private message threads
 const Profile = () => {
   const { username: userParam } = useParams();
-
+// GraphQL query that will
   const { error, loading, data } = useQuery(userParam ? QUERY_USER : QUERY_ME, {
     variables: { username: userParam },
     fetchPolicy: "no-cache",
   });
 
   const user = data?.user || data?.otherUser || {};
-  // navigate to personal profile page if username is yours
+  // navigate to profile page if username is yours
   if (Auth.loggedIn() && Auth.getProfile().data.username === userParam) {
     return <Navigate to="/me" replace={true} />;
   }
@@ -28,11 +30,7 @@ const Profile = () => {
   }
 
   if (!userParam && !Auth.loggedIn()) {
-    return (
-      <h4 className="text-center">
-        You need to log in to access your profile!
-      </h4>
-    );
+    return <Navigate to="/" replace={true} />;
   }
 
   if (!user?.username) {
@@ -50,7 +48,7 @@ const Profile = () => {
             Viewing {userParam ? `${user.username}'s` : "your"} profile
           </h2>
           {!userParam && (
-            <Link to={`/conversations`} className="btn bg-warning">
+            <Link to={`/conversations`} className="btn bg-warning conversations">
               Conversations
             </Link>
           )}

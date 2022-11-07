@@ -1,6 +1,8 @@
 import React from "react";
-import { format_date } from "../../../utils/helpers";
+import { formatDate } from "../../../utils/helpers";
 import { Link } from "react-router-dom";
+// Renders a list of comments on the post
+
 const CommentList = ({ comments = [] }) => {
   if (!comments.length) {
     return <h3>No Comments Yet</h3>;
@@ -18,16 +20,16 @@ const CommentList = ({ comments = [] }) => {
         {comments &&
           comments.map((comment) => (
             <div key={comment._id} className="col-12 mb-3 pb-3">
-              <div className="p-3 bg-dark text-light">
+              <div className="p-3 bg-dark text-light rounded">
                 <Link to={`/profiles/${comment.commentAuthor.username}`}>
-                  <p>
-                    <span style={{ fontSize: "1rem", color: "#1a89bc" }}>
+                  <p key="comment._id">
+                    <span className="text-break" style={{ fontSize: "1rem", color: "#1a89bc" }}>
                       {comment.commentAuthor.username} posted this{" "}
-                      {format_date(comment.createdAt)}
+                      {formatDate(comment.createdAt)}
                     </span>
                   </p>
                 </Link>
-                <p className="card-body" id="post">
+                <p className="card-body text-break comment">
                   {comment.commentText}
                 </p>
               </div>

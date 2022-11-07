@@ -12,6 +12,9 @@ const PostList = ({
   showTitle = true,
   showCategory = true,
 }) => {
+  // sorts so the most recent posts appear first
+  posts.sort((a, b) => (a.createdAt > b.createdAt ? -1 : 1));
+
   if (!posts.length) {
     return <h3>No Posts Yet</h3>;
   }

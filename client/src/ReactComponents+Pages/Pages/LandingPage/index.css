@@ -1,6 +1,5 @@
 .landing-container {
-  background: url("https://dm0qx8t0i9gc9.cloudfront.net/thumbnails/video/rZJIMvhmliwmde8a6/videoblocks-preschool-kids-playing-with-toys-on-the-floor-children-playing-constructor-top-view-kids-development-center_hdnkal5an_thumbnail-1080_01.png")
-    no-repeat center center;
+
   height: 100vh;
   font-family: var(--font);
 }
@@ -11,11 +10,13 @@
 }
 
 body {
-  background-image: linear-gradient(to right, #ccd1cb, var(--dark), var(--dark),var(--dark),var(--dark),var(--dark),var(--dark),#ccd1cb);
+background: #000428;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to top, #004e92, #000428);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to top, #004e92, #000428); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
 }
 
 .font {
-  font-family: var(--font);
   color: var(--text);
 }
 

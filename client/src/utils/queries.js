@@ -129,6 +129,7 @@ export const QUERY_SINGLE_POST = gql`
       createdAt
       categoryName
       comments {
+        _id
         commentText
         createdAt
         commentAuthor {

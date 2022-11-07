@@ -9,16 +9,18 @@ import { QUERY_USER, QUERY_ME } from "../../../utils/queries";
 
 import Auth from "../../../utils/auth";
 
+// This page displays a logged-in user's posts using the PostList component
+// It's also the only way to access the conversations button, which leads to a list of their private message threads
 const Profile = () => {
   const { username: userParam } = useParams();
-
+  // GraphQL query that will
   const { error, loading, data } = useQuery(userParam ? QUERY_USER : QUERY_ME, {
     variables: { username: userParam },
     fetchPolicy: "no-cache",
   });
 
   const user = data?.user || data?.otherUser || {};
-  // navigate to personal profile page if username is yours
+  // navigate to profile page if username is yours
   if (Auth.loggedIn() && Auth.getProfile().data.username === userParam) {
     return <Navigate to="/me" replace={true} />;
   }
@@ -28,11 +30,7 @@ const Profile = () => {
   }
 
   if (!userParam && !Auth.loggedIn()) {
-    return (
-      <h4 className="text-center">
-        You need to log in to access your profile!
-      </h4>
-    );
+    return <Navigate to="/" replace={true} />;
   }
 
   if (!user?.username) {
@@ -46,22 +44,30 @@ const Profile = () => {
     <div>
       <div className="flex-row justify-center mb-3 d-flex">
         <div className="d-flex align-items-center w-75">
-          <h2 className="col-12 col-md-10 p-3 text-left mb-1 p-0">
-            Viewing {userParam ? `${user.username}'s` : "your"} profile
-          </h2>
-          {!userParam && (
-            <Link to={`/conversations`} className="btn bg-warning">
-              Conversations
-            </Link>
-          )}
+          <div className="d-flex flex-column flex-md-row justify-content-between align-items-center w-100">
+            <h2 className="col-12 col-md-10 p-3 text-left mb-0 p-0">
+              Viewing {userParam ? `${user.username}'s` : "your"} profile
+            </h2>
+            <div className = "d-flex flex-row justify-content-end align-items-center w-100">
+              {!userParam && (
+                <Link
+                  to={`/conversations`}
+                  className="btn bg-warning conversations"
+                >
+                  Conversations
+                </Link>
+              )}
+            </div>
+          </div>
         </div>
-        <div className="col-12 col-md-10 mb-5">
+        <div className="col-12 col-md-10 mb-5 mt-2">
           <PostList
             posts={user.posts}
             username={user.username}
             title={`${user.username}'s posts...`}
             showTitle={false}
             showUsername={false}
+           
           />
         </div>
         {!userParam && (

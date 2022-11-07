@@ -2,6 +2,9 @@ import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import "./index.css";
 
+// An extremely simple footer with a back button. 
+// A good candidate for an overhaul later, as it's got lots of empty space to be used
+
 const Footer = () => {
   const location = useLocation();
   const navigate = useNavigate();

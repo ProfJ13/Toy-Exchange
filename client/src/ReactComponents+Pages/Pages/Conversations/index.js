@@ -10,7 +10,7 @@ import UserSearchBar from "../../Components/UserSearchBar";
 // This page renders all active conversations between the logged-in user and others
 // It also displays how many new messages they have, rendering "fresh" conversations in different color
 const Conversations = () => {
-  const { data, refetch } = useQuery(QUERY_SHARED_THREADS, {
+  const { data, loading, refetch } = useQuery(QUERY_SHARED_THREADS, {
     fetchPolicy: "no-cache",
   });
   const threads = data?.sharedThreads || [];
@@ -28,14 +28,20 @@ const Conversations = () => {
       </>
     );
   }
-  if (!threads.length) {
-    return (
-      <>
-        <UserSearchBar refetch={refetch} />
-        <h4>No Conversations Yet! Add some by searching for users!</h4>
-      </>
-    );
-  }
+  if (loading) return (
+    <>
+      <UserSearchBar refetch={refetch} />
+      <h4>Loading...</h4>
+    </>
+  );
+    if (!threads.length) {
+      return (
+        <>
+          <UserSearchBar refetch={refetch} />
+          <h4>No Conversations Yet! Add some by searching for users!</h4>
+        </>
+      );
+    }
   return (
     <main className="flex-row justify-content-center">
       <div className="mt-3 col-12 col-md-10 mb-3 p-3">

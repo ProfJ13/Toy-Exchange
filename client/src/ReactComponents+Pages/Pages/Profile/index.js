@@ -42,8 +42,8 @@ const Profile = () => {
   }
   return (
     <div>
-      <div className="flex-row justify-center mb-3 d-flex">
-        <div className="d-flex flex-column flex-md-row align-items-center w-100 px-4">
+      <div className="flex-row justify-center mb-3 d-flex ">
+        <div className="d-flex flex-column flex-md-row justify-content-around align-items-center col-10 px-4">
           <h2 className="text-left mb-0 p-0 text-break w-100 mt-2">
             Viewing {userParam ? `${user.username}'s` : "your"} profile
           </h2>

@@ -69,7 +69,7 @@ const PostForm = () => {
                 <h5 className="text-light">Toy Category:</h5>
                 <select
                   name="categoryName"
-                  className="px-4 py-1 mb-3"
+                  className="px-4 py-1 mb-3 w-100"
                   value={formState.categoryName}
                   onChange={handleChange}
                 >

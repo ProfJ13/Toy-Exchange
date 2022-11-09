@@ -43,22 +43,19 @@ const Profile = () => {
   return (
     <div>
       <div className="flex-row justify-center mb-3 d-flex">
-        <div className="d-flex align-items-center w-75">
-          <div className="d-flex flex-column flex-md-row justify-content-between align-items-center w-100">
-            <h2 className="col-12 col-md-10 p-3 text-left mb-0 p-0 text-break">
-              Viewing {userParam ? `${user.username}'s` : "your"} profile
-            </h2>
-            <div className = "d-flex flex-row justify-content-end align-items-center w-100">
-              {!userParam && (
-                <Link
-                  to={`/conversations`}
-                  className="btn bg-warning conversations"
-                >
-                  Conversations
-                </Link>
-              )}
-            </div>
-          </div>
+        <div className="d-flex flex-column flex-md-row align-items-center w-100 px-4">
+          <h2 className="text-left mb-0 p-0 text-break w-100 mt-2">
+            Viewing {userParam ? `${user.username}'s` : "your"} profile
+          </h2>
+
+          {!userParam && (
+            <Link
+              to={`/conversations`}
+              className="btn bg-warning conversations mt-2 align-self-end align-self-md-center"
+            >
+              Conversations
+            </Link>
+          )}
         </div>
         <div className="col-12 col-md-10 mb-5 mt-2">
           <PostList
@@ -67,7 +64,6 @@ const Profile = () => {
             title={`${user.username}'s posts...`}
             showTitle={false}
             showUsername={false}
-           
           />
         </div>
         {!userParam && (

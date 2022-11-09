@@ -22,7 +22,7 @@ const AppNavbar = () => {
 
   return (
     <>
-      <Navbar expand="lg" id="navbar">
+      <Navbar expand="md" id="navbar">
         <Container fluid>
           <Navbar.Brand as={Link} to="/" className="d-flex align-items-center" style={{textDecoration: "none"}}>
             <img
@@ -58,14 +58,14 @@ const AppNavbar = () => {
               {Auth.loggedIn() ? (
                 <>
                   <Link
-                    className="btn btn-lg m-2"
+                    className="btn btn-lg m-2 d-flex justify-content-center"
                     to="/me"
                     id="profileButton"
                     style={{ color: "var(--text)" }}
                   >
                     Your Profile
                     {data?.checkMessages?.length > 0 ? (
-                      // if there are new messages, this span will get conditionally rendered; it's style like a
+                      // if there are new messages, this span will get conditionally rendered; it's styled like a
                       // notification circle, with a solid yellow circle around a number.
                       <span
                         className="d-flex justify-content-center align-items-center"

@@ -55,7 +55,7 @@ const MessageForm = ({ username, refetch }) => {
               className="p-1"
             />
 
-            <button className="btn bg-success m-2 p-1 py-1" type="submit">
+            <button className="btn bg-success m-2 p-1 align-self-end" type="submit">
               Send Message
             </button>
           </form>

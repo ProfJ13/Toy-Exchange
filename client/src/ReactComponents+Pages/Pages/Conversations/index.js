@@ -8,7 +8,7 @@ import Auth from "../../../utils/auth";
 import UserSearchBar from "../../Components/UserSearchBar";
 
 // This page renders all active conversations between the logged-in user and others
-// It also displays how many new messages they have, rendering "fresh" conversations in different color
+// It also displays how many new messages they have, rendering "fresh" conversations in a different color
 const Conversations = () => {
   const { data, loading, refetch } = useQuery(QUERY_SHARED_THREADS, {
     fetchPolicy: "no-cache",

@@ -27,7 +27,7 @@ const MessagePage = () => {
   if (!messages?.length) {
     return (
       <>
-        <h4 className="mt-2 text-break">
+        <h4 className="ml-2 mt-2 text-break">
           Start your conversation with{" "}
           {Auth.getProfile().data.username === thread.user1
             ? thread.user2
@@ -47,7 +47,7 @@ const MessagePage = () => {
   }
   return (
     <>
-      <h4 className="mt-2 text-break">
+      <h4 className="ml-2 mt-2 text-break">
         Your conversation with{" "}
         {Auth.getProfile().data.username === thread.user1
           ? thread.user2
@@ -62,14 +62,17 @@ const MessagePage = () => {
               defaultActiveKey="1"
               className={
                 Auth.getProfile().data.username === message.messageSender
-                  ? "bg-success text-break p-2 m-0 align-self-end border border-dark rounded mb-2 d-flex align-items-end my-message"
-                  : "bg-warning text-break p-2 m-0 align-self-start border border-dark rounded mb-2 d-flex align-items-start their-message"
+                  ? "bg-success text-right text-break p-2 m-0 align-self-end border border-dark rounded mb-2 d-flex align-items-end my-message"
+                  : "bg-warning text-left text-break p-2 m-0 align-self-start border border-dark rounded mb-2 d-flex align-items-start their-message"
               }
             >
               <Accordion.Item eventKey="0">
                 <Accordion.Header>{message.messageText}</Accordion.Header>
                 <Accordion.Body>
-                  Sent {formatDate(message.createdAt)}
+                  {Auth.getProfile().data.username === message.messageSender
+                    ? "You sent this"
+                    : "Sent by " + message.messageSender}{" "}
+                  {formatDate(message.createdAt)}
                 </Accordion.Body>
               </Accordion.Item>
             </Accordion>

@@ -36,10 +36,10 @@ const AppNavbar = () => {
             <h1
               style={{
                 color: "var(--text)",
-                fontSize: "50px",
+                fontSize: "45px",
                 fontFamily: "'Chalk', sans-serif",
               }}
-              className="d-inline-block m-0"
+              className="d-inline-block m-0 title"
             >
               ToyZoid
             </h1>

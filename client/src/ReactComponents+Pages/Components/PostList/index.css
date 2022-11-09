@@ -7,14 +7,12 @@ p {
     font-family: var(--font);
 }
 
-#post {
+.post {
     border-color: var(--rose);
-    border-width: 1px;
+    border-width: 2px;
     color: var(--text);
 }
 
-#cardHeader {
-    background-color: var(--rose);
-    color: var(--dark);
-    font-weight: bold;
+.card-header {
+border: 0 !important;
 }

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Navbar, Nav, Container, Modal, Tab } from "react-bootstrap";
 import SignUpForm from "../SignupForm";
@@ -8,11 +8,14 @@ import "./index.css";
 import logo from "../../../images/logo192.png";
 import { useQuery } from "@apollo/client";
 import { CHECK_MESSAGES } from "../../../utils/queries";
+
+// Navbar component with some simple links.
+// It also periodically checks whether the user has new private messages and will display the number of messages
 const AppNavbar = () => {
   // set modal display state
   const [showModal, setShowModal] = useState(false);
-
-  const { data, loading, error } = useQuery(CHECK_MESSAGES, {
+  // This is the graphql query that checks for new messages. It's set to poll once every 5 seconds.
+  const { data } = useQuery(CHECK_MESSAGES, {
     pollInterval: 5000,
     fetchPolicy: "no-cache",
   });
@@ -21,17 +24,22 @@ const AppNavbar = () => {
     <>
       <Navbar expand="lg" id="navbar">
         <Container fluid>
-          <Navbar.Brand as={Link} to="/" className="d-flex align-items-center">
+          <Navbar.Brand as={Link} to="/" className="d-flex align-items-center" style={{textDecoration: "none"}}>
             <img
               src={logo}
               className="mr-2"
               style={{
                 maxHeight: "50px",
               }}
+              alt="Our logo: a bright yellow rubber duck."
             />
             <h1
-              style={{ color: "var(--text)", fontSize: "30px" }}
-              className="d-inline-block m-0"
+              style={{
+                color: "var(--text)",
+                fontSize: "45px",
+                fontFamily: "'Chalk', sans-serif",
+              }}
+              className="d-inline-block m-0 title"
             >
               ToyZoid
             </h1>
@@ -50,13 +58,15 @@ const AppNavbar = () => {
               {Auth.loggedIn() ? (
                 <>
                   <Link
-                    className="btn btn-lg m-2 d-flex justify-content-between align-items-center"
+                    className="btn btn-lg m-2"
                     to="/me"
                     id="profileButton"
                     style={{ color: "var(--text)" }}
                   >
-                    {Auth.getProfile().data.username}'s Profile
-                    {data?.checkMessages?.length !== 0 ? (
+                    Your Profile
+                    {data?.checkMessages?.length > 0 ? (
+                      // if there are new messages, this span will get conditionally rendered; it's style like a
+                      // notification circle, with a solid yellow circle around a number.
                       <span
                         className="d-flex justify-content-center align-items-center"
                         style={{

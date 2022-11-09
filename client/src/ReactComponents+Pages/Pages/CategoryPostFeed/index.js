@@ -5,17 +5,19 @@ import PostList from "../../Components/PostList";
 import "./index.css";
 import { QUERY_CATEGORY_POSTS } from "../../../utils/queries";
 import Auth from "../../../utils/auth";
-const PostFeedPage = () => {
+
+// This page is what displays when a user clicks on a toy category.
+// This page will display the category name, query the relevant post data, and pass it on to the PostList component to be rendered
+const CategoryPostFeed = () => {
   const { categoryName: categoryParam } = useParams();
   const { loading, data, error } = useQuery(QUERY_CATEGORY_POSTS, {
     variables: { categoryName: categoryParam },
     fetchPolicy: "no-cache",
   });
-  console.log(data);
   const posts = data?.categoryPosts || [];
   return (
     <main>
-      <div className="flex-row justify-center">
+      <div className="flex-row justify-content-center">
         <div className="col-12 col-md-10 mb-3 p-3">
           {Auth.loggedIn() ? (
             <Link
@@ -47,4 +49,4 @@ const PostFeedPage = () => {
   );
 };
 
-export default PostFeedPage;
+export default CategoryPostFeed;

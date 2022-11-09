@@ -81,13 +81,15 @@ export const QUERY_SHARED_THREADS = gql`
   }
 `;
 
-export const CHECK_MESSAGES = gql`query checkMessages {
-  checkMessages {
-    messages {
-      read
+export const CHECK_MESSAGES = gql`
+  query checkMessages {
+    checkMessages {
+      messages {
+        read
+      }
     }
   }
-}`
+`;
 
 export const QUERY_POSTS = gql`
   query getPosts {
@@ -129,6 +131,7 @@ export const QUERY_SINGLE_POST = gql`
       createdAt
       categoryName
       comments {
+        _id
         commentText
         createdAt
         commentAuthor {

@@ -1,12 +1,12 @@
 footer {
-    background-color: var(--grey);
+  background-color: #40476d;
 }
 
 h4 {
-    color: var(--text);
+  color: var(--text);
 }
 
 #btn {
-    color: var(--text);
-    background-color: var(--rose);
+  color: var(--text);
+  background-color: var(--rose);
 }

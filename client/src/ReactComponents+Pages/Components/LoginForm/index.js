@@ -5,6 +5,8 @@ import { LOGIN_USER } from "../../../utils/mutations";
 import Auth from "../../../utils/auth";
 import "./index.css";
 
+// A login form that uses graphQL mutation to submit the user's credentials and deliver their token back to them
+
 const LoginForm = () => {
   const [loginFormData, setLoginFormData] = useState({
     email: "",
@@ -12,6 +14,7 @@ const LoginForm = () => {
   });
   const [validated] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
+  // GraphQL mutation that attempts to log the user in
   const [loginFunction] = useMutation(LOGIN_USER);
 
   const handleInputChange = (event) => {
@@ -22,7 +25,6 @@ const LoginForm = () => {
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
-    // check if form has everything (as per react-bootstrap docs)
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
       event.preventDefault();

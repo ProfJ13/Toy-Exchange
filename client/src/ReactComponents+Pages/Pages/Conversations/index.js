@@ -13,7 +13,9 @@ const Conversations = () => {
   const { data, loading, refetch } = useQuery(QUERY_SHARED_THREADS, {
     fetchPolicy: "no-cache",
   });
+  const username = Auth.getProfile()?.data?.username;
   const threads = data?.sharedThreads || [];
+  
   // sorts the threads by the last time a message was sent by either party, most recent first
   threads.sort((a, b) =>
     a.lastMessageTimestamp > b.lastMessageTimestamp ? -1 : 1
@@ -62,28 +64,23 @@ const Conversations = () => {
               <Link to={`/conversations/${thread._id}`}>
                 <h5
                   className={
-                    (Auth.getProfile().data.username === thread.user1 &&
+                    (username === thread.user1 &&
                       thread.user1NewMessages !== 0) ||
-                    (Auth.getProfile().data.username === thread.user2 &&
-                      thread.user2NewMessages !== 0)
+                    (username === thread.user2 && thread.user2NewMessages !== 0)
                       ? "bg-success card-header p-2 m-0 text-break"
                       : "card-header p-2 m-0 text-break"
                   }
                   id="cardHeader"
                 >
-                  {Auth.getProfile().data.username === thread.user1
-                    ? thread.user2
-                    : thread.user1}
+                  {username === thread.user1 ? thread.user2 : thread.user1}
                 </h5>
-                {(Auth.getProfile().data.username === thread.user1 &&
-                  thread.user1NewMessages > 0) ||
-                (Auth.getProfile().data.username === thread.user2 &&
-                  thread.user2NewMessages > 0) ||
+                {(username === thread.user1 && thread.user1NewMessages > 0) ||
+                (username === thread.user2 && thread.user2NewMessages > 0) ||
                 thread.updatedAt !== thread.createdAt ? (
                   <>
                     <div className="card-body bg-light p-2">
                       <p>
-                        {Auth.getProfile().data.username === thread.user1
+                        {username === thread.user1
                           ? thread.user1NewMessages === 1
                             ? "1 new message"
                             : thread.user1NewMessages + " new messages"
@@ -119,9 +116,7 @@ const Conversations = () => {
               ) : (
                 <Link
                   to={`/profiles/${
-                    Auth.getProfile().data.username === thread.user1
-                      ? thread.user2
-                      : thread.user1
+                    username === thread.user1 ? thread.user2 : thread.user1
                   }`}
                 >
                   <p className="ms-2 my-1">
@@ -129,9 +124,7 @@ const Conversations = () => {
                       className="text-break"
                       style={{ fontSize: "1rem", color: "var(--text)" }}
                     >
-                      {Auth.getProfile().data.username === thread.user1
-                        ? thread.user2
-                        : thread.user1}
+                      {username === thread.user1 ? thread.user2 : thread.user1}
                       's profile
                     </span>
                   </p>

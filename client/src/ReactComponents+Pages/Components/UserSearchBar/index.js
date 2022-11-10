@@ -50,7 +50,7 @@ const UserSearchBar = ({ refetch }) => {
         <div className="mb-3">
           <h3>Search for a user to message them:</h3>
           <form
-            className="d-flex flex-column flex-sm-row justify-content-start align-items-start"
+            className="d-flex flex-column flex-sm-row justify-content-start align-items-start align-items-sm-center"
             onSubmit={handleFormSubmit}
           >
             <input
@@ -58,7 +58,7 @@ const UserSearchBar = ({ refetch }) => {
               placeholder="Search usernames..."
               list="users"
               onChange={handleChange}
-              className="p-1 mt-2"
+              className="p-1 my-1"
               value={formState}
             />
             {/* renders a list of matching users in a tooltip list to pick from */}
@@ -71,7 +71,7 @@ const UserSearchBar = ({ refetch }) => {
                 ))}
             </datalist>
             <button
-              className="btn bg-success ml-2 p-1 py-1 mt-2 align-self-end justify-self-sm-start"
+              className="btn bg-success ml-2 p-1 py-1 my-1 align-self-end justify-self-sm-start"
               type="submit"
             >
               Add Conversation

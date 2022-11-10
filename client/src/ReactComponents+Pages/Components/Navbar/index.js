@@ -24,7 +24,12 @@ const AppNavbar = () => {
     <>
       <Navbar expand="md" id="navbar">
         <Container fluid>
-          <Navbar.Brand as={Link} to="/" className="d-flex align-items-center" style={{textDecoration: "none"}}>
+          <Navbar.Brand
+            as={Link}
+            to="/"
+            className="d-flex align-items-center"
+            style={{ textDecoration: "none" }}
+          >
             <img
               src={logo}
               className="mr-2"
@@ -68,17 +73,15 @@ const AppNavbar = () => {
                       // if there are new messages, this span will get conditionally rendered; it's styled like a
                       // notification circle, with a solid yellow circle around a number.
                       <span
-                        className="d-flex justify-content-center align-items-center"
+                        className="d-flex justify-content-center align-items-center ml-1 bg-warning"
                         style={{
                           border: "solid 2px black",
-                          marginLeft: "1px",
                           display: "inline-block",
                           minHeight: "30px",
                           minWidth: "30px",
                           fontSize: "15px",
                           borderRadius: "15px",
                           color: "white",
-                          backgroundColor: "yellow",
                         }}
                       >
                         <span>{data?.checkMessages?.length}</span>

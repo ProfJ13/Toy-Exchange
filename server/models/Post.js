@@ -1,5 +1,6 @@
 const { Schema, model } = require("mongoose");
 
+// This collection stores all posts; including the _id of any comments on them
 const postSchema = new Schema(
   {
     postTitle: {

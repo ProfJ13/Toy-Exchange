@@ -79,7 +79,7 @@ const typeDefs = gql`
     sendMessage(username: String!, messageText: String!): Thread
     createThread(username: String!): Thread
     addUser(username: String!, email: String!, password: String!): Auth
-    login(email: String!, password: String!): Auth
+    login(username: String!, password: String!): Auth
     addPost(
       postTitle: String!
       postText: String!

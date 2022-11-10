@@ -14,7 +14,7 @@ import {
 } from "react-router-dom";
 
 import CategorySelect from "./ReactComponents+Pages/Pages/CategorySelect";
-import PostFeedPage from "./ReactComponents+Pages/Pages/PostFeedPage";
+import CategoryPostFeed from "./ReactComponents+Pages/Pages/CategoryPostFeed";
 import LandingPage from "./ReactComponents+Pages/Pages/LandingPage";
 import SinglePost from "./ReactComponents+Pages/Pages/SinglePost";
 import PostForm from "./ReactComponents+Pages/Pages/PostForm";
@@ -52,31 +52,28 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <Router>
-        <div className="flex-column justify-flex-start min-100-vh">
+        <div className="d-flex flex-column justify-flex-start min-100-vh">
           <Navbar />
-          <div className="container">
-            <Routes>
-              <Route path="/" element={<LandingPage />} />
-              <Route path="/categories" element={<CategorySelect />} />
-              <Route
-                path="/categories/:categoryName"
-                element={<PostFeedPage />}
-              />
-              <Route path="/create-post/:categoryName" element={<PostForm />} />
-              <Route path="/create-post" element={<PostForm />} />
-              <Route path="/edit-post/:postId" element={<EditPostForm />} />
-              <Route path="/me" element={<Profile />} />
-              <Route path="/profiles/:username" element={<Profile />} />
 
-              <Route path="/conversations" element={<Conversations />} />
-              <Route
-                path="/conversations/:threadId"
-                element={<MessagePage />}
-              />
-              <Route path="/posts/:postId" element={<SinglePost />} />
-              <Route path="*" element={<Navigate to="/" />} />
-            </Routes>
-          </div>
+          <Routes>
+            <Route path="/" element={<LandingPage />} />
+            <Route path="/categories" element={<CategorySelect />} />
+            <Route
+              path="/categories/:categoryName"
+              element={<CategoryPostFeed />}
+            />
+            <Route path="/create-post/:categoryName" element={<PostForm />} />
+            <Route path="/create-post" element={<PostForm />} />
+            <Route path="/edit-post/:postId" element={<EditPostForm />} />
+            <Route path="/me" element={<Profile />} />
+            <Route path="/profiles/:username" element={<Profile />} />
+
+            <Route path="/conversations" element={<Conversations />} />
+            <Route path="/conversations/:threadId" element={<MessagePage />} />
+            <Route path="/posts/:postId" element={<SinglePost />} />
+            <Route path="*" element={<Navigate to="/" />} />
+          </Routes>
+
           <Footer />
         </div>
       </Router>

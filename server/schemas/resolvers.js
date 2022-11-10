@@ -244,7 +244,13 @@ const resolvers = {
       throw new AuthenticationError("You need to be logged in!");
     },
     addUser: async (parent, { username, email, password }) => {
-      const user = await User.create({ username, email, password });
+      const user = await User.create({
+        usernameLowerCase: username.toLowerCase(),
+        emailLowerCase: email.toLowerCase(),
+        username: username,
+        email: email,
+        password,
+      });
       const token = signToken(user);
       Thread.create({
         user1: username,
@@ -259,8 +265,13 @@ const resolvers = {
       console.log(`New user created: username ${username}`);
       return { token, user };
     },
-    login: async (parent, { email, password }) => {
-      const user = await User.findOne({ email });
+    login: async (parent, { username, password }) => {
+      const user = await User.findOne({
+        $or: [
+          { usernameLowerCase: username.toLowerCase() },
+          { emailLowerCase: username.toLowerCase() },
+        ],
+      });
 
       if (!user) {
         throw new AuthenticationError("Incorrect credentials");

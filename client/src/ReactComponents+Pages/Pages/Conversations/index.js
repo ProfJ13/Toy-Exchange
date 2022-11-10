@@ -84,9 +84,12 @@ const Conversations = () => {
                     <div className="card-body bg-light p-2">
                       <p>
                         {Auth.getProfile().data.username === thread.user1
-                          ? thread.user1NewMessages
-                          : thread.user2NewMessages}{" "}
-                        new messages
+                          ? thread.user1NewMessages === 1
+                            ? "1 new message"
+                            : thread.user1NewMessages + " new messages"
+                          : thread.user2NewMessages === 1
+                          ? "1 new message"
+                          : thread.user2NewMessages + " new messages"}
                       </p>
                     </div>
                     <div className="card-body bg-light p-2">

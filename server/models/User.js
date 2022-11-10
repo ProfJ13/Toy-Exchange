@@ -4,12 +4,30 @@ const bcrypt = require("bcrypt");
 // a standard collection of User documents
 const userSchema = new Schema(
   {
+    // using a usernameLowerCase field to allow usernames to be unique, even with changes in letter case
+    usernameLowerCase: {
+      type: String,
+      required: true,
+      unique: true,
+      trim: true,
+      maxLength: 40,
+      // This rejects all usernames that have an @ symbol; this prevents users from circumventing the login system
+      match: [/^((?!@).)*$/, "Usernames can't include an @ symbol!"],
+    },
+    // see usernameLowerCase
+    emailLowerCase: {
+      type: String,
+      required: true,
+      unique: true,
+      match: [/.+@.+\..+/, "Must match an email address!"],
+    },
     username: {
       type: String,
       required: true,
       unique: true,
       trim: true,
       maxLength: 40,
+      match: [/^((?!@).)*$/, "Usernames can't include an @ symbol!"],
     },
     email: {
       type: String,

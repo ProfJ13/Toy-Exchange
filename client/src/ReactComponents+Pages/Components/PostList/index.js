@@ -39,7 +39,7 @@ const PostList = ({
                 <span style={{ fontSize: "1rem", color: "var(--text)" }}>
                   {post.comments.length}{" "}
                   {post.comments.length === 1 ? "comment" : "comments"} on this
-                  post
+                  listing
                 </span>
               </p>
             </Link>

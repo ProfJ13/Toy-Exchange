@@ -72,6 +72,7 @@ const SignupForm = () => {
           <Form.Label htmlFor="username">Username</Form.Label>
           <Form.Control
             autoFocus
+            autoComplete="off"
             type="text"
             placeholder="Your username"
             name="username"
@@ -87,6 +88,7 @@ const SignupForm = () => {
         <Form.Group>
           <Form.Label htmlFor="email">E-mail</Form.Label>
           <Form.Control
+            autoComplete="email"
             type="email"
             placeholder="Your e-mail address"
             name="email"
@@ -105,6 +107,7 @@ const SignupForm = () => {
             type="password"
             placeholder="Your password"
             name="password"
+            autoComplete="off"
             onChange={handleInputChange}
             value={signupFormData.password}
             required

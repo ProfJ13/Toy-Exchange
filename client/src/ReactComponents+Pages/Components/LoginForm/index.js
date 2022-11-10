@@ -9,7 +9,7 @@ import "./index.css";
 
 const LoginForm = () => {
   const [loginFormData, setLoginFormData] = useState({
-    email: "",
+    username: "",
     password: "",
   });
   const [validated] = useState(false);
@@ -48,7 +48,6 @@ const LoginForm = () => {
 
     setLoginFormData({
       username: "",
-      email: "",
       password: "",
     });
   };
@@ -65,18 +64,19 @@ const LoginForm = () => {
           Something went wrong with your login credentials!
         </Alert>
         <Form.Group>
-          <Form.Label htmlFor="email">E-mail</Form.Label>
+          <Form.Label htmlFor="username">Username/e-mail</Form.Label>
           <Form.Control
             autoFocus
             type="text"
-            placeholder="Your e-mail"
-            name="email"
+            autoComplete="username"
+            placeholder="Your username/e-mail..."
+            name="username"
             onChange={handleInputChange}
-            value={loginFormData.email}
+            value={loginFormData.username}
             required
           />
           <Form.Control.Feedback type="invalid">
-            Email is required!
+            Your e-mail or Username is required!
           </Form.Control.Feedback>
         </Form.Group>
 
@@ -95,7 +95,7 @@ const LoginForm = () => {
           </Form.Control.Feedback>
         </Form.Group>
         <Button
-          disabled={!(loginFormData.email && loginFormData.password)}
+          disabled={!(loginFormData.username && loginFormData.password)}
           type="submit"
           variant="success"
           className="mt-2"

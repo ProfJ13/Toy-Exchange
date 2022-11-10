@@ -1,5 +1,6 @@
 const { Schema, model } = require("mongoose");
 
+// a collection of our current toy categories
 const categorySchema = new Schema({
   categoryName: {
     type: String,

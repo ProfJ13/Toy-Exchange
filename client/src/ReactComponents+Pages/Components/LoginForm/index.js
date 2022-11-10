@@ -5,13 +5,16 @@ import { LOGIN_USER } from "../../../utils/mutations";
 import Auth from "../../../utils/auth";
 import "./index.css";
 
+// A login form that uses graphQL mutation to submit the user's credentials and deliver their token back to them
+
 const LoginForm = () => {
   const [loginFormData, setLoginFormData] = useState({
-    email: "",
+    username: "",
     password: "",
   });
   const [validated] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
+  // GraphQL mutation that attempts to log the user in
   const [loginFunction] = useMutation(LOGIN_USER);
 
   const handleInputChange = (event) => {
@@ -22,7 +25,6 @@ const LoginForm = () => {
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
-    // check if form has everything (as per react-bootstrap docs)
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
       event.preventDefault();
@@ -46,7 +48,6 @@ const LoginForm = () => {
 
     setLoginFormData({
       username: "",
-      email: "",
       password: "",
     });
   };
@@ -63,18 +64,19 @@ const LoginForm = () => {
           Something went wrong with your login credentials!
         </Alert>
         <Form.Group>
-          <Form.Label htmlFor="email">E-mail</Form.Label>
+          <Form.Label htmlFor="username">Username/e-mail</Form.Label>
           <Form.Control
             autoFocus
             type="text"
-            placeholder="Your e-mail"
-            name="email"
+            autoComplete="username"
+            placeholder="Your username/e-mail..."
+            name="username"
             onChange={handleInputChange}
-            value={loginFormData.email}
+            value={loginFormData.username}
             required
           />
           <Form.Control.Feedback type="invalid">
-            Email is required!
+            Your e-mail or Username is required!
           </Form.Control.Feedback>
         </Form.Group>
 
@@ -93,7 +95,7 @@ const LoginForm = () => {
           </Form.Control.Feedback>
         </Form.Group>
         <Button
-          disabled={!(loginFormData.email && loginFormData.password)}
+          disabled={!(loginFormData.username && loginFormData.password)}
           type="submit"
           variant="success"
           className="mt-2"

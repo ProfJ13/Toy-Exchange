@@ -14,7 +14,11 @@ db.once("open", async () => {
     await Comment.deleteMany({});
     await Thread.deleteMany({});
     for (const user of userSeeds) {
-      await User.create(user);
+      await User.create({
+        ...user,
+        usernameLowerCase: user.username.toLowerCase(),
+        emailLowerCase: user.email.toLowerCase(),
+      });
     }
     const userData = await User.find();
 

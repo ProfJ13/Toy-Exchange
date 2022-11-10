@@ -2,22 +2,24 @@ const { AuthenticationError } = require("apollo-server-express");
 const { User, Post, Comment, Category, Thread } = require("../models");
 const { signToken } = require("../utils/auth");
 
-// resolver is a function responsible for populating the data that defined by typeDefs.js
-//  Do we need to add await since we're using async?
 const resolvers = {
   Query: {
+    // unused as of now
     users: async () => {
       return User.find().populate("posts");
     },
+    // searches for posts by username
     posts: async (parent, { username }) => {
       const params = username ? { username } : {};
       return Post.find(params).sort({ createdAt: -1 });
     },
+    // searches for posts by category
     categoryPosts: async (parent, { categoryName }) => {
       return Post.find({ categoryName })
         .populate("postAuthor")
         .sort({ createdAt: -1 });
     },
+    // searches for a single post and populate the comment data associated with it
     post: async (parent, { postId }) => {
       return Post.findOne({ _id: postId })
         .populate("postAuthor")
@@ -27,6 +29,7 @@ const resolvers = {
           populate: "commentAuthor",
         });
     },
+    // searches for a user and populates their post data. currently unused
     user: async (parent, args, context) => {
       if (context.user) {
         return User.findOne({ _id: context.user._id }).populate("posts");
@@ -35,20 +38,26 @@ const resolvers = {
         "You need to be logged in, or you don't have access to this!"
       );
     },
+    // used when displaying a different user's info
     otherUser: async (parent, { username }) => {
       return User.findOne({ username }).populate("posts");
     },
+    // uses regex to query names that match the user's input
     userSearch: async (parent, { username }, context) => {
       if (context.user) {
-        return await User.find({
-          username: { $regex: new RegExp("^" + username + ".+$", "i") },
-        }).limit(5);
+        if (username.length > 0) {
+          return await User.find({
+            username: { $regex: new RegExp("^" + username + ".+$", "i") },
+          }).limit(5);
+        } else return null;
       } else {
         throw new AuthenticationError(
           "You need to be logged in, or you don't have access to this!"
         );
       }
     },
+    // fetches a single thread and its messages
+    //  Note that it requires the use of context, which means that the viewing user must be logged into one of the accounts in the shared thread
     thread: async (parent, { threadId }, context) => {
       if (context.user) {
         const thread = await Thread.findOne({
@@ -63,8 +72,8 @@ const resolvers = {
           ],
         });
 
+        // This code block handles marking unread messages to read.
         if (thread) {
-          console.log(thread);
           const username =
             thread.user1 === context.user.username
               ? thread.user2
@@ -102,6 +111,7 @@ const resolvers = {
         );
       }
     },
+    // Fetches all private message threads of a single user, the amount of new messages, and the last time one of them sent a message
     sharedThreads: async (parent, args, context) => {
       if (context.user) {
         return await Thread.find({
@@ -120,6 +130,7 @@ const resolvers = {
         );
       }
     },
+    // checks to see how many new messages the user has. It's a little crude and likely could be refined later
     checkMessages: async (parent, args, context) => {
       if (context.user) {
         const rawThread = await Thread.aggregate([
@@ -156,16 +167,18 @@ const resolvers = {
       }
     },
 
-    // add category and comment resolvers
+    // Returns a list of current categories
     categories: async (parent, args) => {
       return Category.find().sort({ categoryName: 1 });
     },
+    // returns a single comment by ID. I don't think this one's in use currently
     comment: async (parent, { commentId }) => {
       return Comment.findOne({ commentId });
     },
   },
 
   Mutation: {
+    // Used when a user sends a private message to another. Requires that the user be logged in as one of the two involved users
     sendMessage: async (parent, { username, messageText }, context) => {
       if (context.user) {
         return Thread.findOneAndUpdate(
@@ -197,6 +210,7 @@ const resolvers = {
         );
       }
     },
+    // creates a private messaging thread between two users
     createThread: async (parent, { username }, context) => {
       if (context.user) {
         const user = await User.findOne({
@@ -230,22 +244,34 @@ const resolvers = {
       throw new AuthenticationError("You need to be logged in!");
     },
     addUser: async (parent, { username, email, password }) => {
-      const user = await User.create({ username, email, password });
+      const user = await User.create({
+        usernameLowerCase: username.toLowerCase(),
+        emailLowerCase: email.toLowerCase(),
+        username: username,
+        email: email,
+        password,
+      });
       const token = signToken(user);
       Thread.create({
         user1: username,
         user2: "ToyZoid",
         messages: [
           {
-            messageText: `Hello, ${username}, and welcome to ToyZoid! Now that you have an account, you can post listings, comment on other listings, and in your conversations page you can search for other users to privately message them to arrange a toy exchange. We hope you find the trade you're looking for!`,
+            messageText: `Hello, ${username}, and welcome to ToyZoid! Now you can post and comment on listings, and in your conversations page you can search for other users to privately message them. We hope you find the trade you're looking for!`,
             messageSender: "ToyZoid",
           },
         ],
       });
+      console.log(`New user created: username ${username}`);
       return { token, user };
     },
-    login: async (parent, { email, password }) => {
-      const user = await User.findOne({ email });
+    login: async (parent, { username, password }) => {
+      const user = await User.findOne({
+        $or: [
+          { usernameLowerCase: username.toLowerCase() },
+          { emailLowerCase: username.toLowerCase() },
+        ],
+      });
 
       if (!user) {
         throw new AuthenticationError("Incorrect credentials");
@@ -261,6 +287,7 @@ const resolvers = {
 
       return { token, user };
     },
+
     addPost: async (
       parent,
       { postTitle, postText, expectedTradeCompensation, categoryName },
@@ -304,7 +331,7 @@ const resolvers = {
       throw new AuthenticationError("You need to be logged in!");
     },
 
-    // not finished, still returning original post info
+    // Handles editing an existent post
     updatePost: async (
       parent,
       { postId, postTitle, postText, expectedTradeCompensation },
@@ -325,7 +352,7 @@ const resolvers = {
         );
       }
     },
-
+    // requires context, as we need to verify that the post belongs to the logged-in user
     removePost: async (parent, { postId }, context) => {
       if (context.user) {
         const post = await Post.findOneAndDelete({
@@ -344,6 +371,7 @@ const resolvers = {
         "You need to be logged in, or you don't have access to this!"
       );
     },
+    // requires context, as we need to verify that the querying user created the comment
     removeComment: async (parent, { postId, commentId }, context) => {
       if (context.user) {
         return Post.findOneAndUpdate(

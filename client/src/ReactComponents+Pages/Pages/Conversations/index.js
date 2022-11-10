@@ -75,11 +75,11 @@ const Conversations = () => {
                     ? thread.user2
                     : thread.user1}
                 </h5>
-                {thread.updatedAt === thread.createdAt ? (
-                  <div className="card-body bg-light p-2">
-                    <p>Click here to start your conversation!</p>
-                  </div>
-                ) : (
+                {(Auth.getProfile().data.username === thread.user1 &&
+                  thread.user1NewMessages > 0) ||
+                (Auth.getProfile().data.username === thread.user2 &&
+                  thread.user2NewMessages > 0) ||
+                thread.updatedAt !== thread.createdAt ? (
                   <>
                     <div className="card-body bg-light p-2">
                       <p>
@@ -96,27 +96,44 @@ const Conversations = () => {
                       </p>
                     </div>
                   </>
+                ) : (
+                  <div className="card-body bg-light p-2">
+                    <p>Click here to start your conversation!</p>
+                  </div>
                 )}
               </Link>
-              <Link
-                to={`/profiles/${
-                  Auth.getProfile().data.username === thread.user1
-                    ? thread.user2
-                    : thread.user1
-                }`}
-              >
-                <p className="ms-2 my-1">
-                  <span
-                    className="text-break"
-                    style={{ fontSize: "1rem", color: "var(--text)" }}
-                  >
-                    {Auth.getProfile().data.username === thread.user1
+              {thread.user2 === "ToyZoid" ? (
+                <Link to={`/conversations/${thread._id}`}>
+                  <p className="ms-2 my-1">
+                    <span
+                      className="text-break"
+                      style={{ fontSize: "1rem", color: "var(--text)" }}
+                    >
+                      Welcome to ToyZoid!
+                    </span>
+                  </p>
+                </Link>
+              ) : (
+                <Link
+                  to={`/profiles/${
+                    Auth.getProfile().data.username === thread.user1
                       ? thread.user2
-                      : thread.user1}
-                    's profile
-                  </span>
-                </p>
-              </Link>
+                      : thread.user1
+                  }`}
+                >
+                  <p className="ms-2 my-1">
+                    <span
+                      className="text-break"
+                      style={{ fontSize: "1rem", color: "var(--text)" }}
+                    >
+                      {Auth.getProfile().data.username === thread.user1
+                        ? thread.user2
+                        : thread.user1}
+                      's profile
+                    </span>
+                  </p>
+                </Link>
+              )}
             </div>
           ))}
       </div>
